@@ -7,9 +7,8 @@ import { getRandomNumberSet } from './../../../utils/getRandomNumberSet';
 const MAX_QUESTIONS = 6;
 const MAX_OPTIONS = 3;
 
-export const generateQuestionOption = (data, selectedCategory) => {
-  const chosenTemplate =
-    templates[selectedCategory][getRandomNumberFromRange(0, templates[selectedCategory].length - 1)];
+export const generateQuestionOption = (data, selectedCategory, templateNum) => {
+  const chosenTemplate = templates[selectedCategory][templateNum];
 
   const option = data[chosenTemplate.attribute];
   const reference = data[chosenTemplate.reference];
@@ -32,8 +31,10 @@ export const createQuiz = async selectedCategory => {
       })
     );
 
+    const templateNum = getRandomNumberFromRange(0, templates[selectedCategory].length - 1);
+
     const questionOptions = foundEndPoints.map(({ data }) => {
-      return generateQuestionOption(data, selectedCategory);
+      return generateQuestionOption(data, selectedCategory, templateNum);
     });
 
     const answerIndex = getRandomNumberFromRange(0, MAX_OPTIONS - 1);
