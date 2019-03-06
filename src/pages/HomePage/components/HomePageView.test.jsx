@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-testing-library';
+import { render, wait } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
 import HomePageView from './HomePageView';
@@ -38,5 +38,15 @@ describe('HomePageView Component', () => {
     const { getByTestId } = render(<HomePageView {...sampleProps} />);
 
     expect(getByTestId(footerTestId)).toBeInTheDocument();
+  });
+
+  test('should display Random Quote View Component', async () => {
+    const randomQuoteTestId = 'random-quote-view';
+
+    const { getByTestId } = render(<HomePageView {...sampleProps} />);
+
+    await wait(() => {
+      expect(getByTestId(randomQuoteTestId)).toBeInTheDocument();
+    });
   });
 });
