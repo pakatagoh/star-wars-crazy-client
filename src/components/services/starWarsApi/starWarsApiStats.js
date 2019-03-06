@@ -7,11 +7,6 @@ export const limits = {
   starships: 37,
 };
 
-export const categories = {
-  people: 'people',
-  planets: 'planets',
-  films: 'films',
-  species: 'species',
-  vehicles: 'vehicles',
-  starships: 'starships',
-};
+// categories yet to include are 'planets', 'species', 'vehicles', 'starships'
+
+export const categories = ['people', 'films'];

@@ -11,7 +11,6 @@ const Quiz = () => {
       const foundQuizList = await getQuizList();
       if (foundQuizList) {
         console.log(foundQuizList);
-        console.log('in here');
         setQuizList(foundQuizList);
       }
     } catch (error) {
