@@ -17,7 +17,7 @@ const sampleProps = {
 };
 
 describe('HomePageView Component', () => {
-  test('should display Navigation Bar', () => {
+  test('should display Navigation Bar on page', () => {
     const navigationTestId = 'navigation-bar';
 
     const { getByTestId } = render(<HomePageView {...sampleProps} />);
