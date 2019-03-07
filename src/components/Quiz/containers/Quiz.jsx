@@ -3,9 +3,10 @@ import QuizView from '../components/QuizView';
 import { getQuizList } from './../../services/quiz/quizService';
 const Quiz = () => {
   const [quizList, setQuizList] = useState([]);
-  const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
+  const [currentQuestionNum, setCurrentQuestionNum] = useState(1);
   const [score, setScore] = useState(0);
   const [selection, setSelection] = useState('');
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const fetchQuizList = async () => {
     try {
@@ -23,16 +24,19 @@ const Quiz = () => {
   }, []);
 
   const handleChange = event => {
-    const { name, value } = event.target;
+    const { value } = event.target;
     setSelection(value);
-    setCurrentQuestionNum(state => state + 1);
   };
 
   const handleSubmit = () => {
+    const selectedAnswer = selection;
+    const quizAnswer = quizList[currentQuestionNum - 1].answer;
+    if (selectedAnswer === quizAnswer) setScore(state => state + 1);
     setSelection('');
+    currentQuestionNum === quizList.length ? setIsCompleted(true) : setCurrentQuestionNum(state => state + 1);
   };
 
-  const quiz = quizList[0];
+  const quiz = quizList[currentQuestionNum - 1];
   const quizViewProps = {
     selection,
     handleChange,
@@ -40,7 +44,7 @@ const Quiz = () => {
     score,
     currentQuestionNum,
     totalQuestions: quizList.length,
-    isCompleted: currentQuestionNum === quizList.length,
+    isCompleted,
   };
 
   return <QuizView {...quiz} {...quizViewProps} />;
