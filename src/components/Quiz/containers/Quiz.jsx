@@ -3,7 +3,7 @@ import QuizView from '../components/QuizView';
 import { getQuizList } from './../../services/quiz/quizService';
 const Quiz = () => {
   const [quizList, setQuizList] = useState([]);
-  const [currentQuestionNum, setCurrentQuestion] = useState(0);
+  const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
   const [score, setScore] = useState(0);
   const [selection, setSelection] = useState('');
 
@@ -25,7 +25,7 @@ const Quiz = () => {
   const handleChange = event => {
     const { name, value } = event.target;
     setSelection(value);
-    setCurrentQuestion(state => state + 1);
+    setCurrentQuestionNum(state => state + 1);
   };
 
   const handleSubmit = () => {
