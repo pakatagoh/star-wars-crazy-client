@@ -4,7 +4,7 @@ import { limits, categories } from '../starWarsApi/starWarsApiStats';
 import { getRandomNumberFromRange } from './../../../utils/getRandomNumberFromRange';
 import { getRandomNumberSet } from './../../../utils/getRandomNumberSet';
 
-const MAX_QUESTIONS = 5;
+const MAX_QUESTIONS = 1;
 const MAX_OPTIONS = 3;
 
 export const generateQuestionOption = (data, selectedCategory, templateNum) => {

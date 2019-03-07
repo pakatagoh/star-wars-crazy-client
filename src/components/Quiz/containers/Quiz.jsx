@@ -10,7 +10,6 @@ const Quiz = () => {
     try {
       const foundQuizList = await getQuizList();
       if (foundQuizList) {
-        console.log(foundQuizList);
         setQuizList(foundQuizList);
       }
     } catch (error) {
