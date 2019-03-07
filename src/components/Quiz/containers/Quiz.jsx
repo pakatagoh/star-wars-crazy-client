@@ -5,6 +5,7 @@ const Quiz = () => {
   const [quizList, setQuizList] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [selection, setSelection] = useState('');
 
   const fetchQuizList = async () => {
     try {
@@ -21,9 +22,18 @@ const Quiz = () => {
     fetchQuizList();
   }, []);
 
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setSelection(value);
+    setCurrentQuestion(state => state + 1);
+  };
+
+  const handleSubmit = () => {
+    setSelection('');
+  };
   const quiz = quizList[0];
 
-  return <QuizView {...quiz} />;
+  return <QuizView {...quiz} selection={selection} handleChange={handleChange} />;
 };
 
 export default Quiz;
