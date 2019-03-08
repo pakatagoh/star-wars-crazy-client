@@ -7,6 +7,7 @@ const QuizView = props => {
     selection,
     handleChange,
     handleSubmit,
+    handleReset,
     isCompleted,
     score,
     currentQuestionNum,
@@ -15,7 +16,12 @@ const QuizView = props => {
   return (
     <div data-testid="quiz-view">
       {isCompleted ? (
-        <p>Score is {score}</p>
+        <>
+          <p>Score is {score}</p>
+          <button type="button" onClick={handleReset}>
+            Reset
+          </button>
+        </>
       ) : (
         <>
           {question ? (

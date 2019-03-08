@@ -200,4 +200,151 @@ describe('Quiz Container', () => {
 
     expect(completedText).toBeInTheDocument();
   });
+
+  test('should have reset button after completion of all questions. It should not have the submit button', async () => {
+    const { queryByText, getByText } = render(<Quiz />);
+
+    const [label0, button, resetBefore] = await waitForElement(() => [
+      getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
+      getByText(/submit/i),
+      queryByText(/reset/i),
+    ]);
+
+    expect(resetBefore).not.toBeInTheDocument();
+
+    fireEvent.click(label0);
+    fireEvent.click(button);
+
+    const [label1, beforeCompleted] = await waitForElement(() => [
+      getByText(new RegExp(sampleResponse[1].options[0].value, 'i')),
+      queryByText(/score is 2/i),
+    ]);
+
+    expect(beforeCompleted).not.toBeInTheDocument();
+
+    fireEvent.click(label1);
+    fireEvent.click(button);
+
+    const [completedText, resetAfter, submitButton] = await waitForElement(() => [
+      getByText(/score is 2/i),
+      queryByText(/reset/i),
+      queryByText(/submit/i),
+    ]);
+
+    expect(completedText).toBeInTheDocument();
+    expect(resetAfter).toBeInTheDocument();
+    expect(submitButton).not.toBeInTheDocument();
+  });
+});
+
+describe('Quiz Container after completing quiz', () => {
+  const sampleResponse = [
+    {
+      question: 'this is a sample question',
+      answer: 'this is the answer',
+      options: [
+        { key: 'option-1', value: 'this is the answer' },
+        { key: 'option-2', value: 'this is 2nd option' },
+        { key: 'option-3', value: 'this is 3rd option' },
+      ],
+    },
+    {
+      question: 'this is a sample question number 2',
+      answer: 'this is the answer number 2',
+      options: [
+        { key: 'option-1', value: 'this is the answer number 2' },
+        { key: 'option-2', value: 'this is 2nd option number 2' },
+        { key: 'option-3', value: 'this is 3rd option number 2' },
+      ],
+    },
+  ];
+  const newSampleResponse = [
+    {
+      question: 'this is a new sample question',
+      answer: 'this is the new answer',
+      options: [
+        { key: 'option-1', value: 'this is the new answer' },
+        { key: 'option-2', value: 'this is new 2nd option' },
+        { key: 'option-3', value: 'this is  new 3rd option' },
+      ],
+    },
+    {
+      question: 'this is a new sample question number 2',
+      answer: 'this is the new answer number 2',
+      options: [
+        { key: 'option-1', value: 'this is the new answer number 2' },
+        { key: 'option-2', value: 'this is new 2nd option number 2' },
+        { key: 'option-3', value: 'this is new 3rd option number 2' },
+      ],
+    },
+  ];
+
+  async function renderWithCompleted() {
+    const renderedQuiz = render(<Quiz />);
+
+    const [label0, button] = await waitForElement(() => [
+      renderedQuiz.getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
+      renderedQuiz.getByText(/submit/i),
+    ]);
+
+    fireEvent.click(label0);
+    fireEvent.click(button);
+
+    const [label1] = await waitForElement(() => [
+      renderedQuiz.getByText(new RegExp(sampleResponse[1].options[0].value, 'i')),
+    ]);
+
+    fireEvent.click(label1);
+    fireEvent.click(button);
+
+    const [resetAfter] = await waitForElement(() => [renderedQuiz.queryByText(/reset/i)]);
+
+    expect(resetAfter).toBeInTheDocument();
+
+    return {
+      ...renderedQuiz,
+      resetButton: resetAfter,
+    };
+  }
+
+  beforeEach(() => {
+    jest
+      .spyOn(quizService, 'getQuizList')
+      .mockImplementationOnce(() => Promise.resolve(sampleResponse))
+      .mockImplementationOnce(() => Promise.resolve(newSampleResponse));
+  });
+
+  afterEach(() => {
+    quizService.getQuizList.mockRestore();
+  });
+
+  test('should display a new question after reset is clicked', async () => {
+    const { getByText, resetButton } = await renderWithCompleted();
+
+    fireEvent.click(resetButton);
+
+    const question = await waitForElement(() => getByText(newSampleResponse[0].question));
+
+    expect(question).toBeInTheDocument();
+  });
+
+  test('should display submit button after reset is clicked', async () => {
+    const { getByText, resetButton } = await renderWithCompleted();
+
+    fireEvent.click(resetButton);
+
+    const submitButton = await waitForElement(() => getByText(/submit/i));
+
+    expect(submitButton).toBeInTheDocument();
+  });
+
+  test('should display question number 1/2 after clicking reset', async () => {
+    const { getByText, resetButton } = await renderWithCompleted();
+
+    fireEvent.click(resetButton);
+
+    const currentQuestion = await waitForElement(() => getByText(/1\/2/i));
+
+    expect(currentQuestion).toBeInTheDocument();
+  });
 });

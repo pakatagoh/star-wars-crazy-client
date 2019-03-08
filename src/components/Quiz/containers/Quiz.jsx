@@ -7,6 +7,7 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [selection, setSelection] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
+  const [reset, setReset] = useState(false);
 
   const fetchQuizList = async () => {
     try {
@@ -21,7 +22,7 @@ const Quiz = () => {
 
   useEffect(() => {
     fetchQuizList();
-  }, []);
+  }, [reset]);
 
   const handleChange = event => {
     const { value } = event.target;
@@ -36,11 +37,21 @@ const Quiz = () => {
     currentQuestionNum === quizList.length ? setIsCompleted(true) : setCurrentQuestionNum(state => state + 1);
   };
 
+  const handleReset = () => {
+    setSelection('');
+    setScore(0);
+    setQuizList([]);
+    setCurrentQuestionNum(1);
+    setIsCompleted(false);
+    setReset(!reset);
+  };
+
   const quiz = quizList[currentQuestionNum - 1];
   const quizViewProps = {
     selection,
     handleChange,
     handleSubmit,
+    handleReset,
     score,
     currentQuestionNum,
     totalQuestions: quizList.length,
