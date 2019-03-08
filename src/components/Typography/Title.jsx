@@ -7,7 +7,7 @@ const Title = ({ title, as, children, className }) => {
     line-height: 1.4;
   `;
 
-  const classes = `${className}`;
+  const classes = `${className ? className : ''}`;
 
   return (
     <Wrapper as={as && as} className={classes}>
