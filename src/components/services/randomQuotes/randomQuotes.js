@@ -608,7 +608,6 @@ export const quotes = [
   { name: 'PADME', text: 'Padme Naberrie.', episode: '1' },
   { name: 'ANAKIN', text: "I'm glad I met you too.", episode: '1' },
   { name: 'WATTO', text: 'Ootmians! Tinka me chasa hopoe ma booty na nolia.', episode: '1' },
-  { name: 'ANAKIN : WATTO', text: '', episode: '1' },
   { name: 'QUI-GON', text: "...Obi-Wan, you're sure there isn't anything of value left on board?", episode: '1' },
   { name: 'OBI-WAN', text: "A few containers of supplies, the Queen's wardrobe, maybe.", episode: '1' },
   { name: 'QUI-GON', text: "All right. Another solution will present itself. I'll check back.", episode: '1' },
@@ -804,8 +803,8 @@ export const quotes = [
   },
   {
     name:
-      "ANAKIN : But Mom, I love it...and they need help...they're in trouble. The prize money would more than pay for the parts they need. JAR JAR",
-    text: 'Wesa ina pitty bad goo.',
+      "ANAKIN",
+    text: "But Mom, I love it...and they need help...they're in trouble. The prize money would more than pay for the parts they need.",
     episode: '1',
   },
   {
@@ -4180,8 +4179,8 @@ export const quotes = [
   },
   { name: 'POGGLE', text: 'Let the executions begin!', episode: '2' },
   {
-    name: 'ANAKIN : I have a bad feeling about this.OBI-WAN',
-    text: "Take the one the left. I'll take the one on the right.",
+    name: 'ANAKIN',
+    text: "I have a bad feeling about this",
     episode: '2',
   },
   { name: 'ANAKIN', text: 'What about Padme?', episode: '2' },
@@ -4190,8 +4189,8 @@ export const quotes = [
   { name: 'ANAKIN', text: 'You okay?', episode: '2' },
   { name: 'PADME', text: 'Sure! Well, sort of.', episode: '2' },
   {
-    name: 'ANAKIN : Jump!!!NUTE GUNRAY',
-    text: "This isn't how it's supposed to be! Jango, finish her off.",
+    name: 'ANAKIN',
+    text: "Jump!!!",
     episode: '2',
   },
   {
