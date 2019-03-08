@@ -37,4 +37,14 @@ describe('getRandomNumberFromRange function', () => {
 
     expect(actual).toBeLessThanOrEqual(sampleRangeUpper);
   });
+
+  test.only('should return 0,1 or 2 if upper and lower range numbers are 2 and 0 respectively', () => {
+    const sampleRangLower = 0;
+    const sampleRangeUpper = 2;
+
+    const actual = getRandomNumberFromRange(sampleRangLower, sampleRangeUpper);
+    expect(actual).toBeGreaterThanOrEqual(sampleRangLower);
+
+    expect(actual).toBeLessThanOrEqual(sampleRangeUpper);
+  });
 });
