@@ -1,4 +1,5 @@
 import React from 'react';
+import Title from './../../Typography/Title';
 
 const RandomQuoteView = props => {
   const { randomQuote } = props;
@@ -6,7 +7,7 @@ const RandomQuoteView = props => {
     <div data-testid="random-quote-view">
       {randomQuote ? (
         <>
-          <p>{randomQuote.name}</p>
+          <Title as="h3">{randomQuote.name}</Title>
           <p>{randomQuote.text}</p>
           <p>{randomQuote.episode}</p>
         </>
