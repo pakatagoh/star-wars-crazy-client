@@ -1,29 +1,41 @@
 import React, { useState } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, NavbarToggler, Nav, NavItem, Navbar } from 'reactstrap';
+import NavLogo from './NavLogo';
+import NavLinkWhite from './NavLinkWhite';
 
 const NavigationView = props => {
-  const { navBrand } = props;
+  const { navBrand, navItemsLeft, navItemsRight } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
     setIsOpen(!isOpen);
   };
 
+  const renderNavItemsLeft = () => {
+    return navItemsLeft.map(item => (
+      <NavLinkWhite to={item.to} className="nav-link">
+        <NavItem>{item.text}</NavItem>
+      </NavLinkWhite>
+    ));
+  };
+
+  const renderNavItemsRight = () => {
+    return navItemsRight.map(item => (
+      <NavLinkWhite to={item.to} className="nav-link">
+        <NavItem>{item.text}</NavItem>
+      </NavLinkWhite>
+    ));
+  };
+
   return (
     <div data-testid="navigation-bar">
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href={navBrand.to}>
-          <img src={navBrand.src} alt={navBrand.alt} />
-        </NavbarBrand>
+      <Navbar expand="sm" color="dark" dark>
+        <NavLogo {...navBrand} />
+        <Nav>{navItemsLeft && renderNavItemsLeft()}</Nav>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink href="/components/">Components</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-            </NavItem>
+            {navItemsRight && renderNavItemsRight()}
           </Nav>
         </Collapse>
       </Navbar>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Switch } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { render } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';

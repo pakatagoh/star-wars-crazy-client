@@ -4,11 +4,11 @@ import Quiz from './../../../components/Quiz/containers/Quiz';
 import FooterView from './../../../components/Footer/FooterView';
 import RandomQuote from './../../../components/RandomQuote/containers/RandomQuote';
 const HomePageView = props => {
-  const { navProps } = props;
+  const { navViewProps } = props;
   return (
     <>
       <header>
-        <NavigationView {...navProps} />
+        <NavigationView {...navViewProps} />
       </header>
       <main data-testid="home-page" className="container">
         <RandomQuote />
