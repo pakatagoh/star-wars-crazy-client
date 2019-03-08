@@ -13,7 +13,7 @@ const NavigationView = props => {
 
   const renderNavItemsLeft = () => {
     return navItemsLeft.map(item => (
-      <NavLinkWhite to={item.to} className="nav-link">
+      <NavLinkWhite key={item.text} to={item.to} className="nav-link">
         <NavItem>{item.text}</NavItem>
       </NavLinkWhite>
     ));
@@ -21,7 +21,7 @@ const NavigationView = props => {
 
   const renderNavItemsRight = () => {
     return navItemsRight.map(item => (
-      <NavLinkWhite to={item.to} className="nav-link">
+      <NavLinkWhite key={item.text} to={item.to} className="nav-link">
         <NavItem>{item.text}</NavItem>
       </NavLinkWhite>
     ));
