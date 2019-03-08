@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import RandomQuoteView from '../components/RandomQuoteView';
 import { getQuote } from './../../services/randomQuotes/randomQuotesService';
+
 const RandomQuote = () => {
   const [quote, setQuote] = useState('');
 

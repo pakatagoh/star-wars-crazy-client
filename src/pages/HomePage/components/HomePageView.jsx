@@ -1,6 +1,6 @@
 import React from 'react';
 import NavigationView from '../../../components/Navigation/NavigationView';
-import QuizView from './../../../components/Quiz/QuizView';
+import Quiz from './../../../components/Quiz/containers/Quiz';
 import FooterView from './../../../components/Footer/FooterView';
 import RandomQuote from './../../../components/RandomQuote/containers/RandomQuote';
 const HomePageView = props => {
@@ -12,7 +12,7 @@ const HomePageView = props => {
       </header>
       <main data-testid="home-page" className="container">
         <RandomQuote />
-        <QuizView />
+        <Quiz />
         <FooterView />
       </main>
     </>
