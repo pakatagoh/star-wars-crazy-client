@@ -22,7 +22,7 @@ describe('RandomQuote Container', () => {
   test('should call getQuote service once', async () => {
     const { getByText } = render(<RandomQuote />);
 
-    const element = await waitForElement(() => getByText(sampleRandomQuote.name));
+    const element = await waitForElement(() => getByText(new RegExp(sampleRandomQuote.name, 'i')));
     expect(element).toBeInTheDocument();
     expect(randomQuoteService.getQuote.mock.calls.length).toEqual(1);
   });
