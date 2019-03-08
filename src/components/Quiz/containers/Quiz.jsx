@@ -29,7 +29,8 @@ const Quiz = () => {
     setSelection(value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = event => {
+    event.preventDefault();
     const selectedAnswer = selection;
     const quizAnswer = quizList[currentQuestionNum - 1].answer;
     if (selectedAnswer === quizAnswer) setScore(state => state + 1);
