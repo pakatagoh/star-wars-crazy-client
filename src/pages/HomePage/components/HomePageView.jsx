@@ -8,14 +8,18 @@ const HomePageView = props => {
   const { navViewProps } = props;
   return (
     <>
-      <header>
-        <NavigationView {...navViewProps} />
+      <header className="bg-dark">
+        <Block container spacer={1} className="px-0">
+          <NavigationView {...navViewProps} />
+        </Block>
       </header>
       <main data-testid="home-page">
-        <Block>
+        <Block container>
           <RandomQuote />
         </Block>
-        <Quiz />
+        <Block container>
+          <Quiz />
+        </Block>
         <FooterView />
       </main>
     </>
