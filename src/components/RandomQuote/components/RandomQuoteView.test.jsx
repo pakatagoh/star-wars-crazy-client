@@ -14,8 +14,8 @@ describe('RandomQuoteView Component', () => {
 
     const { getByText } = render(<RandomQuoteView randomQuote={sampleRandomQuote} />);
 
-    expect(getByText(sampleRandomQuote.name)).toBeInTheDocument();
+    expect(getByText(new RegExp(sampleRandomQuote.name, 'i'))).toBeInTheDocument();
     expect(getByText(sampleRandomQuote.text)).toBeInTheDocument();
-    expect(getByText(sampleRandomQuote.episode)).toBeInTheDocument();
+    expect(getByText(new RegExp(sampleRandomQuote.episode, 'i'))).toBeInTheDocument();
   });
 });

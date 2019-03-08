@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElement, fireEvent } from 'react-testing-library';
+import { render, wait, waitForElement, fireEvent } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
 import * as quizService from './../../services/quiz/quizService';
@@ -52,12 +52,15 @@ describe('Quiz Container', () => {
   });
 
   test("should have radio selected when it's label is clicked", async () => {
-    const { getByText, getByLabelText } = render(<Quiz />);
+    const { container, getByText, getByLabelText } = render(<Quiz />);
 
-    const [label, radio] = await waitForElement(() => [
-      getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
-      getByLabelText(new RegExp(sampleResponse[0].options[0].value, 'i')),
-    ]);
+    const [label, radio] = await waitForElement(
+      () => [
+        getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
+        getByLabelText(new RegExp(sampleResponse[0].options[0].value, 'i')),
+      ],
+      { container }
+    );
     expect(label).toBeInTheDocument();
     expect(radio).toBeInTheDocument();
     fireEvent.click(label);

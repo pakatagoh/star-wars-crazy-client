@@ -1,4 +1,6 @@
 import React from 'react';
+import Title from './../../Typography/Title';
+import '../styles/quiz.css';
 
 const QuizView = props => {
   const {
@@ -15,52 +17,74 @@ const QuizView = props => {
   } = props;
   return (
     <div data-testid="quiz-view">
-      {isCompleted ? (
-        <>
-          <p>Score is {score}</p>
-          <button type="button" onClick={handleReset}>
-            Reset
-          </button>
-        </>
-      ) : (
-        <>
-          {question ? (
-            <>
-              <h2>{question}</h2>
-              <p>
-                {currentQuestionNum}/{totalQuestions}
-              </p>
-              <form onSubmit={handleSubmit}>
-                {options && options.length > 0 ? (
-                  <>
-                    {options.map(option => (
-                      <React.Fragment key={option.key}>
-                        <input
-                          id={option.key}
-                          type="radio"
-                          name="selection"
-                          value={option.value}
-                          checked={option.value === selection}
-                          onChange={handleChange}
-                          className="sr-only"
-                        />
-                        <label htmlFor={option.key}>{option.value}</label>
-                      </React.Fragment>
-                    ))}
-                    <button type="submit" disabled={!selection}>
-                      Submit
-                    </button>
-                  </>
-                ) : (
-                  <p>Oops, something went wrong. Please refresh the page</p>
-                )}
-              </form>
-            </>
-          ) : (
-            <p>Loading...</p>
-          )}
-        </>
-      )}
+      <Title className="text-center" as="h1">
+        Star Wars Quiz
+      </Title>
+      <div className="border-yellow p-3">
+        {isCompleted ? (
+          <div className="d-flex flex-column align-items-center">
+            <Title as="h4">Quiz Completed!</Title>
+            <p className="h2">
+              Your Score is {score} out of {totalQuestions}
+            </p>
+            <button type="button" className="btn btn-outline-crawl" onClick={handleReset}>
+              Reset
+            </button>
+          </div>
+        ) : (
+          <>
+            {question ? (
+              <div className="row justify-content-center">
+                <div className="col-10">
+                  <Title as="h4" className="mb-4">
+                    {question}
+                  </Title>
+                  <form onSubmit={handleSubmit}>
+                    {options && options.length > 0 ? (
+                      <div className="d-flex flex-column">
+                        {options.map(option => (
+                          <div className="mb-3" key={option.key}>
+                            <input
+                              id={option.key}
+                              type="radio"
+                              name="selection"
+                              value={option.value}
+                              checked={option.value === selection}
+                              onChange={handleChange}
+                              className="sr-only input-radio"
+                            />
+                            <label htmlFor={option.key} className="m-0">
+                              {option.value}
+                            </label>
+                          </div>
+                        ))}
+                        <div className="row align-items-center">
+                          <div className="col">
+                            <button type="submit" className="btn btn-outline-crawl btn-block" disabled={!selection}>
+                              Submit
+                            </button>
+                          </div>
+                          <div className="col-auto">
+                            <p className="m-0 font-weight-bold">
+                              {currentQuestionNum}/{totalQuestions}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <p>Oops, something went wrong. Please refresh the page</p>
+                    )}
+                  </form>
+                </div>
+              </div>
+            ) : (
+              <div className="d-flex justify-content-center">
+                <span className="loader" />
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

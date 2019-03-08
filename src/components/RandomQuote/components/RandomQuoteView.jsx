@@ -1,4 +1,8 @@
 import React from 'react';
+import { capitalize } from 'lodash';
+import Title from './../../Typography/Title';
+import Subtitle from '../../Typography/Subtitle';
+import Overline from '../../Typography/Overline';
 
 const RandomQuoteView = props => {
   const { randomQuote } = props;
@@ -6,9 +10,11 @@ const RandomQuoteView = props => {
     <div data-testid="random-quote-view">
       {randomQuote ? (
         <>
-          <p>{randomQuote.name}</p>
-          <p>{randomQuote.text}</p>
-          <p>{randomQuote.episode}</p>
+          <Title as="h3">{randomQuote.text}</Title>
+          <div>
+            <Subtitle>{capitalize(randomQuote.name.toLowerCase())}</Subtitle>
+            <Overline>EPISODE {randomQuote.episode}</Overline>
+          </div>
         </>
       ) : (
         <p>Loading...</p>
