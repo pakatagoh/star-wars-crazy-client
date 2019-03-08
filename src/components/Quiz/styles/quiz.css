@@ -2,3 +2,67 @@
   border: 0.6rem solid #ffd700;
   border-radius: 1rem;
 }
+
+.input-radio + label {
+  cursor: pointer;
+}
+
+.input-radio + label::before {
+  content: '';
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  background-image: url('https://i.pinimg.com/originals/60/b7/30/60b73041000047d4e8737d4eee9c5a08.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.input-radio:checked + label::before {
+  content: '';
+  background-image: url('https://cdn4.iconfinder.com/data/icons/famous-characters-add-on-vol-1-flat/48/Famous_Character_-_Add_On_1-37-128.png');
+}
+
+.btn.btn-outline-crawl {
+  border-color: rgb(75, 213, 238);
+  color: rgb(75, 213, 238);
+}
+.btn.btn-outline-crawl:hover {
+  background-color: rgb(75, 213, 238);
+  color: white;
+}
+
+.btn.btn-outline-crawl:disabled {
+  background-color: transparent;
+  border-color: rgb(75, 213, 238);
+  color: rgb(75, 213, 238);
+}
+
+.loader::before {
+  content: '';
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  background-image: url('https://i.pinimg.com/originals/60/b7/30/60b73041000047d4e8737d4eee9c5a08.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation-name: spin;
+  animation-duration: 2s;
+  /* animation-fill-mode: forwards; */
+  animation-iteration-count: infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateZ(0);
+  }
+  50% {
+    transform: rotateZ(180deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}

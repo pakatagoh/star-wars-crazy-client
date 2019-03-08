@@ -1,8 +1,6 @@
 import React from 'react';
-import { Row, Col } from 'reactstrap';
 import Title from './../../Typography/Title';
 import '../styles/quiz.css';
-import Paragraph from '../../Typography/Paragraph';
 
 const QuizView = props => {
   const {
@@ -24,25 +22,26 @@ const QuizView = props => {
       </Title>
       <div className="border-yellow p-3">
         {isCompleted ? (
-          <>
-            <p>Score is {score}</p>
-            <button type="button" onClick={handleReset}>
+          <div className="d-flex flex-column align-items-center">
+            <Title as="h4">Quiz Completed!</Title>
+            <p className="h2">Your Score is {score}</p>
+            <button type="button" className="btn btn-outline-crawl" onClick={handleReset}>
               Reset
             </button>
-          </>
+          </div>
         ) : (
           <>
             {question ? (
-              <>
-                <Title className="text-center" as="h4">
-                  {question}
-                </Title>
-                <form onSubmit={handleSubmit}>
-                  {options && options.length > 0 ? (
-                    <div className="row flex-column">
-                      {options.map(option => (
-                        <React.Fragment key={option.key}>
-                          <div className="col-12">
+              <div className="row justify-content-center">
+                <div className="col-10">
+                  <Title as="h4" className="mb-4">
+                    {question}
+                  </Title>
+                  <form onSubmit={handleSubmit}>
+                    {options && options.length > 0 ? (
+                      <div className="d-flex flex-column">
+                        {options.map(option => (
+                          <div className="mb-3" key={option.key}>
                             <input
                               id={option.key}
                               type="radio"
@@ -50,26 +49,36 @@ const QuizView = props => {
                               value={option.value}
                               checked={option.value === selection}
                               onChange={handleChange}
-                              className="sr-only"
+                              className="sr-only input-radio"
                             />
-                            <label htmlFor={option.key}>{option.value}</label>
+                            <label htmlFor={option.key} className="m-0">
+                              {option.value}
+                            </label>
                           </div>
-                        </React.Fragment>
-                      ))}
-                      <button type="submit" disabled={!selection}>
-                        Submit
-                      </button>
-                    </div>
-                  ) : (
-                    <p>Oops, something went wrong. Please refresh the page</p>
-                  )}
-                </form>
-                <p>
-                  {currentQuestionNum}/{totalQuestions}
-                </p>
-              </>
+                        ))}
+                        <div className="row align-items-center">
+                          <div className="col">
+                            <button type="submit" className="btn btn-outline-crawl btn-block" disabled={!selection}>
+                              Submit
+                            </button>
+                          </div>
+                          <div className="col-auto">
+                            <p className="m-0 font-weight-bold">
+                              {currentQuestionNum}/{totalQuestions}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <p>Oops, something went wrong. Please refresh the page</p>
+                    )}
+                  </form>
+                </div>
+              </div>
             ) : (
-              <p className="text-center">Loading...</p>
+              <div className="d-flex justify-content-center">
+                <span className="loader" />
+              </div>
             )}
           </>
         )}
