@@ -24,7 +24,9 @@ const QuizView = props => {
         {isCompleted ? (
           <div className="d-flex flex-column align-items-center">
             <Title as="h4">Quiz Completed!</Title>
-            <p className="h2">Your Score is {score}</p>
+            <p className="h2">
+              Your Score is {score} out of {totalQuestions}
+            </p>
             <button type="button" className="btn btn-outline-crawl" onClick={handleReset}>
               Reset
             </button>
