@@ -1,4 +1,6 @@
 import React from 'react';
+import DivYellow from './../../Block/DivYellow';
+import Title from './../../Typography/Title';
 
 const QuizView = props => {
   const {
@@ -23,10 +25,10 @@ const QuizView = props => {
           </button>
         </>
       ) : (
-        <>
+        <DivYellow className="p-3">
           {question ? (
             <>
-              <h2>{question}</h2>
+              <Title className="text-center">{question}</Title>
               <p>
                 {currentQuestionNum}/{totalQuestions}
               </p>
@@ -59,7 +61,7 @@ const QuizView = props => {
           ) : (
             <p>Loading...</p>
           )}
-        </>
+        </DivYellow>
       )}
     </div>
   );

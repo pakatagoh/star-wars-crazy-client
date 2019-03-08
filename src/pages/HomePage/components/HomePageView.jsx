@@ -14,7 +14,7 @@ const HomePageView = props => {
         </Block>
       </header>
       <main data-testid="home-page">
-        <Block container>
+        <Block container spacer={2}>
           <RandomQuote />
         </Block>
         <Block container>

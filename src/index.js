@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as serviceWorker from './serviceWorker';
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 const theme = {
   primary: '#ffd700',
@@ -33,7 +33,9 @@ ReactDOM.render(
   <BrowserRouter>
     <>
       <GlobalStyles theme={theme} />
-      <App />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </>
   </BrowserRouter>,
   document.getElementById('root')
