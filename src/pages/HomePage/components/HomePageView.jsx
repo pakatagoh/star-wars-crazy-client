@@ -5,16 +5,14 @@ import Block from './../../../components/Block/Block';
 
 const HomePageView = props => {
   return (
-    <>
-      <main data-testid="home-page">
-        <Block container spacer={2}>
-          <Quiz />
-        </Block>
-        <Block container spacer={2}>
-          <RandomQuote />
-        </Block>
-      </main>
-    </>
+    <main data-testid="home-page">
+      <Block container spacer={2}>
+        <Quiz />
+      </Block>
+      <Block container spacer={2}>
+        <RandomQuote />
+      </Block>
+    </main>
   );
 };
 
