@@ -31,22 +31,22 @@ const FooterView = () => {
     <>
       <Block container spacer={3} className="border-top border-bottom border-light px-sm-0">
         <footer data-testid="footer" className="d-flex flex-column flex-sm-row justify-content-sm-between">
-          <div className="mb-3 mb-sm-0">
-            <p>Star Wars and any associated names are copyright Lucasfilm ltd.</p>
-            <p>
-              Data used for the quizes were collected freely using{' '}
+          <ul className="list-unstyled mb-3 mb-sm-0">
+            <li className="mb-3"> - Star Wars and any associated names are copyright Lucasfilm ltd.</li>
+            <li className="mb-3">
+              - Data used for the quizes were collected freely using{' '}
               <StyledLink href="https://swapi.co/">Star Wars API (SWAPI)</StyledLink>
-            </p>
-            <p>
-              Data for character quotes were sourced from <StyledLink href="https://codepen.io/">Codepen</StyledLink>{' '}
+            </li>
+            <li className="mb-3">
+              - Data for character quotes were sourced from <StyledLink href="https://codepen.io/">Codepen</StyledLink>{' '}
               user <StyledLink href="https://codepen.io/joanjetson/">Joan Jetson</StyledLink>
-            </p>
-            <p>
+            </li>
+            <li className="mb-3">
               <StyledLink href="https://github.com/pakatagoh/star-wars-crazy-client" className="font-weight-bold">
-                Github Repo
+                - Github Repo
               </StyledLink>
-            </p>
-          </div>
+            </li>
+          </ul>
           <div className="d-flex flex-column flex-sm-row">
             <ul className="list-unstyled ml-sm-5 mb-3 mb-sm-0">
               <StyledListHeader className="d-inline-block mb-3">Tech & Packages</StyledListHeader>

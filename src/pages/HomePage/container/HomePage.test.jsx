@@ -14,27 +14,11 @@ function renderWithRouter(ui, { route = '/', history = createMemoryHistory({ ini
 }
 
 describe('HomePageView Component', () => {
-  test('should display Navigation Bar on page', () => {
-    const navigationTestId = 'navigation-bar';
-
-    const { getByTestId } = renderWithRouter(<HomePage />);
-
-    expect(getByTestId(navigationTestId)).toBeInTheDocument();
-  });
-
   test('should display Quiz Form', () => {
     const quizTestId = 'quiz-view';
     const { getByTestId } = renderWithRouter(<HomePage />);
 
     expect(getByTestId(quizTestId)).toBeInTheDocument();
-  });
-
-  test('should display Footer Component', () => {
-    const footerTestId = 'footer';
-
-    const { getByTestId } = renderWithRouter(<HomePage />);
-
-    expect(getByTestId(footerTestId)).toBeInTheDocument();
   });
 
   test('should display Random Quote View Component', async () => {
