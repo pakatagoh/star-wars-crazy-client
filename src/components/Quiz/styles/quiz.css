@@ -50,8 +50,8 @@
   background-position: center;
   background-repeat: no-repeat;
   animation-name: spin;
-  animation-duration: 2s;
-  /* animation-fill-mode: forwards; */
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 

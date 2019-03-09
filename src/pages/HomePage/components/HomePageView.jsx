@@ -20,7 +20,9 @@ const HomePageView = props => {
         <Block container>
           <Quiz />
         </Block>
-        <FooterView />
+        <Block container spacer={3} className="border-top border-light">
+          <FooterView />
+        </Block>
       </main>
     </>
   );
