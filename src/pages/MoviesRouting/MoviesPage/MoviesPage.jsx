@@ -8,7 +8,8 @@ import { STAR_WARS_EPISODES } from './../../../components/services/movie/starWar
 import { sizes } from './../../../utils/styledSizes';
 import Subtitle from './../../../components/Typography/Subtitle';
 
-const MoviesPage = () => {
+const MoviesPage = props => {
+  const { handleClick } = props;
   // https://www.styled-components.com/docs/advanced#media-templates
   // Iterate through the sizes and create a media template
   const media = Object.keys(sizes).reduce((acc, label) => {
@@ -49,7 +50,7 @@ const MoviesPage = () => {
       <Block container>
         <Row>
           {STAR_WARS_EPISODES.map(episode => (
-            <Col sm={6} md={3} className="mb-5">
+            <Col key={episode.number} sm={6} md={3} className="mb-5" onClick={() => handleClick(episode.imdb)}>
               <div>
                 <StyledNavLink to={episode.to}>
                   <div className="d-flex flex-column align-items-center">
