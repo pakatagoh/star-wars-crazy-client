@@ -8,10 +8,6 @@ export const tmdbMovieApi = axios.create({
   baseURL: 'https://api.themoviedb.org/3/movie',
 });
 
-export const tmdbImageApi = axios.create({
-  baseURL: 'https://image.tmdb.org/t/p/original',
-});
-
 export const tmdbMovieCreditsApi = async movie_id => {
   return await tmdbMovieApi.get(`/${movie_id}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}`);
 };
@@ -23,11 +19,7 @@ export const tmdbApiGetMovie = async imdbId => {
     );
     const foundMovie = movieFindResponse.data.movie_results[0];
     const { id: movie_id, overview, poster_path, release_date, title, vote_average } = foundMovie;
-
-    const [creditsResponse, imageResponse] = await Promise.all([
-      await tmdbMovieCreditsApi(movie_id),
-      await tmdbImageApi.get(`${poster_path}`),
-    ]);
+    const creditsResponse = await tmdbMovieCreditsApi(movie_id);
     const { cast } = creditsResponse.data;
     return {
       id: movie_id,
@@ -35,8 +27,8 @@ export const tmdbApiGetMovie = async imdbId => {
       release_date,
       title,
       vote_average,
-      cast,
-      image: imageResponse.data,
+      cast: cast.splice(0, 4),
+      imageSrc: `https://image.tmdb.org/t/p/w342${poster_path}`,
     };
   } catch (error) {
     console.error(error);
