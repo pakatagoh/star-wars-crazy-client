@@ -1,6 +1,7 @@
 import React from 'react';
 import Title from './../../Typography/Title';
 import '../styles/quiz.css';
+import QuizCompleted from './QuizCompleted';
 
 const QuizView = props => {
   const {
@@ -22,15 +23,7 @@ const QuizView = props => {
       </Title>
       <div className="border-yellow p-3">
         {isCompleted ? (
-          <div className="d-flex flex-column align-items-center">
-            <Title as="h4">Quiz Completed!</Title>
-            <p className="h2">
-              Your Score is {score} out of {totalQuestions}
-            </p>
-            <button type="button" className="btn btn-outline-crawl" onClick={handleReset}>
-              Reset
-            </button>
-          </div>
+          <QuizCompleted score={score} totalQuestions={totalQuestions} handleReset={handleReset} />
         ) : (
           <>
             {question ? (
