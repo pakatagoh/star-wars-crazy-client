@@ -1,7 +1,7 @@
 import React from 'react';
-import Quiz from './../../../components/Quiz/containers/Quiz';
 import RandomQuote from './../../../components/RandomQuote/containers/RandomQuote';
 import Block from './../../../components/Block/Block';
+import Quiz from './../../../components/Quiz/Quiz';
 
 const HomePageView = props => {
   return (

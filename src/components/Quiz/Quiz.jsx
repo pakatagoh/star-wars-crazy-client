@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getQuizList } from './../../services/quiz/quizService';
-import Title from './../../Typography/Title';
-import QuizCompleted from './../components/QuizCompleted';
-import QuizForm from './../components/QuizForm';
+import QuizCompleted from './QuizCompleted';
+import QuizForm from './QuizForm';
+import Title from './../Typography/Title';
+import { getQuizList } from './../services/quiz/quizService';
+
 const Quiz = () => {
   const [quizList, setQuizList] = useState([]);
   const [currentQuestionNum, setCurrentQuestionNum] = useState(1);

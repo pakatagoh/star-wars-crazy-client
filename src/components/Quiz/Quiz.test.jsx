@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, wait, waitForElement, fireEvent } from 'react-testing-library';
+import { render, waitForElement, fireEvent } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
-import * as quizService from './../../services/quiz/quizService';
+import * as quizService from '../services/quiz/quizService';
 import Quiz from './Quiz';
 
 describe('Quiz Container', () => {
@@ -43,12 +43,47 @@ describe('Quiz Container', () => {
     expect(element).toBeInTheDocument();
   });
 
+  test('should display the options on the page', async () => {
+    const { getByText } = render(<Quiz />);
+
+    const [option1, option2, option3] = await waitForElement(() => [
+      getByText(sampleResponse[0].options[0].value),
+      getByText(sampleResponse[0].options[1].value),
+      getByText(sampleResponse[0].options[2].value),
+    ]);
+    expect(option1).toBeInTheDocument();
+    expect(option2).toBeInTheDocument();
+    expect(option3).toBeInTheDocument();
+  });
+
   test('should display a question', async () => {
     const { getByText } = render(<Quiz />);
 
     const questionElement = await waitForElement(() => getByText(sampleResponse[0].question));
 
     expect(questionElement).toBeInTheDocument();
+  });
+
+  test('should display disabled button on load', async () => {
+    const { getByText } = render(<Quiz />);
+
+    const button = await waitForElement(() => getByText(/submit/i));
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute('disabled');
+  });
+
+  test('should display no selected radio input on load', async () => {
+    const { getByLabelText } = render(<Quiz />);
+
+    const [radio0, radio1, radio2] = await waitForElement(() => [
+      getByLabelText(sampleResponse[0].options[0].value),
+      getByLabelText(sampleResponse[0].options[0].value),
+      getByLabelText(sampleResponse[0].options[0].value),
+    ]);
+
+    expect(radio0).toHaveProperty('checked', false);
+    expect(radio1).toHaveProperty('checked', false);
+    expect(radio2).toHaveProperty('checked', false);
   });
 
   test("should have radio selected when it's label is clicked", async () => {

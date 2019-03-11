@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from './../../Typography/Title';
+import Title from './../Typography/Title';
 
 const QuizCompleted = props => {
   const { score, totalQuestions, handleReset } = props;

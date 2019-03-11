@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from '../../Typography/Title';
+import Title from './../Typography/Title';
 
 const QuizForm = props => {
   const { question, handleSubmit, options, selection, handleChange, currentQuestionNum, totalQuestions } = props;
