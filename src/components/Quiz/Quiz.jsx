@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Row, Col } from 'reactstrap';
 import QuizCompleted from './QuizCompleted';
 import QuizForm from './QuizForm';
 import Title from './../Typography/Title';
+import './quiz.css';
 import { getQuizList } from './../services/quiz/quizService';
 
 const Quiz = () => {
@@ -71,8 +73,8 @@ const Quiz = () => {
           <QuizCompleted score={score} totalQuestions={totalQuestions} handleReset={handleReset} />
         ) : (
           <>
-            <div className="row justify-content-center">
-              <div className="col-10">
+            <Row className="justify-content-center">
+              <Col sm="10">
                 {quizList.length > 0 ? (
                   <QuizForm question={quiz.question} options={quiz.options} {...quizFormProps} />
                 ) : (
@@ -80,8 +82,8 @@ const Quiz = () => {
                     <span className="loader" />
                   </div>
                 )}
-              </div>
-            </div>
+              </Col>
+            </Row>
           </>
         )}
       </div>
