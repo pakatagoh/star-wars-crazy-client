@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import QuizView from '../components/QuizView';
 import { getQuizList } from './../../services/quiz/quizService';
+import Title from './../../Typography/Title';
+import QuizCompleted from './../components/QuizCompleted';
+import QuizForm from './../components/QuizForm';
 const Quiz = () => {
   const [quizList, setQuizList] = useState([]);
   const [currentQuestionNum, setCurrentQuestionNum] = useState(1);
@@ -48,18 +50,42 @@ const Quiz = () => {
   };
 
   const quiz = quizList[currentQuestionNum - 1];
-  const quizViewProps = {
+  const totalQuestions = quizList.length;
+
+  const quizFormProps = {
+    handleSubmit,
     selection,
     handleChange,
-    handleSubmit,
-    handleReset,
-    score,
     currentQuestionNum,
-    totalQuestions: quizList.length,
-    isCompleted,
+    totalQuestions,
   };
 
-  return <QuizView {...quiz} {...quizViewProps} />;
+  return (
+    <div data-testid="quiz-view">
+      <Title className="text-center" as="h1">
+        Star Wars Quiz
+      </Title>
+      <div className="border-yellow p-3">
+        {isCompleted ? (
+          <QuizCompleted score={score} totalQuestions={totalQuestions} handleReset={handleReset} />
+        ) : (
+          <>
+            <div className="row justify-content-center">
+              <div className="col-10">
+                {quizList.length > 0 ? (
+                  <QuizForm question={quiz.question} options={quiz.options} {...quizFormProps} />
+                ) : (
+                  <div className="d-flex justify-content-center">
+                    <span className="loader" />
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Quiz;
