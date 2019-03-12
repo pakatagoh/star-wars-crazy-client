@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+
+const StyledParagraph = styled.p`
+  line-height: 1.2;
+`;
+
 const Paragraph = props => {
   const { children, text, className, as } = props;
-
-  const StyledParagraph = styled.p`
-    line-height: 1.2;
-  `;
 
   const classes = `${className ? className : ''}`;
   return (

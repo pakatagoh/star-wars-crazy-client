@@ -2,31 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 import Block from '../Block/Block';
 
+const StyledLink = styled.a`
+  color: ${props => (props.theme.secondary ? props.theme.secondary : 'white')};
+
+  &:hover {
+    color: ${props => (props.theme.secondaryHover ? props.theme.secondaryHover : 'white')};
+    text-decoration: none;
+  }
+`;
+const StyledListHeader = styled.li`
+  font-weight: bold;
+  border-bottom: 2px solid ${props => (props.theme.primary ? props.theme.primary : 'white')};
+  color: ${props => (props.theme.primary ? props.theme.primary : 'white')};
+`;
+const StyledListItem = styled.li`
+  font-weight: 300;
+  color: ${props => (props.theme.secondary ? props.theme.secondary : 'white')};
+`;
+
+const StyledCopy = styled.div`
+  color: ${props => (props.theme.primary ? props.theme.primary : 'white')};
+`;
 const FooterView = () => {
-  const StyledLink = styled.a`
-    color: ${props => (props.theme.secondary ? props.theme.secondary : 'white')};
-
-    &:hover {
-      color: ${props => (props.theme.secondaryHover ? props.theme.secondaryHover : 'white')};
-      text-decoration: none;
-    }
-  `;
-
-  const StyledListHeader = styled.li`
-    font-weight: bold;
-    border-bottom: 2px solid ${props => (props.theme.primary ? props.theme.primary : 'white')};
-    color: ${props => (props.theme.primary ? props.theme.primary : 'white')};
-  `;
-
-  const StyledListItem = styled.li`
-    font-weight: 300;
-    color: ${props => (props.theme.secondary ? props.theme.secondary : 'white')};
-  `;
-
-  const StyledCopy = styled.div`
-    color: ${props => (props.theme.primary ? props.theme.primary : 'white')};
-  `;
-
   return (
     <>
       <Block container spacer={3} className="border-top border-bottom border-light px-sm-0">

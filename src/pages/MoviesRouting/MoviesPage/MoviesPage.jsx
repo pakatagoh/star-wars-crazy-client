@@ -8,42 +8,42 @@ import { STAR_WARS_EPISODES } from './../../../components/services/movie/starWar
 import { sizes } from './../../../utils/styledSizes';
 import Subtitle from './../../../components/Typography/Subtitle';
 
+// https://www.styled-components.com/docs/advanced#media-templates
+// Iterate through the sizes and create a media template
+const media = Object.keys(sizes).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (min-width: ${sizes[label]}px) {
+      ${css(...args)}
+    }
+  `;
+  return acc;
+}, {});
+
+const StyledImage = styled.img`
+  width: 100%;
+  height: 14rem;
+  object-fit: contain;
+  object-position: center;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  transform: scale(1);
+  transition: box-shadow 0.3s linear, transform 0.3s linear;
+
+  &:hover {
+    box-shadow: 0 0 30px -1px ${props => (props.theme.secondary ? props.theme.secondary : 'white')};
+    transform: scale(1.02);
+  }
+
+  ${media.md`height: 16rem;`};
+  ${media.lg`height: 18rem;`};
+`;
+
+const StyledNavLink = styled(NavLink)`
+  &:hover {
+    text-decoration: none;
+  }
+`;
+
 const MoviesPage = props => {
-  // https://www.styled-components.com/docs/advanced#media-templates
-  // Iterate through the sizes and create a media template
-  const media = Object.keys(sizes).reduce((acc, label) => {
-    acc[label] = (...args) => css`
-      @media (min-width: ${sizes[label]}px) {
-        ${css(...args)}
-      }
-    `;
-    return acc;
-  }, {});
-
-  const StyledImage = styled.img`
-    width: 100%;
-    height: 14rem;
-    object-fit: contain;
-    object-position: center;
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-    transform: scale(1);
-    transition: box-shadow 0.3s linear, transform 0.3s linear;
-
-    &:hover {
-      box-shadow: 0 0 30px -1px ${props => (props.theme.secondary ? props.theme.secondary : 'white')};
-      transform: scale(1.02);
-    }
-
-    ${media.md`height: 16rem;`};
-    ${media.lg`height: 18rem;`};
-  `;
-
-  const StyledNavLink = styled(NavLink)`
-    &:hover {
-      text-decoration: none;
-    }
-  `;
-
   return (
     <main>
       <Block container>

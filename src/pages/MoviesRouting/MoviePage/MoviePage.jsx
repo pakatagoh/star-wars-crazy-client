@@ -7,6 +7,13 @@ import { STAR_WARS_EPISODES } from './../../../components/services/movie/starWar
 import Title from '../../../components/Typography/Title';
 import Subtitle from './../../../components/Typography/Subtitle';
 
+const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top;
+`;
+
 const MoviePage = props => {
   const { slug } = props.match.params;
   const [movieData, setMovieData] = useState({});
@@ -36,13 +43,6 @@ const MoviePage = props => {
       fetchMovie(foundEpisode.imdb);
     }
   }, [reload]);
-
-  const StyledImage = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: top;
-  `;
 
   const { overview, release_date, title, vote_average, cast, imageSrc } = movieData;
   const renderMovieDetails = () => {

@@ -1,19 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const StyledInput = styled.input`
+  & + label::before {
+    content: '😆';
+    display: block;
+  }
+
+  &:checked + label::before {
+    content: '💩';
+  }
+`;
+
 const InputRadio = props => {
   const { className, label, id, ...inputProps } = props;
-
-  const StyledInput = styled.input`
-    & + label::before {
-      content: '😆';
-      display: block;
-    }
-
-    &:checked + label::before {
-      content: '💩';
-    }
-  `;
 
   const classes = `${className}`;
 
