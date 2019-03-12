@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { Row, Col } from 'reactstrap';
 import QuizCompleted from './QuizCompleted';
 import QuizForm from './QuizForm';
 import Title from './../Typography/Title';
 import './quiz.css';
 import { getQuizList } from './../services/quiz/quizService';
+
+const StyledYellowBox = styled.div`
+  border: 0.6rem solid #ffd700;
+  border-radius: 1rem;
+  padding: 0.5rem;
+`;
 
 const Quiz = () => {
   const [quizList, setQuizList] = useState([]);
@@ -68,7 +75,7 @@ const Quiz = () => {
       <Title className="text-center" as="h1">
         Star Wars Quiz
       </Title>
-      <div className="border-yellow p-3">
+      <StyledYellowBox>
         {isCompleted ? (
           <QuizCompleted score={score} totalQuestions={totalQuestions} handleReset={handleReset} />
         ) : (
@@ -86,7 +93,7 @@ const Quiz = () => {
             </Row>
           </>
         )}
-      </div>
+      </StyledYellowBox>
     </div>
   );
 };
