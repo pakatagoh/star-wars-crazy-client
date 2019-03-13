@@ -1,26 +1,4 @@
-.input-radio + label {
-  cursor: pointer;
-}
-
-.input-radio + label::before {
-  content: '';
-  width: 2rem;
-  height: 2rem;
-  margin-right: 1rem;
-  display: inline-flex;
-  align-items: center;
-  background-image: url('https://i.pinimg.com/originals/60/b7/30/60b73041000047d4e8737d4eee9c5a08.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.input-radio:checked + label::before {
-  content: '';
-  background-image: url('https://cdn4.iconfinder.com/data/icons/famous-characters-add-on-vol-1-flat/48/Famous_Character_-_Add_On_1-37-128.png');
-}
-
-.btn.btn-outline-crawl {
+/* .btn.btn-outline-crawl {
   border-color: rgb(75, 213, 238);
   color: rgb(75, 213, 238);
 }
@@ -33,7 +11,7 @@
   background-color: transparent;
   border-color: rgb(75, 213, 238);
   color: rgb(75, 213, 238);
-}
+} */
 
 .loader::before {
   content: '';

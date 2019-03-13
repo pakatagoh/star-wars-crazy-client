@@ -1,5 +1,6 @@
 import React from 'react';
 import Title from './../Typography/Title';
+import ButtonCrawl from '../Buttons/ButtonCrawl';
 
 const QuizCompleted = props => {
   const { score, totalQuestions, handleReset } = props;
@@ -10,9 +11,7 @@ const QuizCompleted = props => {
       <p className="h2">
         Your Score is {score} out of {totalQuestions}
       </p>
-      <button type="button" className="btn btn-outline-crawl" onClick={handleReset}>
-        Reset
-      </button>
+      <ButtonCrawl onClick={handleReset}>Reset</ButtonCrawl>
     </div>
   );
 };

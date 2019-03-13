@@ -26,19 +26,20 @@ const StyledInput = styled.input`
 `;
 
 const InputRadio = props => {
-  const { className, label, id, onChange, name, value, checked } = props;
+  const { className, id, onChange, name, value, checked } = props;
 
-  const classes = `${className ? className : ''}`;
+  const classes = `sr-only ${className ? className : ''}`;
 
   return (
-    <>
-      <StyledInput id={id} name={name} onChange={onChange} value={value} checked={checked} className="sr-only" />
-      {label && (
-        <label htmlFor={id} className={classes}>
-          {label}
-        </label>
-      )}
-    </>
+    <StyledInput
+      type="radio"
+      id={id}
+      name={name}
+      onChange={onChange}
+      value={value}
+      checked={checked}
+      className={classes}
+    />
   );
 };
 
