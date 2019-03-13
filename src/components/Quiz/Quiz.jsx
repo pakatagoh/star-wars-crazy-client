@@ -37,6 +37,8 @@ const Quiz = () => {
   }, [reset]);
 
   const handleChange = event => {
+    console.log('handleChange executed');
+    console.log(event.target.value);
     const { value } = event.target;
     setSelection(value);
   };

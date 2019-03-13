@@ -1,8 +1,25 @@
 import React from 'react';
 import Title from './../Typography/Title';
+import InputRadio from '../Input/InputRadio';
 
 const QuizForm = props => {
   const { question, handleSubmit, options, selection, handleChange, currentQuestionNum, totalQuestions } = props;
+
+  const renderRadios = () => {
+    return options.map(option => (
+      <div className="mb-3" key={option.key}>
+        <InputRadio
+          id={option.key}
+          name="selection"
+          value={option.value}
+          checked={option.value === selection}
+          onChange={handleChange}
+          label={option.value}
+        />
+      </div>
+    ));
+  };
+
   return (
     <>
       <Title as="h4" className="mb-4">
@@ -10,22 +27,7 @@ const QuizForm = props => {
       </Title>
       <form onSubmit={handleSubmit}>
         <div className="d-flex flex-column">
-          {options.map(option => (
-            <div className="mb-3" key={option.key}>
-              <input
-                id={option.key}
-                type="radio"
-                name="selection"
-                value={option.value}
-                checked={option.value === selection}
-                onChange={handleChange}
-                className="sr-only input-radio"
-              />
-              <label htmlFor={option.key} className="m-0">
-                {option.value}
-              </label>
-            </div>
-          ))}
+          {renderRadios()}
           <div className="row align-items-center">
             <div className="col">
               <button type="submit" className="btn btn-outline-crawl btn-block" disabled={!selection}>
