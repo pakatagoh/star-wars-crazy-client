@@ -4,8 +4,8 @@ import { Row, Col } from 'reactstrap';
 import QuizCompleted from './QuizCompleted';
 import QuizForm from './QuizForm';
 import Title from './../Typography/Title';
-import './quiz.css';
 import { getQuizList } from './../services/quiz/quizService';
+import Spinner from '../Spinner/Spinner';
 
 const StyledYellowBox = styled.div`
   border: 0.6rem solid #ffd700;
@@ -85,9 +85,7 @@ const Quiz = () => {
                 {quizList.length > 0 && quiz ? (
                   <QuizForm question={quiz.question} options={quiz.options} {...quizFormProps} />
                 ) : (
-                  <div className="d-flex justify-content-center">
-                    <span className="loader" />
-                  </div>
+                  <Spinner />
                 )}
               </Col>
             </Row>
