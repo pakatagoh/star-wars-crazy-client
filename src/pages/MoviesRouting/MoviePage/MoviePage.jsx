@@ -6,6 +6,7 @@ import { tmdbApiGetMovie } from '../../../components/services/movie/tmdbApi';
 import { STAR_WARS_EPISODES } from './../../../components/services/movie/starWarsEpisodes';
 import Title from '../../../components/Typography/Title';
 import Subtitle from './../../../components/Typography/Subtitle';
+import Spinner from './../../../components/Spinner/Spinner';
 
 const StyledImage = styled.img`
   width: 100%;
@@ -74,7 +75,7 @@ const MoviePage = props => {
                   </div>
                 ))
               ) : (
-                <p>Loading...</p>
+                <Spinner />
               )}
             </div>
           </div>
@@ -95,7 +96,7 @@ const MoviePage = props => {
           <div className="col-2 col-sm-3">
             <MoviePageNav handleClick={handleClick} />
           </div>
-          <div className="col-10 col-sm-9">{isLoading ? <p>Loading...</p> : renderMovieDetails()}</div>
+          <div className="col-10 col-sm-9">{isLoading ? <Spinner /> : renderMovieDetails()}</div>
         </div>
       </Block>
     </main>
