@@ -23,7 +23,7 @@ const StyledListItem = styled.li`
 const StyledCopy = styled.div`
   color: ${props => (props.theme.primary ? props.theme.primary : 'white')};
 `;
-const FooterView = () => {
+const Footer = () => {
   return (
     <>
       <Block container spacer={3} className="border-top border-bottom border-light px-sm-0">
@@ -87,4 +87,4 @@ const FooterView = () => {
   );
 };
 
-export default FooterView;
+export default Footer;

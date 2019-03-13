@@ -3,7 +3,7 @@ import { Collapse, NavbarToggler, Nav, NavItem, Navbar } from 'reactstrap';
 import NavLogo from './NavLogo';
 import NavLinkWhite from './NavLinkWhite';
 
-const NavigationView = props => {
+const Navigation = props => {
   const { navBrand, navItemsLeft, navItemsRight } = props;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,4 +43,4 @@ const NavigationView = props => {
   );
 };
 
-export default NavigationView;
+export default Navigation;

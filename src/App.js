@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Routing from './pages/Routing';
-import FooterView from './components/Footer/FooterView';
-import HeaderView from './components/Header/HeaderView';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 class App extends Component {
   render() {
     return (
       <>
-        <HeaderView />
+        <Header />
         <Routing />
-        <FooterView />
+        <Footer />
       </>
     );
   }

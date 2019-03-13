@@ -1,10 +1,10 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { render, waitForElement, fireEvent } from 'react-testing-library';
+import { render } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
 import { createMemoryHistory } from 'history';
-import NavigationView from './NavigationView';
+import Navigation from './Navigation';
 
 const navigationViewProps = {
   navBrand: {
@@ -23,22 +23,22 @@ function renderWithRouter(ui, { route = '/', history = createMemoryHistory({ ini
   };
 }
 
-describe('NavigationView Component', () => {
+describe('Navigation Component', () => {
   test('should display logo', () => {
-    const { getByAltText } = renderWithRouter(<NavigationView {...navigationViewProps} />);
+    const { getByAltText } = renderWithRouter(<Navigation {...navigationViewProps} />);
 
     expect(getByAltText(/star wars/i)).toBeInTheDocument();
   });
 
   test('should display left navigation links', () => {
-    const { getByText } = renderWithRouter(<NavigationView {...navigationViewProps} />);
+    const { getByText } = renderWithRouter(<Navigation {...navigationViewProps} />);
 
     expect(getByText(navigationViewProps.navItemsLeft[0].text)).toBeInTheDocument();
     expect(getByText(navigationViewProps.navItemsLeft[1].text)).toBeInTheDocument();
   });
 
   test('should display navigation links in the hambuger button', () => {
-    const { getByText } = renderWithRouter(<NavigationView {...navigationViewProps} />);
+    const { getByText } = renderWithRouter(<Navigation {...navigationViewProps} />);
 
     expect(getByText(navigationViewProps.navItemsRight[0].text)).toBeInTheDocument();
     expect(getByText(navigationViewProps.navItemsRight[1].text)).toBeInTheDocument();

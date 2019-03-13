@@ -1,6 +1,6 @@
 import React from 'react';
-import NavigationView from '../Navigation/NavigationView';
 import Block from '../Block/Block';
+import Navigation from './../Navigation/Navigation';
 
 const navViewProps = {
   navBrand: {
@@ -11,14 +11,14 @@ const navViewProps = {
   navItemsLeft: [{ to: '/movies', text: 'Movies' }, { to: '/events', text: 'Events' }],
   navItemsRight: [{ to: '/login', text: 'Login' }, { to: '/signup', text: 'Sign Up' }],
 };
-const HeaderView = () => {
+const Header = () => {
   return (
     <header className="bg-dark">
       <Block container spacer={1} className="px-0">
-        <NavigationView {...navViewProps} />
+        <Navigation {...navViewProps} />
       </Block>
     </header>
   );
 };
 
-export default HeaderView;
+export default Header;
