@@ -140,13 +140,13 @@ describe('MoviePage Component with viewport less than sm size', () => {
   test('should display fixed menu button', () => {
     const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
 
-    expect(getByText('Episode Menu')).toBeInTheDocument();
+    expect(getByText('Episodes')).toBeInTheDocument();
   });
 
   test('should display nav of star wars episodes after clicking Episode Menu button', () => {
     const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
 
-    const episodeMenuButton = getByText('Episode Menu');
+    const episodeMenuButton = getByText('Episodes');
 
     fireEvent.click(episodeMenuButton);
 
@@ -162,7 +162,7 @@ describe('MoviePage Component with viewport less than sm size', () => {
   test('should display close button after clicking on Episode Menu button', () => {
     const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
 
-    const episodeMenuButton = getByText('Episode Menu');
+    const episodeMenuButton = getByText('Episodes');
 
     fireEvent.click(episodeMenuButton);
 
