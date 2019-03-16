@@ -33,7 +33,7 @@ const MoviePageNav = props => {
     <nav className="d-flex flex-column">
       {STAR_WARS_EPISODES.map(episode => (
         <div key={episode.number} className="mb-4">
-          <StyledNavLink to={episode.to} activeClassName="border-bottom-crawl" onClick={handleClick}>
+          <StyledNavLink to={episode.to} activeClassName={activeClassName} onClick={handleClick}>
             <div>
               <Title as="h3" className="h5 text-center">{`Star Wars Episode ${episode.number}`}</Title>
               <Subtitle className="h6 text-center">{episode.title}</Subtitle>

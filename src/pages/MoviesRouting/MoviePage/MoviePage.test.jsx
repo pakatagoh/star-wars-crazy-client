@@ -55,6 +55,10 @@ const match = {
 describe('MoviePage Component', () => {
   beforeEach(() => {
     jest.spyOn(tmdbService, 'tmdbApiGetMovie').mockImplementation(() => Promise.resolve(sampleMovieData));
+    window.matchMedia = () => ({
+      addListener: () => {},
+      removeListener: () => {},
+    });
   });
 
   afterEach(() => {

@@ -8,6 +8,7 @@ export const STAR_WARS_EPISODES = [
     slug: 'episode-1',
     imdb: 'tt0120915',
     poster: posters.episode_1,
+    spotifyId: '45EFycwtfRhnDPWbc2mClK',
   },
   {
     number: 2,
@@ -16,6 +17,7 @@ export const STAR_WARS_EPISODES = [
     slug: 'episode-2',
     imdb: 'tt0121765',
     poster: posters.episode_2,
+    spotifyId: '4RSVY5851aNeCttrDpdj7A',
   },
   {
     number: 3,
@@ -24,6 +26,7 @@ export const STAR_WARS_EPISODES = [
     slug: 'episode-3',
     imdb: 'tt0121766',
     poster: posters.episode_3,
+    spotifyId: '6zhlos3HFJrWni7rjqxacg',
   },
   {
     number: 4,
@@ -32,6 +35,7 @@ export const STAR_WARS_EPISODES = [
     slug: 'episode-4',
     imdb: 'tt0076759',
     poster: posters.episode_4,
+    spotifyId: '55gMu4AvAKCbCaGv3GIXgy',
   },
   {
     number: 5,
@@ -40,6 +44,7 @@ export const STAR_WARS_EPISODES = [
     slug: 'episode-5',
     imdb: 'tt0080684',
     poster: posters.episode_5,
+    spotifyId: '44TnXcUjTIHPBBROepl99a',
   },
   {
     number: 6,
@@ -48,6 +53,7 @@ export const STAR_WARS_EPISODES = [
     slug: 'episode-6',
     imdb: 'tt0086190',
     poster: posters.episode_6,
+    spotifyId: '1gt4PAxdMmq5DUV7tyuNxx',
   },
   {
     number: 7,
@@ -56,6 +62,7 @@ export const STAR_WARS_EPISODES = [
     slug: 'episode-7',
     imdb: 'tt2488496',
     poster: posters.episode_7,
+    spotifyId: '3fUKGTsiYL1kSroBWBLmmR',
   },
   {
     number: 8,
@@ -64,5 +71,6 @@ export const STAR_WARS_EPISODES = [
     slug: 'episode-8',
     imdb: 'tt2527336',
     poster: posters.episode_8,
+    spotifyId: '0LhcWlgnpCVHqOVFZFuoPX',
   },
 ];

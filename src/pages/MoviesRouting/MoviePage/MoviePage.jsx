@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
+import Media from 'react-media';
+import { sizes } from './../../../utils/styledSizes';
 import Block from '../../../components/Block/Block';
 import MoviePageNav from './MoviePageNav';
 import { tmdbApiGetMovie } from '../../../components/services/movie/tmdbApi';
@@ -7,6 +10,7 @@ import { STAR_WARS_EPISODES } from './../../../components/services/movie/starWar
 import Title from '../../../components/Typography/Title';
 import Subtitle from './../../../components/Typography/Subtitle';
 import Spinner from './../../../components/Spinner/Spinner';
+import MovieMenuModal from './MovieMenuModal';
 
 const StyledImage = styled.img`
   width: 100%;
@@ -38,8 +42,8 @@ const MoviePage = props => {
     setReload(!reload);
   };
 
+  const foundEpisode = STAR_WARS_EPISODES.find(episode => episode.slug === slug);
   useEffect(() => {
-    const foundEpisode = STAR_WARS_EPISODES.find(episode => episode.slug === slug);
     if (foundEpisode) {
       fetchMovie(foundEpisode.imdb);
     }
@@ -54,7 +58,7 @@ const MoviePage = props => {
             <StyledImage src={imageSrc} alt={title} />
           </div>
           <div className="col-md-7">
-            <Title as="h1" className="h3">
+            <Title as="h1" className="h1">
               {title}
             </Title>
             <div className="row mb-4">
@@ -93,11 +97,30 @@ const MoviePage = props => {
     <main>
       <Block container spacer={2}>
         <div className="row">
-          <div className="col-2 col-sm-3">
-            <MoviePageNav handleClick={handleClick} />
-          </div>
-          <div className="col-10 col-sm-9">{isLoading ? <Spinner /> : renderMovieDetails()}</div>
+          <Media query={`(max-width: ${sizes.sm}px)`}>
+            {matches =>
+              matches ? (
+                <MovieMenuModal handleClick={handleClick} />
+              ) : (
+                <div className="col-sm-3">
+                  <MoviePageNav handleClick={handleClick} />
+                </div>
+              )
+            }
+          </Media>
+          <div className="col-sm-9">{isLoading ? <Spinner /> : renderMovieDetails()}</div>
         </div>
+      </Block>
+      <Block container spacer={2}>
+        <iframe
+          src={`https://open.spotify.com/embed/album/${foundEpisode.spotifyId}`}
+          width="300"
+          height="380"
+          frameborder="0"
+          allowtransparency="true"
+          allow="encrypted-media"
+          title="star wars album"
+        />
       </Block>
     </main>
   );
