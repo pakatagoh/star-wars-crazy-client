@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Modal, ModalBody, ModalFooter, ModalHeader, Button } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 import MoviePageNav from './MoviePageNav';
 
 const StyledMenuButton = styled.button`
@@ -13,11 +13,11 @@ const StyledMenuButton = styled.button`
   border-radius: 50% 50%;
 `;
 
-const bgBlack = 'bg-black';
+const contentBgBlack = 'content-bg-black';
 const StyledModal = styled(Modal).attrs({
-  contentClassName: bgBlack,
+  contentClassName: contentBgBlack,
 })`
-  & .${bgBlack} {
+  & .${contentBgBlack} {
     background-color: black;
   }
 `;
@@ -37,17 +37,20 @@ const MovieMenuModal = props => {
 
   return (
     <div>
-      <StyledMenuButton onClick={handleToggle}>Menu</StyledMenuButton>
+      <StyledMenuButton onClick={handleToggle}>Episode Menu</StyledMenuButton>
       <StyledModal
         isOpen={modal}
         toggle={handleToggle}
-        className="m-0"
-        contentClassName={`rounded-0 bg-black`}
-        scrollable
+        className="m-0 h-100"
+        contentClassName={`h-100 rounded-0 ${contentBgBlack}`}
+        scrollable="true"
+        centered
       >
-        <ModalHeader toggle={handleToggle}>Modal title</ModalHeader>
+        {/* <ModalHeader toggle={handleToggle}>Modal title</ModalHeader> */}
         <ModalBody>
-          <MoviePageNav handleClick={handleNav} />
+          <div className="d-flex">
+            <MoviePageNav handleClick={handleNav} />
+          </div>
         </ModalBody>
       </StyledModal>
     </div>

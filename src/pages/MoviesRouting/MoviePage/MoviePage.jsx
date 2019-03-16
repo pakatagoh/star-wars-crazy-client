@@ -116,7 +116,7 @@ const MoviePage = props => {
           src={`https://open.spotify.com/embed/album/${foundEpisode.spotifyId}`}
           width="300"
           height="380"
-          frameborder="0"
+          frameBorder="0"
           allowtransparency="true"
           allow="encrypted-media"
           title="star wars album"

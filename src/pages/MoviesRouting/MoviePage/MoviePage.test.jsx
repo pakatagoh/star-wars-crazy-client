@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { render, waitForElement } from 'react-testing-library';
+import { render, waitForElement, fireEvent } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
 
@@ -13,6 +13,12 @@ function renderWithRouter(ui, { route = '/', history = createMemoryHistory({ ini
     ...render(<Router history={history}>{ui}</Router>),
     history,
   };
+}
+
+// @link https://medium.com/@dawchihliou/testing-react-hooks-6d3ae95cd838
+// simulate window resize
+function fireResize(width) {
+  window.innerWidth = width;
 }
 
 const sampleMovieData = {
@@ -55,6 +61,9 @@ const match = {
 describe('MoviePage Component', () => {
   beforeEach(() => {
     jest.spyOn(tmdbService, 'tmdbApiGetMovie').mockImplementation(() => Promise.resolve(sampleMovieData));
+
+    // To prevent error: Invariant violation <Media targetWindow> does not support 'matchMedia' when using react-media package
+    // @link https://github.com/ReactTraining/react-media/issues/86
     window.matchMedia = () => ({
       addListener: () => {},
       removeListener: () => {},
@@ -105,5 +114,58 @@ describe('MoviePage Component', () => {
     expect(overview).toBeInTheDocument();
     expect(releaseDate).toBeInTheDocument();
     expect(voteAverage).toBeInTheDocument();
+  });
+});
+
+describe('MoviePage Component with viewport less than sm size', () => {
+  beforeEach(() => {
+    jest.spyOn(tmdbService, 'tmdbApiGetMovie').mockImplementation(() => Promise.resolve(sampleMovieData));
+
+    // To prevent error: Invariant violation <Media targetWindow> does not support 'matchMedia' when using react-media package
+    // @link https://github.com/ReactTraining/react-media/issues/86
+    // @link window.matchMedia https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
+    // @link test example https://github.com/ReactTraining/react-media/issues/93#issuecomment-416170644
+    // @link mediaQueryList https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList
+    window.matchMedia = () => ({
+      matches: true,
+      addListener: () => {},
+      removeListener: () => {},
+    });
+  });
+
+  afterEach(() => {
+    tmdbService.tmdbApiGetMovie.mockRestore();
+  });
+
+  test('should display fixed menu button', () => {
+    const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
+
+    expect(getByText('Episode Menu')).toBeInTheDocument();
+  });
+
+  test('should display nav of star wars episodes after clicking Episode Menu button', () => {
+    const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
+
+    const episodeMenuButton = getByText('Episode Menu');
+
+    fireEvent.click(episodeMenuButton);
+
+    expect(getByText(/episode 1/i)).toBeInTheDocument();
+    expect(getByText(/episode 2/i)).toBeInTheDocument();
+    expect(getByText(/episode 3/i)).toBeInTheDocument();
+    expect(getByText(/episode 4/i)).toBeInTheDocument();
+    expect(getByText(/episode 5/i)).toBeInTheDocument();
+    expect(getByText(/episode 6/i)).toBeInTheDocument();
+    expect(getByText(/episode 7/i)).toBeInTheDocument();
+  });
+
+  test('should display close button after clicking on Episode Menu button', () => {
+    const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
+
+    const episodeMenuButton = getByText('Episode Menu');
+
+    fireEvent.click(episodeMenuButton);
+
+    expect(getByText('Close')).toBeInTheDocument();
   });
 });
