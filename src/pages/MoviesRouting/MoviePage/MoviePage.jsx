@@ -5,7 +5,7 @@ import Media from 'react-media';
 import { sizes } from './../../../utils/styledSizes';
 import Block from '../../../components/Block/Block';
 import MoviePageNav from './MoviePageNav';
-import { tmdbApiGetMovie } from '../../../components/services/movie/tmdbApi';
+import { getMovie } from '../../../components/services/movie/movieApi';
 import { STAR_WARS_EPISODES } from './../../../components/services/movie/starWarsEpisodes';
 import Title from '../../../components/Typography/Title';
 import Subtitle from './../../../components/Typography/Subtitle';
@@ -27,7 +27,7 @@ const MoviePage = props => {
 
   const fetchMovie = async imdbId => {
     try {
-      const foundMovie = await tmdbApiGetMovie(imdbId);
+      const foundMovie = await getMovie(imdbId);
       if (foundMovie) {
         setIsLoading(false);
         setMovieData(foundMovie);
