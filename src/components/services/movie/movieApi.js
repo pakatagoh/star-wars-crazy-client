@@ -3,7 +3,7 @@ import axios from 'axios';
 const isDev = process.env.NODE_ENV !== 'production';
 
 const getUrl = isDev => {
-  return isDev ? 'http://localhost:8080' : 'https://api-starwarscrazy.herokuapp.com/';
+  return isDev ? 'http://localhost:8080' : 'https://api-starwarscrazy.herokuapp.com';
 };
 const baseURL = getUrl(isDev);
 
