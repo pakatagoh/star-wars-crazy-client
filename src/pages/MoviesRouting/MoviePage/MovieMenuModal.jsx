@@ -52,7 +52,7 @@ const MovieMenuModal = props => {
         scrollable="true"
       >
         <ModalBody>
-          <div className="d-flex">
+          <div>
             <MoviePageNav handleClick={handleNav} />
           </div>
         </ModalBody>
