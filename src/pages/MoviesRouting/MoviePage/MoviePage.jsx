@@ -33,7 +33,7 @@ const MoviePage = props => {
         setMovieData(foundMovie);
       }
     } catch (error) {
-      console.error(error);
+      console.error('the error from fetchMovie', error);
     }
   };
 
