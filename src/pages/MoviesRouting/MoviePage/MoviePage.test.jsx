@@ -5,7 +5,7 @@ import { render, waitForElement, fireEvent } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
 
-import * as tmdbService from '../../../components/services/movie/tmdbApi';
+import * as movieService from '../../../components/services/movie/movieApi';
 import MoviePage from './MoviePage';
 
 function renderWithRouter(ui, { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {}) {
@@ -60,7 +60,7 @@ const match = {
 
 describe('MoviePage Component', () => {
   beforeEach(() => {
-    jest.spyOn(tmdbService, 'tmdbApiGetMovie').mockImplementation(() => Promise.resolve(sampleMovieData));
+    jest.spyOn(movieService, 'getMovie').mockImplementation(() => Promise.resolve(sampleMovieData));
 
     // To prevent error: Invariant violation <Media targetWindow> does not support 'matchMedia' when using react-media package
     // @link https://github.com/ReactTraining/react-media/issues/86
@@ -71,7 +71,7 @@ describe('MoviePage Component', () => {
   });
 
   afterEach(() => {
-    tmdbService.tmdbApiGetMovie.mockRestore();
+    movieService.getMovie.mockRestore();
   });
 
   test('should display sidebar nav of star wars episodes', () => {
@@ -119,7 +119,7 @@ describe('MoviePage Component', () => {
 
 describe('MoviePage Component with viewport less than sm size', () => {
   beforeEach(() => {
-    jest.spyOn(tmdbService, 'tmdbApiGetMovie').mockImplementation(() => Promise.resolve(sampleMovieData));
+    jest.spyOn(movieService, 'getMovie').mockImplementation(() => Promise.resolve(sampleMovieData));
 
     // To prevent error: Invariant violation <Media targetWindow> does not support 'matchMedia' when using react-media package
     // @link https://github.com/ReactTraining/react-media/issues/86
@@ -134,7 +134,7 @@ describe('MoviePage Component with viewport less than sm size', () => {
   });
 
   afterEach(() => {
-    tmdbService.tmdbApiGetMovie.mockRestore();
+    movieService.getMovie.mockRestore();
   });
 
   test('should display fixed menu button', () => {
