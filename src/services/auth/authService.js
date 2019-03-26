@@ -9,16 +9,25 @@ const baseURL = getUrl(isDev);
 
 const authApi = axios.create({
   baseURL,
+  withCredentials: true,
 });
 
 export const signup = async data => {
-  const response = await authApi.post('/v1/auth/signup', data);
-
-  if (response && response.data) {
-    return {
-      data: response.data,
-    };
+  try {
+    const response = await authApi.post('/v1/auth/signup', data);
+    return response;
+  } catch (error) {
+    if (error.response) return error.response.data;
+    return { error };
   }
+};
 
-  throw new Error('Something went wrong during signup with server');
+export const logout = async () => {
+  try {
+    const response = await authApi.post('/v1/auth/logout');
+    return response;
+  } catch (error) {
+    if (error.response) return error.response.data;
+    return { error };
+  }
 };

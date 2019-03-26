@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { signup } from './../../services/auth/authService';
 import { UserContext } from './../../App';
@@ -14,12 +14,14 @@ const signupSchema = Yup.object().shape({
 });
 
 const SignupPage = props => {
+  const { history } = props;
   const { user, setUser } = useContext(UserContext);
   const initialFormValues = {
     email: '',
     firstName: '',
     lastName: '',
     password: '',
+    imageUrl: '',
   };
 
   return (
@@ -30,16 +32,29 @@ const SignupPage = props => {
         onSubmit={async (values, actions) => {
           try {
             const response = await signup(values);
-            if (response.error) {
+            if (response.error && response.error.name === 'SequelizeValidationError') {
+              const { errors } = response.error;
               actions.setSubmitting(false);
-              actions.setStatus({ error: { message: response.error.message } });
+              errors.forEach(error => {
+                actions.setSubmitting(false);
+                actions.setFieldError(error.path, error.message);
+              });
+              return;
+            }
+            if (response.error) {
+              console.error(response.error);
+              actions.setSubmitting(false);
+              actions.setStatus({
+                error: { message: response.error.message || 'Something went wrong, please try again' },
+              });
               return;
             }
 
             actions.resetForm();
             actions.setSubmitting(false);
             actions.setStatus('success');
-            setUser(response.user);
+            setUser(response.data);
+            history.push('/');
             return;
           } catch (error) {
             console.error(error);
@@ -49,10 +64,6 @@ const SignupPage = props => {
         }}
         render={props => {
           const { status, isSubmitting, isValid } = props;
-
-          const renderSuccess = () => {
-            return <div>Success</div>;
-          };
 
           const renderError = status => {
             return <div>{status.error.message}</div>;
@@ -65,16 +76,19 @@ const SignupPage = props => {
                   <p>{user.firstName} your account has been created!</p>
                 </div>
               )}
-              {status && !status.error ? (
-                renderSuccess()
-              ) : (
+              {!user.firstName && (
                 <>
                   <Form>
-                    <Field type="email" name="email" placeholder="Email" />
-
                     <Field type="text" name="firstName" placeholder="First name" />
+                    <ErrorMessage name="firstName" />
                     <Field type="text" name="lastName" placeholder="Last name" />
+                    <ErrorMessage name="lastName" />
+                    <Field type="text" name="imageUrl" placeholder="Image Url" />
+                    <ErrorMessage name="imageUrl" />
+                    <Field type="email" name="email" placeholder="Email" />
+                    <ErrorMessage name="email" />
                     <Field type="password" name="password" placeholder="password" />
+                    <ErrorMessage name="password" />
                     <button type="submit" disabled={!isValid || isSubmitting}>
                       Register
                     </button>

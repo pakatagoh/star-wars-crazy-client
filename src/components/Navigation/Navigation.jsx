@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Collapse, NavbarToggler, Nav, NavItem, Navbar } from 'reactstrap';
 import NavLogo from './NavLogo';
 import NavLinkWhite from './NavLinkWhite';
+import ButtonCrawl from '../Buttons/ButtonCrawl';
 
 const Navigation = props => {
-  const { navBrand, navItemsLeft, navItemsRight } = props;
+  const { navBrand, navItemsLeft, navItemsRight, handleLogout } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
@@ -20,11 +21,20 @@ const Navigation = props => {
   };
 
   const renderNavItemsRight = () => {
-    return navItemsRight.map(item => (
-      <NavLinkWhite key={item.text} to={item.to} className="nav-link">
-        <NavItem>{item.text}</NavItem>
-      </NavLinkWhite>
-    ));
+    return navItemsRight.map(item => {
+      if (item.text === 'Logout') {
+        return (
+          <ButtonCrawl key={item.text} onClick={handleLogout}>
+            {item.text}
+          </ButtonCrawl>
+        );
+      }
+      return (
+        <NavLinkWhite key={item.text} to={item.to} className="nav-link">
+          <NavItem>{item.text}</NavItem>
+        </NavLinkWhite>
+      );
+    });
   };
 
   return (

@@ -7,7 +7,7 @@ export const UserContext = React.createContext({});
 
 const App = () => {
   const [user, setUser] = useState({});
-
+  // TODO: UseEffect to get user from DB if there is a cookie on each render
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <Header />
