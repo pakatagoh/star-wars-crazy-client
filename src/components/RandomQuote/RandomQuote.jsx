@@ -3,7 +3,7 @@ import { capitalize } from 'lodash';
 import Title from '../Typography/Title';
 import Subtitle from '../Typography/Subtitle';
 import Overline from '../Typography/Overline';
-import { getQuote } from '../services/randomQuotes/randomQuotesService';
+import { getQuote } from '../../services/randomQuotes/randomQuotesService';
 
 const RandomQuote = () => {
   const [quote, setQuote] = useState('');

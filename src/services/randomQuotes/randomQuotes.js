@@ -802,9 +802,9 @@ export const quotes = [
     episode: '1',
   },
   {
-    name:
-      "ANAKIN",
-    text: "But Mom, I love it...and they need help...they're in trouble. The prize money would more than pay for the parts they need.",
+    name: 'ANAKIN',
+    text:
+      "But Mom, I love it...and they need help...they're in trouble. The prize money would more than pay for the parts they need.",
     episode: '1',
   },
   {
@@ -4180,7 +4180,7 @@ export const quotes = [
   { name: 'POGGLE', text: 'Let the executions begin!', episode: '2' },
   {
     name: 'ANAKIN',
-    text: "I have a bad feeling about this",
+    text: 'I have a bad feeling about this',
     episode: '2',
   },
   { name: 'ANAKIN', text: 'What about Padme?', episode: '2' },
@@ -4190,7 +4190,7 @@ export const quotes = [
   { name: 'PADME', text: 'Sure! Well, sort of.', episode: '2' },
   {
     name: 'ANAKIN',
-    text: "Jump!!!",
+    text: 'Jump!!!',
     episode: '2',
   },
   {

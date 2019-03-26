@@ -5,7 +5,7 @@ import { render, waitForElement, fireEvent } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
 
-import * as movieService from '../../../components/services/movie/movieApi';
+import * as movieService from '../../../services/movie/movieApi';
 import MoviePage from './MoviePage';
 
 function renderWithRouter(ui, { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {}) {

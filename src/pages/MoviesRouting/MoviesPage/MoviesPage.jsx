@@ -4,7 +4,7 @@ import { Row, Col } from 'reactstrap';
 import styled, { css } from 'styled-components';
 import Block from './../../../components/Block/Block';
 import Title from './../../../components/Typography/Title';
-import { STAR_WARS_EPISODES } from './../../../components/services/movie/starWarsEpisodes';
+import { STAR_WARS_EPISODES } from './../../../services/movie/starWarsEpisodes';
 import { sizes } from './../../../utils/styledSizes';
 import Subtitle from './../../../components/Typography/Subtitle';
 

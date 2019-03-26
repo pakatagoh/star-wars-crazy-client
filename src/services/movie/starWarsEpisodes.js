@@ -1,4 +1,4 @@
-import { posters } from './../../../assets/posters';
+import { posters } from './../../assets/posters/index';
 
 export const STAR_WARS_EPISODES = [
   {

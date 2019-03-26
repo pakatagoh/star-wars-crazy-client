@@ -4,7 +4,7 @@ import { Row, Col } from 'reactstrap';
 import QuizCompleted from './QuizCompleted';
 import QuizForm from './QuizForm';
 import Title from './../Typography/Title';
-import { getQuizList } from './../services/quiz/quizService';
+import { getQuizList } from './../../services/quiz/quizService';
 import Spinner from '../Spinner/Spinner';
 
 const StyledYellowBox = styled.div`

@@ -1,8 +1,8 @@
 import { starWarsApi } from './../starWarsApi/starWarsApiService';
 import * as templates from './quizTemplates';
 import { limits, categories } from '../starWarsApi/starWarsApiStats';
-import { getRandomNumberFromRange } from './../../../utils/getRandomNumberFromRange';
-import { getRandomNumberSet } from './../../../utils/getRandomNumberSet';
+import { getRandomNumberSet } from './../../utils/getRandomNumberSet';
+import { getRandomNumberFromRange } from './../../utils/getRandomNumberFromRange';
 
 const dev = process.env.NODE_ENV !== 'production';
 const MAX_QUESTIONS = dev ? 1 : 5;

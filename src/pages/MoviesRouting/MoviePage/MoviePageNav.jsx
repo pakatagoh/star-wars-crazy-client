@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import Title from './../../../components/Typography/Title';
 import Subtitle from './../../../components/Typography/Subtitle';
-import { STAR_WARS_EPISODES } from './../../../components/services/movie/starWarsEpisodes';
+import { STAR_WARS_EPISODES } from './../../../services/movie/starWarsEpisodes';
 
 //https://spectrum.chat/styled-components/help/how-to-use-sc-with-nav-activeclassname~8f753cea-75c3-4524-8207-fd0216026665
 
