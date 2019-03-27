@@ -7,6 +7,7 @@ import Title from './../Typography/Title';
 import Spinner from '../Spinner/Spinner';
 import { getQuizList } from './../../services/quiz/quizService';
 import { UserContext } from './../../App';
+import { saveUserScore } from '../../services/score/scoreService';
 
 const StyledYellowBox = styled.div`
   border: 0.6rem solid #ffd700;
@@ -43,7 +44,7 @@ const Quiz = () => {
     setSelection(value);
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
     const selectedAnswer = selection;
     const quizAnswer = quizList[currentQuestionNum - 1].answer;
@@ -51,6 +52,7 @@ const Quiz = () => {
     setSelection('');
     if (currentQuestionNum === quizList.length) {
       setIsCompleted(true);
+      const response = await saveUserScore(score);
       return;
     }
     setCurrentQuestionNum(state => state + 1);
