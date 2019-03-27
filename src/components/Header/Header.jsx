@@ -23,7 +23,8 @@ const Header = props => {
     try {
       const response = await logout();
       if (response.statusText === 'OK') {
-        setUser({});
+        setUser(null);
+        localStorage.removeItem('user');
         history.push('/');
         return;
       }
@@ -31,7 +32,7 @@ const Header = props => {
       console.error(error);
     }
   };
-  if (user.firstName) {
+  if (user) {
     navViewProps.navItemsRight = [{ text: 'Logout' }];
   }
   return (

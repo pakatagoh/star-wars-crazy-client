@@ -6,12 +6,21 @@ import Footer from './components/Footer/Footer';
 export const UserContext = React.createContext({});
 
 const App = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {}, []);
-  // TODO: UseEffect to get user from DB if there is a cookie on each render
+  useEffect(() => {
+    const foundUser = localStorage.getItem('user');
+
+    if (foundUser) {
+      const user = JSON.parse(foundUser);
+      setUser(user);
+    }
+    setIsLoading(false);
+  }, []);
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, isLoading }}>
       <Header />
       <Routing />
       <Footer />

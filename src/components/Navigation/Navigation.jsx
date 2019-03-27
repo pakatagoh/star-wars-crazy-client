@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Collapse, NavbarToggler, Nav, NavItem, Navbar } from 'reactstrap';
 import NavLogo from './NavLogo';
 import NavLinkWhite from './NavLinkWhite';
 import ButtonCrawl from '../Buttons/ButtonCrawl';
+import { UserContext } from './../../App';
+import Spinner from '../Spinner/Spinner';
 
 const Navigation = props => {
   const { navBrand, navItemsLeft, navItemsRight, handleLogout } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const { isLoading } = useContext(UserContext);
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -44,9 +47,13 @@ const Navigation = props => {
         <Nav>{navItemsLeft && renderNavItemsLeft()}</Nav>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            {navItemsRight && renderNavItemsRight()}
-          </Nav>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Nav className="ml-auto" navbar>
+              {navItemsRight && renderNavItemsRight()}
+            </Nav>
+          )}
         </Collapse>
       </Navbar>
     </div>

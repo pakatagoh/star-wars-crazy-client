@@ -54,6 +54,8 @@ const SignupPage = props => {
             actions.setSubmitting(false);
             actions.setStatus('success');
             setUser(response.data);
+            console.log(response.data);
+            localStorage.setItem('user', JSON.stringify(response.data));
             history.push('/');
             return;
           } catch (error) {
@@ -70,13 +72,13 @@ const SignupPage = props => {
           };
           return (
             <>
-              {user.firstName && (
+              {user && (
                 <div>
                   <h2>Success!</h2>
                   <p>{user.firstName} your account has been created!</p>
                 </div>
               )}
-              {!user.firstName && (
+              {!user && (
                 <>
                   <Form>
                     <Field type="text" name="firstName" placeholder="First name" />

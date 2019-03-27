@@ -96,7 +96,7 @@ describe('Signup form after filling up required fields', () => {
     authServices.signup.mockRestore();
   });
 
-  test('should show success if submission was successful', async () => {
+  test('should show home page if submission was successful', async () => {
     authServices.signup.mockResolvedValueOnce({
       user: {
         firstName: 'pakata',
@@ -109,9 +109,9 @@ describe('Signup form after filling up required fields', () => {
     const submitButton = getByText(/register/i);
 
     fireEvent.click(submitButton);
-    const success = await waitForElement(() => getByText(/success/i));
+    const quizHeader = await waitForElement(() => getByText(/quiz/i));
 
-    expect(success).toBeInTheDocument();
+    expect(quizHeader).toBeInTheDocument();
   });
 
   test('should show Error when submission failed', async () => {

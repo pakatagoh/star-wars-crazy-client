@@ -31,3 +31,13 @@ export const logout = async () => {
     return { error };
   }
 };
+
+export const login = async data => {
+  try {
+    const response = await authApi.post('/v1/auth/login', data);
+    return response;
+  } catch (error) {
+    if (error.response) return error.response.data;
+    return { error };
+  }
+};

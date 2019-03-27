@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 const Block = props => {
   const { spacer, className, container, children } = props;
 
-  const classes = `${className ? className : ''} ${container ? 'container' : 'container-fluid'}`;
+  const classes = `${className ? className : ''} ${container ? 'container' : ''}`;
   return (
     <Wrapper className={classes} spacer={spacer}>
       {children}
