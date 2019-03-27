@@ -22,7 +22,7 @@ const Quiz = () => {
   const [selection, setSelection] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
   const [reset, setReset] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const fetchQuizList = async () => {
     try {
@@ -45,17 +45,23 @@ const Quiz = () => {
   };
 
   const handleSubmit = async event => {
-    event.preventDefault();
-    const selectedAnswer = selection;
-    const quizAnswer = quizList[currentQuestionNum - 1].answer;
-    if (selectedAnswer === quizAnswer) setScore(state => state + 1);
-    setSelection('');
-    if (currentQuestionNum === quizList.length) {
-      setIsCompleted(true);
-      const response = await saveUserScore(score);
-      return;
+    try {
+      event.preventDefault();
+      const selectedAnswer = selection;
+      const quizAnswer = quizList[currentQuestionNum - 1].answer;
+      if (selectedAnswer === quizAnswer) setScore(state => state + 1);
+      setSelection('');
+      if (currentQuestionNum === quizList.length) {
+        const submittedScore = selectedAnswer === quizAnswer ? score + 1 : score;
+        setIsCompleted(true);
+        const response = await saveUserScore(submittedScore);
+        setUser({ ...user, score: submittedScore });
+        return;
+      }
+      setCurrentQuestionNum(state => state + 1);
+    } catch (error) {
+      console.error(error);
     }
-    setCurrentQuestionNum(state => state + 1);
   };
 
   const handleReset = () => {

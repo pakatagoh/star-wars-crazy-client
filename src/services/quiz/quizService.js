@@ -5,7 +5,7 @@ import { getRandomNumberSet } from './../../utils/getRandomNumberSet';
 import { getRandomNumberFromRange } from './../../utils/getRandomNumberFromRange';
 
 const dev = process.env.NODE_ENV !== 'production';
-const MAX_QUESTIONS = dev ? 1 : 5;
+const MAX_QUESTIONS = dev ? 3 : 5;
 const MAX_OPTIONS = 3;
 
 export const generateQuestionOption = (data, selectedCategory, templateNum) => {
