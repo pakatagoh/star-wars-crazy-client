@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Row, Col } from 'reactstrap';
 import QuizCompleted from './QuizCompleted';
 import QuizForm from './QuizForm';
 import Title from './../Typography/Title';
-import { getQuizList } from './../../services/quiz/quizService';
 import Spinner from '../Spinner/Spinner';
+import { getQuizList } from './../../services/quiz/quizService';
+import { UserContext } from './../../App';
 
 const StyledYellowBox = styled.div`
   border: 0.6rem solid #ffd700;
@@ -20,6 +21,7 @@ const Quiz = () => {
   const [selection, setSelection] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
   const [reset, setReset] = useState(false);
+  const { user } = useContext(UserContext);
 
   const fetchQuizList = async () => {
     try {
@@ -47,7 +49,11 @@ const Quiz = () => {
     const quizAnswer = quizList[currentQuestionNum - 1].answer;
     if (selectedAnswer === quizAnswer) setScore(state => state + 1);
     setSelection('');
-    currentQuestionNum === quizList.length ? setIsCompleted(true) : setCurrentQuestionNum(state => state + 1);
+    if (currentQuestionNum === quizList.length) {
+      setIsCompleted(true);
+      return;
+    }
+    setCurrentQuestionNum(state => state + 1);
   };
 
   const handleReset = () => {
