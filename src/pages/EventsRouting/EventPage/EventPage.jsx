@@ -86,13 +86,19 @@ const EventPage = props => {
         <div>
           <Title as="h4">Details</Title>
           <Row>
-            <Col md={6}>
+            <Col sm={6} md={4}>
               <Subtitle as="h5">Starts</Subtitle>
               <p>{event.eventStart}</p>
               <Subtitle as="h5">Ends</Subtitle>
               <p>{event.eventEnd}</p>
             </Col>
-            <Col md={6}>
+            <Col sm={6} md={4}>
+              <Subtitle as="h5">Capacity</Subtitle>
+              <p>{event.capacity}</p>
+              <Subtitle as="h5">Availability</Subtitle>
+              <p>{isAvailable}</p>
+            </Col>
+            <Col md={4}>
               <Subtitle as="h5">Organizer</Subtitle>
               <div className="d-flex">
                 <div className="mr-3">
@@ -103,9 +109,6 @@ const EventPage = props => {
                   <a href={`mailto:${event.organizer.email}`}>Contact {event.organizer.firstName}</a>
                 </div>
               </div>
-              <Subtitle as="h5">Capacity</Subtitle>
-              <p>{event.capacity}</p>
-              <p>Availability: {isAvailable}</p>
             </Col>
           </Row>
         </div>

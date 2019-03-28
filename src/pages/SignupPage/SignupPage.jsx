@@ -30,6 +30,9 @@ const SignupPage = props => {
 
   return (
     <main>
+      <Block container spacer={2}>
+        <Title>Sign up for some Star Wars fun</Title>
+      </Block>
       <Formik
         initialValues={initialFormValues}
         validationSchema={signupSchema}
