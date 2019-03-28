@@ -38,7 +38,6 @@ const Header = props => {
   if (user) {
     navViewProps.navItemsRight = [{ text: 'Logout' }];
   }
-  console.log('about to render header');
   return (
     <header className="bg-dark">
       <Block container spacer={1} className="px-0">
