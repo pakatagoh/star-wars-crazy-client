@@ -4,6 +4,10 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { signup } from './../../services/auth/authService';
 import { UserContext } from './../../App';
+import Block from '../../components/Block/Block';
+import Title from '../../components/Typography/Title';
+import ButtonCrawl from '../../components/Buttons/ButtonCrawl';
+import { Link } from 'react-router-dom';
 
 const signupSchema = Yup.object().shape({
   email: Yup.string()
@@ -95,6 +99,12 @@ const SignupPage = props => {
           );
         }}
       />
+      <Block container spacer={2}>
+        <Title as="h4">Already have an account?</Title>
+        <Link to="/login">
+          <ButtonCrawl>Login</ButtonCrawl>
+        </Link>
+      </Block>
     </main>
   );
 };

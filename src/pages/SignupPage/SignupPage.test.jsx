@@ -4,7 +4,6 @@ import { createMemoryHistory } from 'history';
 import { render, fireEvent, waitForElement } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
-import SignupPage from './SignupPage';
 import App from '../../App';
 import * as authServices from './../../services/auth/authService';
 

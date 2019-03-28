@@ -5,6 +5,9 @@ import * as Yup from 'yup';
 import { login } from './../../services/auth/authService';
 import { UserContext } from './../../App';
 import Title from '../../components/Typography/Title';
+import ButtonCrawl from '../../components/Buttons/ButtonCrawl';
+import Block from '../../components/Block/Block';
+import { Link } from 'react-router-dom';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -89,6 +92,12 @@ const LoginPage = props => {
           );
         }}
       />
+      <Block container spacer={2}>
+        <Title as="h5">Don't have an account?</Title>
+        <Link to="/signup">
+          <ButtonCrawl>Signup</ButtonCrawl>
+        </Link>
+      </Block>
     </main>
   );
 };
