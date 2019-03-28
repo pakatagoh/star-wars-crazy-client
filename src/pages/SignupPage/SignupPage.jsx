@@ -54,7 +54,6 @@ const SignupPage = props => {
             actions.setSubmitting(false);
             actions.setStatus('success');
             setUser(response.data);
-            console.log(response.data);
             localStorage.setItem('user', JSON.stringify(response.data));
             history.push('/');
             return;
@@ -72,12 +71,6 @@ const SignupPage = props => {
           };
           return (
             <>
-              {user && (
-                <div>
-                  <h2>Success!</h2>
-                  <p>{user.firstName} your account has been created!</p>
-                </div>
-              )}
               {!user && (
                 <>
                   <Form>

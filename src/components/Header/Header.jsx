@@ -16,7 +16,7 @@ const Header = props => {
       to: '/',
     },
     navItemsLeft: [{ to: '/movies', text: 'Movies' }, { to: '/events', text: 'Events' }],
-    navItemsRight: [{ to: '/login', text: 'Login' }, { to: '/signup', text: 'Sign Up' }],
+    navItemsRight: [],
   };
 
   const handleLogout = async () => {
@@ -32,9 +32,13 @@ const Header = props => {
       console.error(error);
     }
   };
+
+  navViewProps.navItemsRight = [{ to: '/login', text: 'Login' }, { to: '/signup', text: 'Sign Up' }];
+
   if (user) {
     navViewProps.navItemsRight = [{ text: 'Logout' }];
   }
+  console.log('about to render header');
   return (
     <header className="bg-dark">
       <Block container spacer={1} className="px-0">

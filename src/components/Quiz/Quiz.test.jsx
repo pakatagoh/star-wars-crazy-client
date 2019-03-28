@@ -4,6 +4,7 @@ import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
 import * as quizService from '../../services/quiz/quizService';
 import Quiz from './Quiz';
+import HomePage from './../../pages/HomePage/HomePage';
 
 describe('Quiz Container', () => {
   const sampleResponse = [
@@ -36,7 +37,7 @@ describe('Quiz Container', () => {
   });
 
   test('should call getQuizList service once', async () => {
-    const { getByText } = render(<Quiz />);
+    const { getByText } = render(<HomePage />);
 
     const element = await waitForElement(() => getByText(sampleResponse[0].question));
     expect(quizService.getQuizList.mock.calls.length).toEqual(1);
@@ -44,7 +45,7 @@ describe('Quiz Container', () => {
   });
 
   test('should display the options on the page', async () => {
-    const { getByText } = render(<Quiz />);
+    const { getByText } = render(<HomePage />);
 
     const [option1, option2, option3] = await waitForElement(() => [
       getByText(sampleResponse[0].options[0].value),
@@ -57,7 +58,7 @@ describe('Quiz Container', () => {
   });
 
   test('should display a question', async () => {
-    const { getByText } = render(<Quiz />);
+    const { getByText } = render(<HomePage />);
 
     const questionElement = await waitForElement(() => getByText(sampleResponse[0].question));
 
@@ -65,7 +66,7 @@ describe('Quiz Container', () => {
   });
 
   test('should display disabled button on load', async () => {
-    const { getByText } = render(<Quiz />);
+    const { getByText } = render(<HomePage />);
 
     const button = await waitForElement(() => getByText(/submit/i));
     expect(button).toBeInTheDocument();
@@ -73,7 +74,7 @@ describe('Quiz Container', () => {
   });
 
   test('should display no selected radio input on load', async () => {
-    const { getByLabelText } = render(<Quiz />);
+    const { getByLabelText } = render(<HomePage />);
 
     const [radio0, radio1, radio2] = await waitForElement(() => [
       getByLabelText(sampleResponse[0].options[0].value),
@@ -87,7 +88,7 @@ describe('Quiz Container', () => {
   });
 
   test("should have radio selected when it's label is clicked", async () => {
-    const { container, getByText, getByLabelText } = render(<Quiz />);
+    const { container, getByText, getByLabelText } = render(<HomePage />);
 
     const [label, radio] = await waitForElement(
       () => [
@@ -104,7 +105,7 @@ describe('Quiz Container', () => {
   });
 
   test("should have second clicked label and it's respective radio checked and the first radio to become unchecked", async () => {
-    const { getByText, getByLabelText } = render(<Quiz />);
+    const { getByText, getByLabelText } = render(<HomePage />);
 
     const [label0, radio0, label1, radio1] = await waitForElement(() => [
       getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
@@ -130,7 +131,7 @@ describe('Quiz Container', () => {
   });
 
   test('should have button change from disabled to enabled when radio selected after label is clicked', async () => {
-    const { getByText } = render(<Quiz />);
+    const { getByText } = render(<HomePage />);
 
     const [label, button] = await waitForElement(() => [
       getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
@@ -145,7 +146,7 @@ describe('Quiz Container', () => {
   });
 
   test('should change current Question number to 2/2 after submitting fist answer', async () => {
-    const { getByText } = render(<Quiz />);
+    const { getByText } = render(<HomePage />);
 
     const [label, button, currentQuestion] = await waitForElement(() => [
       getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
@@ -162,7 +163,7 @@ describe('Quiz Container', () => {
   });
 
   test('should see final score after submitting final question', async () => {
-    const { getByText, queryByText } = render(<Quiz />);
+    const { getByText, queryByText } = render(<HomePage />);
 
     const [label0, button] = await waitForElement(() => [
       getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
@@ -188,7 +189,7 @@ describe('Quiz Container', () => {
   });
 
   test('should see final score of 2 after submitting 2 correct answers to 2 questions', async () => {
-    const { getByText, queryByText } = render(<Quiz />);
+    const { getByText, queryByText } = render(<HomePage />);
 
     const [label0, button] = await waitForElement(() => [
       getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
@@ -214,7 +215,7 @@ describe('Quiz Container', () => {
   });
 
   test('should see final score of 1 after submitting 1 correct answer to 2 questions', async () => {
-    const { getByText, queryByText } = render(<Quiz />);
+    const { getByText, queryByText } = render(<HomePage />);
 
     const [label0, button] = await waitForElement(() => [
       getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
@@ -240,7 +241,7 @@ describe('Quiz Container', () => {
   });
 
   test('should have reset button after completion of all questions. It should not have the submit button', async () => {
-    const { queryByText, getByText } = render(<Quiz />);
+    const { queryByText, getByText } = render(<HomePage />);
 
     const [label0, button, resetBefore] = await waitForElement(() => [
       getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),
@@ -318,7 +319,7 @@ describe('Quiz Container after completing quiz', () => {
   ];
 
   async function renderWithCompleted() {
-    const renderedQuiz = render(<Quiz />);
+    const renderedQuiz = render(<HomePage />);
 
     const [label0, button] = await waitForElement(() => [
       renderedQuiz.getByText(new RegExp(sampleResponse[0].options[0].value, 'i')),

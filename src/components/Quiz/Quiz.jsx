@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Row, Col } from 'reactstrap';
 import QuizCompleted from './QuizCompleted';
 import QuizForm from './QuizForm';
 import Title from './../Typography/Title';
 import Spinner from '../Spinner/Spinner';
-import { getQuizList } from './../../services/quiz/quizService';
-import { UserContext } from './../../App';
-import { saveUserScore } from '../../services/score/scoreService';
 
 const StyledYellowBox = styled.div`
   border: 0.6rem solid #ffd700;
@@ -15,74 +12,8 @@ const StyledYellowBox = styled.div`
   padding: 0.5rem;
 `;
 
-const Quiz = () => {
-  const [quizList, setQuizList] = useState([]);
-  const [currentQuestionNum, setCurrentQuestionNum] = useState(1);
-  const [score, setScore] = useState(0);
-  const [selection, setSelection] = useState('');
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [reset, setReset] = useState(false);
-  const { user, setUser } = useContext(UserContext);
-
-  const fetchQuizList = async () => {
-    try {
-      const foundQuizList = await getQuizList();
-      if (foundQuizList) {
-        setQuizList(foundQuizList);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchQuizList();
-  }, [reset]);
-
-  const handleChange = event => {
-    const { value } = event.target;
-    setSelection(value);
-  };
-
-  const handleSubmit = async event => {
-    try {
-      event.preventDefault();
-      const selectedAnswer = selection;
-      const quizAnswer = quizList[currentQuestionNum - 1].answer;
-      if (selectedAnswer === quizAnswer) setScore(state => state + 1);
-      setSelection('');
-      if (currentQuestionNum === quizList.length) {
-        const submittedScore = selectedAnswer === quizAnswer ? score + 1 : score;
-        setIsCompleted(true);
-        const response = await saveUserScore(submittedScore);
-        setUser({ ...user, score: submittedScore });
-        return;
-      }
-      setCurrentQuestionNum(state => state + 1);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleReset = () => {
-    setSelection('');
-    setScore(0);
-    setQuizList([]);
-    setCurrentQuestionNum(1);
-    setIsCompleted(false);
-    setReset(!reset);
-  };
-
-  const quiz = quizList[currentQuestionNum - 1];
-  const totalQuestions = quizList.length;
-
-  const quizFormProps = {
-    handleSubmit,
-    selection,
-    handleChange,
-    currentQuestionNum,
-    totalQuestions,
-  };
+const Quiz = props => {
+  const { isCompleted, score, totalQuestions, handleReset, quiz, quizList, quizFormProps } = props;
 
   return (
     <div data-testid="quiz-view">
