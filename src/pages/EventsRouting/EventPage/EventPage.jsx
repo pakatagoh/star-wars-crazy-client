@@ -36,10 +36,16 @@ const EventPage = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState({});
   const [error, setError] = useState('');
+  const [isAttending, setIsAttending] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
   const fetchEvent = async () => {
     try {
+      const getAttendance = attendees => {
+        if (!user) return false;
+        if (attendees.length === 0) return false;
+        return attendees.some(attendee => attendee.id === user.id);
+      };
       const response = await getEvent(id);
       if (response.error) {
         console.error(response.error);
@@ -49,6 +55,11 @@ const EventPage = props => {
       }
       setError('');
       setEvent(response);
+
+      const attending = getAttendance(response.attendees);
+      if (user && attending) {
+        setIsAttending(attending);
+      }
       setIsLoading(false);
       return;
     } catch (error) {
@@ -69,6 +80,7 @@ const EventPage = props => {
       const { updatedEvent, updatedUserEvents } = response;
       setEvent(updatedEvent);
       setUser({ ...user, events: updatedUserEvents });
+      setIsAttending();
     } catch (error) {
       console.error(error);
       setError(error.message);
@@ -108,8 +120,10 @@ const EventPage = props => {
           <Block container spacer={2}>
             <Row className="align-items-center">
               <Col xs={6}>
-                {user ? (
+                {user && !isAttending ? (
                   <ButtonCrawl onClick={handleAttendance}>Attend</ButtonCrawl>
+                ) : user && isAttending ? (
+                  <ButtonCrawl onClick={handleAttendance}>Attending</ButtonCrawl>
                 ) : (
                   <Link to="/login">
                     <ButtonCrawl>Login to attend</ButtonCrawl>
