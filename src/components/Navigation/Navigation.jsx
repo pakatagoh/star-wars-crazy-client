@@ -27,9 +27,12 @@ const Navigation = props => {
     return navItemsRight.map(item => {
       if (item.text === 'Logout') {
         return (
-          <ButtonCrawl key={item.text} onClick={handleLogout}>
-            {item.text}
-          </ButtonCrawl>
+          <div
+            key={item.text}
+            className="d-flex justify-content-end justify-content-sm-start pt-2 pt-sm-0 pb-2 pb-sm-0"
+          >
+            <ButtonCrawl onClick={handleLogout}>{item.text}</ButtonCrawl>
+          </div>
         );
       }
       return (

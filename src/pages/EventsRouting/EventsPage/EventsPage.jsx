@@ -1,161 +1,103 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card, CardBody, CardTitle, CardText, CardImg } from 'reactstrap';
+import styled from 'styled-components';
+import { Row, Col, Card, CardBody, CardTitle, CardText, CardImg, CardFooter } from 'reactstrap';
 import Title from '../../../components/Typography/Title';
 import Block from '../../../components/Block/Block';
 import ButtonCrawl from './../../../components/Buttons/ButtonCrawl';
 import { UserContext } from './../../../App';
+import { getEvents } from '../../../services/event/eventService';
+import Spinner from './../../../components/Spinner/Spinner';
 
-const events = [
-  {
-    id: 1,
-    name: 'Event 1 name',
-    slug: 'event-1-name',
-    description:
-      'event 1 description Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem officia, voluptate molestias obcaecati laudantium libero tempore voluptatem corrupti saepe. Dicta!',
-    eventStart: '28 March 2019 10:00 eventStart 1',
-    eventEnd: '28 March 2019 17:00 eventEnd 1',
-    organizer: 'user 1',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80',
-    capacity: 10,
-    attendees: [
-      {
-        firstName: 'pakata',
-        lastName: 'goh',
-        email: 'pakatagohlh@gmail.com',
-        imageUrl: 'http://image.com',
-      },
-      {
-        firstName: 'nicholas',
-        lastName: 'teng',
-        email: 'nicholas@gmail.com',
-        imageUrl: 'http://image.com',
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Event 2 name',
-    slug: 'event-2-name',
-    description:
-      'event 2 description Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem officia, voluptate molestias obcaecati laudantium libero tempore voluptatem corrupti saepe. Dicta!',
-    eventStart: '28 March 2019 10:00 eventStart 2',
-    eventEnd: '28 March 2019 17:00 eventEnd 2',
-    organizer: 'user 2',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80',
-    capacity: 8,
-    attendees: [
-      {
-        firstName: 'pakata',
-        lastName: 'goh',
-        email: 'pakatagohlh@gmail.com',
-        imageUrl: 'http://image.com',
-      },
-      {
-        firstName: 'nicholas',
-        lastName: 'teng',
-        email: 'nicholas@gmail.com',
-        imageUrl: 'http://image.com',
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: 'Event 3 name',
-    slug: 'event-3-name',
-    description:
-      'event 3 description Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem officia, voluptate molestias obcaecati laudantium libero tempore voluptatem corrupti saepe. Dicta!',
-    eventStart: '28 March 2019 10:00 eventStart 3',
-    eventEnd: '28 March 2019 17:00 eventEnd 3',
-    organizer: 'user 1',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80',
-    capacity: 15,
-    attendees: [
-      {
-        firstName: 'pakata',
-        lastName: 'goh',
-        email: 'pakatagohlh@gmail.com',
-        imageUrl: 'http://image.com',
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: 'Event 4 name',
-    slug: 'event-4-name',
-    description:
-      'event 4 description Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem officia, voluptate molestias obcaecati laudantium libero tempore voluptatem corrupti saepe. Dicta!',
-    eventStart: '28 March 2019 10:00 eventStart 4',
-    eventEnd: '28 March 2019 17:00 eventEnd 4',
-    organizer: 'user 3',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80',
-    capacity: 20,
-    attendees: [
-      {
-        firstName: 'nicholas',
-        lastName: 'teng',
-        email: 'nicholas@gmail.com',
-        imageUrl: 'http://image.com',
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: 'Event 5 name',
-    slug: 'event-5-name',
-    description:
-      'event 5 description Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem officia, voluptate molestias obcaecati laudantium libero tempore voluptatem corrupti saepe. Dicta!',
-    eventStart: '28 March 2019 10:00 eventStart 5',
-    eventEnd: '28 March 2019 17:00 eventEnd 5',
-    organizer: 'user 2',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80',
-    capacity: 27,
-    attendees: [
-      {
-        firstName: 'nicholas',
-        lastName: 'teng',
-        email: 'nicholas@gmail.com',
-        imageUrl: 'http://image.com',
-      },
-    ],
-  },
-];
+const StyledCardFooter = styled(CardFooter)`
+  &.bg-none {
+    background-color: rgba(0, 0, 0, 0);
+  }
+`;
 
 const EventsPage = props => {
   const { user } = useContext(UserContext);
+  const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const fetchEvents = async () => {
+    try {
+      const response = await getEvents();
+      if (response.error) {
+        console.error(response.error.message);
+        setError(response.error);
+        setIsLoading(false);
+        return;
+      }
+      setError('');
+      setEvents(response);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   return (
     <main>
       <Block container spacer={2}>
-        <Title as="h1">Events</Title>
-        <Row>
-          {events.map(event => (
-            <Col key={event.id} md={6} lg={4}>
-              <Card className="bg-dark">
-                <CardImg top width="100%" src={event.imageUrl} alt={event.name} />
-                <CardBody>
-                  <CardTitle>{event.name}</CardTitle>
-                  <CardText>{event.description}</CardText>
-                  {user ? (
-                    <ButtonCrawl>Attend</ButtonCrawl>
-                  ) : (
-                    <Link to="/login">
-                      <ButtonCrawl>Login to attend</ButtonCrawl>
-                    </Link>
-                  )}
-                  <Link to={{ pathname: `/events/${event.slug}`, state: { eventId: event.id } }}>
-                    <ButtonCrawl>Details</ButtonCrawl>
-                  </Link>
-                </CardBody>
-              </Card>
+        <Row className="align-items-center mb-3">
+          <Col sm={6}>
+            <Title as="h1">Events</Title>
+          </Col>
+          {user && !error && (
+            <Col sm={6} className="d-flex justify-content-sm-end">
+              <Link to="/events/new">
+                <ButtonCrawl>Create Event</ButtonCrawl>
+              </Link>
             </Col>
-          ))}
+          )}
         </Row>
+        {isLoading ? (
+          <div className="d-flex justify-content-center">
+            <Spinner />
+          </div>
+        ) : (
+          <Row>
+            {error ? (
+              <Title as="h2">{error}</Title>
+            ) : (
+              <>
+                {events.map(event => (
+                  <Col key={event.id} md={6} lg={4} className="mb-4">
+                    <Card className="bg-dark h-100">
+                      <CardImg top width="100%" src={event.imageUrl} alt={event.name} />
+                      <CardBody className="d-flex flex-column justify-content-between">
+                        <div>
+                          <CardTitle>{event.name}</CardTitle>
+                          <CardText>{event.description}</CardText>
+                        </div>
+                        <StyledCardFooter className="bg-none mt-2">
+                          {user ? (
+                            <ButtonCrawl>Attend</ButtonCrawl>
+                          ) : (
+                            <Link to="/login">
+                              <ButtonCrawl>Login to attend</ButtonCrawl>
+                            </Link>
+                          )}
+                          <Link to={`/events/${event.id}`}>
+                            <ButtonCrawl>Details</ButtonCrawl>
+                          </Link>
+                        </StyledCardFooter>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                ))}
+              </>
+            )}
+          </Row>
+        )}
       </Block>
     </main>
   );
