@@ -22,16 +22,23 @@ const EventsPage = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const addAttendance = events => {
-    const eventsWithAttendence = events.map(event => {
+  const addAttendanceAndOrganizer = events => {
+    const eventsWithAttendenceAndOrganizer = events.map(event => {
+      if (event.organizer.id === user.id) {
+        event.isOrganizer = true;
+      } else {
+        event.isOrganizer = false;
+      }
+
       if (event.attendees.length === 0) {
         event.isAttending = false;
         return event;
       }
       event.isAttending = event.attendees.some(attendee => attendee.id === user.id);
+
       return event;
     });
-    setEvents(eventsWithAttendence);
+    setEvents(eventsWithAttendenceAndOrganizer);
   };
 
   const fetchEvents = async () => {
@@ -46,7 +53,7 @@ const EventsPage = props => {
       setError('');
       setEvents(response);
       if (user) {
-        addAttendance(response);
+        addAttendanceAndOrganizer(response);
       }
       setIsLoading(false);
     } catch (error) {
@@ -68,6 +75,11 @@ const EventsPage = props => {
       const eventsUpdater = produce(draft => {
         const foundIndex = draft.findIndex(event => event.id === updatedEvent.id);
         draft.splice(foundIndex, 1);
+        if (updatedEvent.organizer.id === user.id) {
+          updatedEvent.isOrganizer = true;
+        } else {
+          updatedEvent.isOrganizer = false;
+        }
         if (updatedEvent.length === 0) updatedEvent.isAttending = false;
         updatedEvent.isAttending = updatedEvent.attendees.some(attendee => attendee.id === user.id);
         draft.push(updatedEvent);
@@ -123,7 +135,11 @@ const EventsPage = props => {
                             <CardText>{event.description}</CardText>
                           </div>
                           <StyledCardFooter className="bg-none mt-2">
-                            {user && !event.isAttending ? (
+                            {user && event.isOrganizer ? (
+                              <Link to={`/events/${event.id}/edit`}>
+                                <ButtonCrawl>Edit</ButtonCrawl>
+                              </Link>
+                            ) : user && !event.isAttending ? (
                               <ButtonCrawl onClick={() => handleAttendance(event.id)}>Attend</ButtonCrawl>
                             ) : user && event.isAttending ? (
                               <ButtonCrawl onClick={() => handleAttendance(event.id)}>Attending</ButtonCrawl>
