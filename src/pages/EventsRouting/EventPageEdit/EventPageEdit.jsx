@@ -1,11 +1,44 @@
 import React, { useContext, useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Block from '../../../components/Block/Block';
 import Title from '../../../components/Typography/Title';
-import { UserContext } from '../../../App';
 import Spinner from '../../../components/Spinner/Spinner';
+import ButtonYellow from './../../../components/Buttons/ButtonYellow';
+import { UserContext } from '../../../App';
 import { getEvent, updateEvent } from './../../../services/event/eventService';
+
+const StyledFormikField = styled(Field)`
+  & {
+    width: 100%;
+    padding: 10px 5px;
+    border: none;
+    border-bottom: 1px solid white;
+    background: none;
+    color: white;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const StyledFormikTextArea = styled(Field)`
+  & {
+    width: 100%;
+    height: 150px;
+    padding: 10px 5px;
+    border: none;
+    border-bottom: 1px solid white;
+    background: none;
+    color: white;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 const eventSchema = Yup.object().shape({
   name: Yup.string().required('Event name is required'),
@@ -107,19 +140,43 @@ const EventPageEdit = props => {
                   return (
                     <>
                       <Form>
-                        <Field type="text" name="name" placeholder="Event name" />
-                        <ErrorMessage name="name" />
-                        <Field component="textarea" name="description" placeholder="Describe your event" />
-                        <ErrorMessage name="description" />
-                        <Field type="text" name="eventStart" placeholder="Start date and time" />
-                        <ErrorMessage name="eventStart" />
-                        <Field type="text" name="eventEnd" placeholder="End date and time" />
-                        <ErrorMessage name="eventEnd" />
-                        <Field type="text" name="imageUrl" placeholder="Event image url" />
-                        <ErrorMessage name="imageUrl" />
-                        <button type="submit" disabled={!isValid || isSubmitting}>
+                        <div className="mb-4">
+                          <StyledFormikField type="text" name="name" placeholder="Event name" />
+                        </div>
+                        <div className="mb-4">
+                          <ErrorMessage name="name" />
+                        </div>
+                        <div className="mb-4">
+                          <StyledFormikTextArea
+                            component="textarea"
+                            name="description"
+                            placeholder="Describe your event"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <ErrorMessage name="description" />
+                        </div>
+                        <div className="mb-4">
+                          <StyledFormikField type="text" name="eventStart" placeholder="Start date and time" />
+                        </div>
+                        <div className="mb-4">
+                          <ErrorMessage name="eventStart" />
+                        </div>
+                        <div className="mb-4">
+                          <StyledFormikField type="text" name="eventEnd" placeholder="End date and time" />
+                        </div>
+                        <div className="mb-4">
+                          <ErrorMessage name="eventEnd" />
+                        </div>
+                        <div className="mb-4">
+                          <StyledFormikField type="text" name="imageUrl" placeholder="Event image url" />
+                        </div>
+                        <div className="mb-4">
+                          <ErrorMessage name="imageUrl" />
+                        </div>
+                        <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
                           Save
-                        </button>
+                        </ButtonYellow>
                       </Form>
                       {status && status.error && renderError(status)}
                     </>

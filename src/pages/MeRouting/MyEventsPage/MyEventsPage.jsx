@@ -6,11 +6,10 @@ import { Row, Col, Card, CardImg, CardBody, CardTitle, CardText, CardFooter } fr
 import Block from '../../../components/Block/Block';
 import Title from '../../../components/Typography/Title';
 import Spinner from './../../../components/Spinner/Spinner';
-import ButtonCrawl from './../../../components/Buttons/ButtonCrawl';
+import ButtonYellow from './../../../components/Buttons/ButtonYellow';
 import { getUserEvents } from './../../../services/user/userService';
 import { UserContext } from './../../../App';
 import { deleteEvent } from '../../../services/event/eventService';
-import ButtonYellow from './../../../components/Buttons/ButtonYellow';
 
 const StyledCardFooter = styled(CardFooter)`
   &.bg-none {
