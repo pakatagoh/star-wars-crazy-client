@@ -12,9 +12,14 @@ const movieApi = axios.create({
 });
 
 export const getMovie = async imdbId => {
-  const foundMovie = await movieApi.get(`/v1/movies/${imdbId}`);
-  if (!foundMovie.data) {
-    throw new Error('Something went wrong. Not able to get movies');
+  try {
+    const foundMovie = await movieApi.get(`/v1/movies/${imdbId}`);
+    if (!foundMovie.data) {
+      throw new Error('Something went wrong. Not able to get movies');
+    }
+    return foundMovie.data;
+  } catch (error) {
+    if (error.response) return error.response.data;
+    return { error };
   }
-  return foundMovie.data;
 };

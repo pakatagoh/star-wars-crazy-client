@@ -49,8 +49,8 @@ const EventPage = props => {
     try {
       const response = await getEvent(id);
       if (response.error) {
-        console.error(response.error);
-        setError(response.error.message);
+        console.error(response.error.message);
+        setError('Something went wrong, unable to load event');
         setIsLoading(false);
         return;
       }
@@ -109,7 +109,15 @@ const EventPage = props => {
             <Row className="align-items-center">
               <Col sm={6} className="order-1 order-sm-0">
                 <StyledImageWrapper>
-                  <StyledImage src={event.imageUrl} alt={event.name} />
+                  <StyledImage
+                    src={event.imageUrl}
+                    alt={event.name}
+                    onError={e => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80';
+                    }}
+                  />
                 </StyledImageWrapper>
               </Col>
               <Col sm={6} className="order-0 order-sm-1">

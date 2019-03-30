@@ -4,6 +4,7 @@ import EventsPage from './EventsPage/EventsPage';
 import EventPage from './EventPage/EventPage';
 import EventPageNew from './EventPageNew/EventPageNew';
 import EventPageEdit from './EventPageEdit/EventPageEdit';
+import PageNotFound from './../PageNotFound/PageNotFound';
 
 const EventsRouting = props => {
   return (
@@ -12,6 +13,7 @@ const EventsRouting = props => {
       <Route path="/events/:id/edit" component={EventPageEdit} />
       <Route path="/events/:id" component={EventPage} />
       <Route exact path="/events" component={EventsPage} />
+      <Route component={PageNotFound} />
     </Switch>
   );
 };

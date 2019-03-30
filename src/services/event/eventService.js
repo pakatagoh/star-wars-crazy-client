@@ -62,3 +62,13 @@ export const updateEvent = async (id, values) => {
     return { error };
   }
 };
+
+export const deleteEvent = async id => {
+  try {
+    const response = await eventApi.delete(`/v1/events/${id}`);
+    return response.data;
+  } catch (error) {
+    if (error.response) return error.response.data;
+    return { error };
+  }
+};

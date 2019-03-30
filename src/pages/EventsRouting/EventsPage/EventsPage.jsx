@@ -103,10 +103,20 @@ const EventsPage = props => {
                 {events.map(event => (
                   <Col key={event.id} md={6} lg={4} className="mb-4">
                     <Card className="bg-dark h-100">
-                      <CardImg top width="100%" src={event.imageUrl} alt={event.name} />
+                      <CardImg
+                        top
+                        width="100%"
+                        src={event.imageUrl}
+                        alt={event.name}
+                        onError={e => {
+                          e.target.onerror = null;
+                          e.target.src =
+                            'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80';
+                        }}
+                      />
                       <CardBody className="d-flex flex-column justify-content-between">
                         <div>
-                          <CardTitle>{event.name}</CardTitle>
+                          <CardTitle className="font-weight-bold h3">{event.name}</CardTitle>
                           <CardText>{event.description}</CardText>
                         </div>
                         <StyledCardFooter className="bg-none mt-2">

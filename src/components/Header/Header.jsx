@@ -6,7 +6,7 @@ import { UserContext } from './../../App';
 import { logout } from '../../services/auth/authService';
 
 const Header = props => {
-  const { history, location } = props;
+  const { history } = props;
   const { user, updateUser } = useContext(UserContext);
 
   const navViewProps = {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
 import Media from 'react-media';
 import { sizes } from './../../../utils/styledSizes';
 import Block from '../../../components/Block/Block';
@@ -23,17 +22,27 @@ const MoviePage = props => {
   const { slug } = props.match.params;
   const [movieData, setMovieData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
   const [reload, setReload] = useState(false);
 
   const fetchMovie = async imdbId => {
     try {
       const foundMovie = await getMovie(imdbId);
-      if (foundMovie) {
+      if (foundMovie.error) {
+        console.error(foundMovie.error.message);
+        setError(foundMovie.error.message);
         setIsLoading(false);
-        setMovieData(foundMovie);
+        return;
       }
+      setError('');
+      setMovieData(foundMovie);
+      setIsLoading(false);
+      return;
     } catch (error) {
-      console.error('the error from fetchMovie', error);
+      console.error(error);
+      setError(error.message);
+      setIsLoading(false);
+      return;
     }
   };
 
@@ -43,8 +52,12 @@ const MoviePage = props => {
   };
 
   const foundEpisode = STAR_WARS_EPISODES.find(episode => episode.slug === slug);
+
   useEffect(() => {
-    if (foundEpisode) {
+    if (!foundEpisode) {
+      setError('Unable to find episode');
+      setIsLoading(false);
+    } else {
       fetchMovie(foundEpisode.imdb);
     }
   }, [reload]);
@@ -95,33 +108,45 @@ const MoviePage = props => {
 
   return (
     <main>
-      <Block container spacer={2}>
-        <div className="row">
-          <Media query={`(max-width: ${sizes.sm}px)`}>
-            {matches =>
-              matches ? (
-                <MovieMenuModal handleClick={handleClick} />
-              ) : (
-                <div className="col-sm-3">
-                  <MoviePageNav handleClick={handleClick} />
-                </div>
-              )
-            }
-          </Media>
-          <div className="col-sm-9">{isLoading ? <Spinner /> : renderMovieDetails()}</div>
-        </div>
-      </Block>
-      <Block container spacer={2}>
-        <iframe
-          src={`https://open.spotify.com/embed/album/${foundEpisode.spotifyId}`}
-          width="300"
-          height="380"
-          frameBorder="0"
-          allowtransparency="true"
-          allow="encrypted-media"
-          title="star wars album"
-        />
-      </Block>
+      {error ? (
+        <Block container spacer={2}>
+          <Title>{error}</Title>
+        </Block>
+      ) : (
+        <>
+          <Block container spacer={2}>
+            <div className="row">
+              <Media query={`(max-width: ${sizes.sm}px)`}>
+                {matches =>
+                  matches ? (
+                    <MovieMenuModal handleClick={handleClick} />
+                  ) : (
+                    <div className="col-sm-3">
+                      <MoviePageNav handleClick={handleClick} />
+                    </div>
+                  )
+                }
+              </Media>
+              <div className="col-sm-9">{isLoading ? <Spinner /> : renderMovieDetails()}</div>
+            </div>
+          </Block>
+          <Block container spacer={2}>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <iframe
+                src={`https://open.spotify.com/embed/album/${foundEpisode.spotifyId}`}
+                width="300"
+                height="380"
+                frameBorder="0"
+                allowtransparency="true"
+                allow="encrypted-media"
+                title="star wars album"
+              />
+            )}
+          </Block>
+        </>
+      )}
     </main>
   );
 };
