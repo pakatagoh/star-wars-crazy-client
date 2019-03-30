@@ -10,6 +10,7 @@ import { getEvent, updateEventAttendance } from '../../../services/event/eventSe
 import Spinner from './../../../components/Spinner/Spinner';
 import ButtonCrawl from '../../../components/Buttons/ButtonCrawl';
 import { Link } from 'react-router-dom';
+import { get } from 'http';
 
 const StyledImageWrapper = styled.div`
   width: 100%;
@@ -34,18 +35,19 @@ const StyledAvatar = styled.img`
 const EventPage = props => {
   const { id } = props.match.params;
   const [isLoading, setIsLoading] = useState(true);
-  const [event, setEvent] = useState({});
+  const [event, setEvent] = useState(null);
   const [error, setError] = useState('');
   const [isAttending, setIsAttending] = useState(false);
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, isLoading: userLoading } = useContext(UserContext);
+
+  const getAttendance = attendees => {
+    if (!user) return false;
+    if (attendees.length === 0) return false;
+    return attendees.some(attendee => attendee.id === user.id);
+  };
 
   const fetchEvent = async () => {
     try {
-      const getAttendance = attendees => {
-        if (!user) return false;
-        if (attendees.length === 0) return false;
-        return attendees.some(attendee => attendee.id === user.id);
-      };
       const response = await getEvent(id);
       if (response.error) {
         console.error(response.error);
@@ -57,9 +59,7 @@ const EventPage = props => {
       setEvent(response);
 
       const attending = getAttendance(response.attendees);
-      if (user && attending) {
-        setIsAttending(attending);
-      }
+      setIsAttending(attending);
       setIsLoading(false);
       return;
     } catch (error) {
@@ -80,7 +80,7 @@ const EventPage = props => {
       const { updatedEvent, updatedUserEvents } = response;
       setEvent(updatedEvent);
       setUser({ ...user, events: updatedUserEvents });
-      setIsAttending();
+      setIsAttending(!isAttending);
     } catch (error) {
       console.error(error);
       setError(error.message);
@@ -88,8 +88,13 @@ const EventPage = props => {
   };
 
   useEffect(() => {
-    fetchEvent();
-  }, []);
+    if (!event) {
+      fetchEvent();
+    }
+    if (event && !userLoading) {
+      getAttendance(event.attendees);
+    }
+  }, [userLoading]);
 
   return (
     <main>

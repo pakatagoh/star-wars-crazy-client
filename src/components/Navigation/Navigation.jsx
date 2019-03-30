@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Collapse, NavbarToggler, Nav, NavItem, Navbar } from 'reactstrap';
 import NavLogo from './NavLogo';
 import NavLinkWhite from './NavLinkWhite';
@@ -25,13 +26,19 @@ const Navigation = props => {
 
   const renderNavItemsRight = () => {
     return navItemsRight.map(item => {
-      if (item.text === 'Logout') {
+      if (item.type === 'button') {
         return (
           <div
             key={item.text}
-            className="d-flex justify-content-end justify-content-sm-start pt-2 pt-sm-0 pb-2 pb-sm-0"
+            className="d-flex justify-content-end justify-content-sm-start pt-2 pt-sm-0 pb-2 pb-sm-0 ml-sm-2"
           >
-            <ButtonCrawl onClick={handleLogout}>{item.text}</ButtonCrawl>
+            {item.to ? (
+              <Link to={item.to}>
+                <ButtonCrawl onClick={handleLogout}>{item.text}</ButtonCrawl>
+              </Link>
+            ) : (
+              <ButtonCrawl onClick={handleLogout}>{item.text}</ButtonCrawl>
+            )}
           </div>
         );
       }

@@ -36,7 +36,10 @@ const Header = props => {
   navViewProps.navItemsRight = [{ to: '/login', text: 'Login' }, { to: '/signup', text: 'Sign Up' }];
 
   if (user) {
-    navViewProps.navItemsRight = [{ text: 'Logout' }];
+    navViewProps.navItemsRight = [
+      { type: 'button', to: '/events/new', text: 'Create Event' },
+      { type: 'button', text: 'Logout' },
+    ];
   }
   return (
     <header className="bg-dark">
