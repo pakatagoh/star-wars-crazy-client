@@ -8,8 +8,8 @@ import Subtitle from './../../../components/Typography/Subtitle';
 import { UserContext } from './../../../App';
 import { getEvent, updateEventAttendance } from '../../../services/event/eventService';
 import Spinner from './../../../components/Spinner/Spinner';
-import ButtonCrawl from '../../../components/Buttons/ButtonCrawl';
 import { Link } from 'react-router-dom';
+import ButtonYellow from './../../../components/Buttons/ButtonYellow';
 
 const StyledImageWrapper = styled.div`
   width: 100%;
@@ -131,12 +131,12 @@ const EventPage = props => {
             <Row className="align-items-center mb-3">
               <Col xs={6}>
                 {user && !isAttending ? (
-                  <ButtonCrawl onClick={handleAttendance}>Attend</ButtonCrawl>
+                  <ButtonYellow onClick={handleAttendance}>Attend</ButtonYellow>
                 ) : user && isAttending ? (
-                  <ButtonCrawl onClick={handleAttendance}>Attending</ButtonCrawl>
+                  <ButtonYellow onClick={handleAttendance}>Attending</ButtonYellow>
                 ) : (
                   <Link to="/login">
-                    <ButtonCrawl>Login to attend</ButtonCrawl>
+                    <ButtonYellow>Login to attend</ButtonYellow>
                   </Link>
                 )}
               </Col>

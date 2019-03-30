@@ -9,6 +9,7 @@ import ButtonCrawl from './../../../components/Buttons/ButtonCrawl';
 import { UserContext } from './../../../App';
 import { getEvents, updateEventAttendance } from '../../../services/event/eventService';
 import Spinner from './../../../components/Spinner/Spinner';
+import ButtonYellow from './../../../components/Buttons/ButtonYellow';
 
 const StyledCardFooter = styled(CardFooter)`
   &.bg-none {
@@ -100,9 +101,6 @@ const EventsPage = props => {
 
   return (
     <main>
-      <Block container spacer={2}>
-        <Title as="h1">Events</Title>
-      </Block>
       {isLoading ? (
         <div className="d-flex justify-content-center">
           <Spinner />
@@ -114,49 +112,52 @@ const EventsPage = props => {
           ) : (
             <>
               {events.length > 0 ? (
-                <Row>
-                  {events.map(event => (
-                    <Col key={event.id} md={6} lg={4} className="mb-4">
-                      <Card className="bg-dark h-100">
-                        <CardImg
-                          top
-                          width="100%"
-                          src={event.imageUrl}
-                          alt={event.name}
-                          onError={e => {
-                            e.target.onerror = null;
-                            e.target.src =
-                              'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80';
-                          }}
-                        />
-                        <CardBody className="d-flex flex-column justify-content-between">
-                          <div>
-                            <CardTitle className="font-weight-bold h3">{event.name}</CardTitle>
-                            <CardText>{event.description}</CardText>
-                          </div>
-                          <StyledCardFooter className="bg-none mt-2">
-                            {user && event.isOrganizer ? (
-                              <Link to={`/events/${event.id}/edit`}>
-                                <ButtonCrawl>Edit</ButtonCrawl>
+                <>
+                  <Title as="h1">Events</Title>
+                  <Row>
+                    {events.map(event => (
+                      <Col key={event.id} md={6} lg={4} className="mb-4">
+                        <Card className="bg-dark h-100">
+                          <CardImg
+                            top
+                            width="100%"
+                            src={event.imageUrl}
+                            alt={event.name}
+                            onError={e => {
+                              e.target.onerror = null;
+                              e.target.src =
+                                'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80';
+                            }}
+                          />
+                          <CardBody className="d-flex flex-column justify-content-between">
+                            <div>
+                              <CardTitle className="font-weight-bold h3">{event.name}</CardTitle>
+                              <CardText>{event.description}</CardText>
+                            </div>
+                            <StyledCardFooter className="d-flex justify-content-between bg-none mt-2 pl-0 pr-0 ">
+                              {user && event.isOrganizer ? (
+                                <Link to={`/events/${event.id}/edit`}>
+                                  <ButtonYellow>Edit</ButtonYellow>
+                                </Link>
+                              ) : user && !event.isAttending ? (
+                                <ButtonYellow onClick={() => handleAttendance(event.id)}>Attend</ButtonYellow>
+                              ) : user && event.isAttending ? (
+                                <ButtonYellow onClick={() => handleAttendance(event.id)}>Attending</ButtonYellow>
+                              ) : (
+                                <Link to="/login">
+                                  <ButtonYellow>Login to attend</ButtonYellow>
+                                </Link>
+                              )}
+                              <Link to={`/events/${event.id}`}>
+                                <ButtonCrawl>Details</ButtonCrawl>
                               </Link>
-                            ) : user && !event.isAttending ? (
-                              <ButtonCrawl onClick={() => handleAttendance(event.id)}>Attend</ButtonCrawl>
-                            ) : user && event.isAttending ? (
-                              <ButtonCrawl onClick={() => handleAttendance(event.id)}>Attending</ButtonCrawl>
-                            ) : (
-                              <Link to="/login">
-                                <ButtonCrawl>Login to attend</ButtonCrawl>
-                              </Link>
-                            )}
-                            <Link to={`/events/${event.id}`}>
-                              <ButtonCrawl>Details</ButtonCrawl>
-                            </Link>
-                          </StyledCardFooter>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  ))}
-                </Row>
+                            </StyledCardFooter>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    ))}
+                  </Row>
+                </>
               ) : (
                 <Title as="h2">No events available</Title>
               )}

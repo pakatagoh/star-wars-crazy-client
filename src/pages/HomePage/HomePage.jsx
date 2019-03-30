@@ -101,7 +101,7 @@ const HomePage = () => {
         <Row>
           <Col lg={3}>
             <Block spacer={2}>
-              <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center justify-content-lg-start">
                 <Leaderboard leaderboard={leaderboard} />
               </div>
             </Block>

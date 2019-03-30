@@ -115,9 +115,11 @@ const MyEventsPage = props => {
                                 </div>
                                 <StyledCardFooter className="bg-none mt-2 d-flex justify-content-between pl-0 pr-0">
                                   <Link to={`/events/${event.id}/edit`}>
-                                    <ButtonCrawl>Edit</ButtonCrawl>
+                                    <ButtonYellow>Edit</ButtonYellow>
                                   </Link>
-                                  <ButtonYellow onClick={() => handleDelete(event.id)}>Delete</ButtonYellow>
+                                  <button className="btn btn-outline-danger" onClick={() => handleDelete(event.id)}>
+                                    Delete
+                                  </button>
                                   {deleteError && <p>{deleteError}</p>}
                                 </StyledCardFooter>
                               </CardBody>
