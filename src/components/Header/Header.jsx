@@ -6,8 +6,8 @@ import { UserContext } from './../../App';
 import { logout } from '../../services/auth/authService';
 
 const Header = props => {
-  const { history } = props;
-  const { user, setUser } = useContext(UserContext);
+  const { history, location } = props;
+  const { user, updateUser } = useContext(UserContext);
 
   const navViewProps = {
     navBrand: {
@@ -23,7 +23,7 @@ const Header = props => {
     try {
       const response = await logout();
       if (response.statusText === 'OK') {
-        setUser(null);
+        updateUser(null);
         localStorage.removeItem('user');
         history.push('/');
         return;
@@ -36,10 +36,7 @@ const Header = props => {
   navViewProps.navItemsRight = [{ to: '/login', text: 'Login' }, { to: '/signup', text: 'Sign Up' }];
 
   if (user) {
-    navViewProps.navItemsRight = [
-      { type: 'button', to: '/events/new', text: 'Create Event' },
-      { type: 'button', text: 'Logout' },
-    ];
+    navViewProps.navItemsRight = [{ to: '/me/events', text: 'Your Events' }, { type: 'button', text: 'Logout' }];
   }
   return (
     <header className="bg-dark">

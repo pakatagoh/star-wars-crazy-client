@@ -5,11 +5,13 @@ import LoginPage from './LoginPage/LoginPage';
 import SignupPage from './SignupPage/SignupPage';
 import MoviesRouting from './MoviesRouting/MoviesRouting';
 import EventsRouting from './EventsRouting/EventsRouting';
+import MeRouting from './MeRouting/MeRouting';
 
 const Routing = () => {
   return (
     <Switch>
       <Route exact path="/" component={HomePage} />
+      <Route path="/me" component={MeRouting} />
       <Route path="/movies" component={MoviesRouting} />
       <Route path="/events" component={EventsRouting} />
       <Route path="/login" component={LoginPage} />

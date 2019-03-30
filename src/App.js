@@ -19,8 +19,13 @@ const App = () => {
     setIsLoading(false);
   }, []);
 
+  const updateUser = data => {
+    localStorage.setItem('user', JSON.stringify(data));
+    setUser(data);
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading }}>
+    <UserContext.Provider value={{ user, updateUser, isLoading }}>
       <Header />
       <Routing />
       <Footer />

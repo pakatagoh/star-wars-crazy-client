@@ -34,7 +34,7 @@ const Navigation = props => {
           >
             {item.to ? (
               <Link to={item.to}>
-                <ButtonCrawl onClick={handleLogout}>{item.text}</ButtonCrawl>
+                <ButtonCrawl>{item.text}</ButtonCrawl>
               </Link>
             ) : (
               <ButtonCrawl onClick={handleLogout}>{item.text}</ButtonCrawl>

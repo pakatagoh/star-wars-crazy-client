@@ -51,3 +51,14 @@ export const updateEventAttendance = async id => {
     return { error };
   }
 };
+
+export const updateEvent = async (id, values) => {
+  try {
+    const response = await eventApi.put(`/v1/events/${id}`, values);
+    console.log('the updated event', response.data);
+    return response.data;
+  } catch (error) {
+    if (error.response) return error.response.data;
+    return { error };
+  }
+};

@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { produce } from 'immer';
 import styled from 'styled-components';
 import { Row, Col, Card, CardBody, CardTitle, CardText, CardImg, CardFooter } from 'reactstrap';
 import Title from '../../../components/Typography/Title';
 import Block from '../../../components/Block/Block';
 import ButtonCrawl from './../../../components/Buttons/ButtonCrawl';
 import { UserContext } from './../../../App';
-import { getEvents } from '../../../services/event/eventService';
+import { getEvents, updateEventAttendance } from '../../../services/event/eventService';
 import Spinner from './../../../components/Spinner/Spinner';
 
 const StyledCardFooter = styled(CardFooter)`
@@ -16,10 +17,22 @@ const StyledCardFooter = styled(CardFooter)`
 `;
 
 const EventsPage = props => {
-  const { user } = useContext(UserContext);
-  const [events, setEvents] = useState([]);
+  const { user, isLoading: userLoading, updateUser } = useContext(UserContext);
+  const [events, setEvents] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const addAttendance = events => {
+    const eventsWithAttendence = events.map(event => {
+      if (event.attendees.length === 0) {
+        event.isAttending = false;
+        return event;
+      }
+      event.isAttending = event.attendees.some(attendee => attendee.id === user.id);
+      return event;
+    });
+    setEvents(eventsWithAttendence);
+  };
 
   const fetchEvents = async () => {
     try {
@@ -32,6 +45,9 @@ const EventsPage = props => {
       }
       setError('');
       setEvents(response);
+      if (user) {
+        addAttendance(response);
+      }
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -40,25 +56,40 @@ const EventsPage = props => {
     }
   };
 
+  const handleAttendance = async eventId => {
+    try {
+      const response = await updateEventAttendance(eventId);
+      if (response.error) {
+        console.error(response.error);
+        setError(response.error.message);
+        return;
+      }
+      const { updatedEvent, updatedUserEvents } = response;
+      const eventsUpdater = produce(draft => {
+        const foundIndex = draft.findIndex(event => event.id === updatedEvent.id);
+        draft.splice(foundIndex, 1);
+        if (updatedEvent.length === 0) updatedEvent.isAttending = false;
+        updatedEvent.isAttending = updatedEvent.attendees.some(attendee => attendee.id === user.id);
+        draft.push(updatedEvent);
+      });
+      setEvents(eventsUpdater);
+      updateUser({ ...user, events: updatedUserEvents });
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+    }
+  };
+
   useEffect(() => {
-    fetchEvents();
-  }, []);
+    if (!userLoading) {
+      fetchEvents();
+    }
+  }, [userLoading]);
 
   return (
     <main>
       <Block container spacer={2}>
-        <Row className="align-items-center mb-3">
-          <Col sm={6}>
-            <Title as="h1">Events</Title>
-          </Col>
-          {user && !error && (
-            <Col sm={6} className="d-flex justify-content-sm-end">
-              <Link to="/events/new">
-                <ButtonCrawl>Create Event</ButtonCrawl>
-              </Link>
-            </Col>
-          )}
-        </Row>
+        <Title as="h1">Events</Title>
         {isLoading ? (
           <div className="d-flex justify-content-center">
             <Spinner />
@@ -79,8 +110,10 @@ const EventsPage = props => {
                           <CardText>{event.description}</CardText>
                         </div>
                         <StyledCardFooter className="bg-none mt-2">
-                          {user ? (
-                            <ButtonCrawl>Attend</ButtonCrawl>
+                          {user && !event.isAttending ? (
+                            <ButtonCrawl onClick={() => handleAttendance(event.id)}>Attend</ButtonCrawl>
+                          ) : user && event.isAttending ? (
+                            <ButtonCrawl onClick={() => handleAttendance(event.id)}>Attending</ButtonCrawl>
                           ) : (
                             <Link to="/login">
                               <ButtonCrawl>Login to attend</ButtonCrawl>

@@ -16,7 +16,7 @@ const HomePage = () => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [reset, setReset] = useState(false);
   const [leaderboard, setLeaderboard] = useState([]);
-  const { user, setUser } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
 
   const fetchQuizList = async () => {
     try {
@@ -64,10 +64,10 @@ const HomePage = () => {
         if (response.error) {
           console.error(response.error.message);
           localStorage.removeItem('user');
-          setUser(null);
+          updateUser(null);
           return;
         }
-        setUser({ ...user, score: submittedScore });
+        updateUser({ ...user, score: submittedScore });
         return;
       }
       setCurrentQuestionNum(state => state + 1);

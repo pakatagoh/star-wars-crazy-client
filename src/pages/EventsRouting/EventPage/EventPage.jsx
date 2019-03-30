@@ -10,7 +10,6 @@ import { getEvent, updateEventAttendance } from '../../../services/event/eventSe
 import Spinner from './../../../components/Spinner/Spinner';
 import ButtonCrawl from '../../../components/Buttons/ButtonCrawl';
 import { Link } from 'react-router-dom';
-import { get } from 'http';
 
 const StyledImageWrapper = styled.div`
   width: 100%;
@@ -38,7 +37,7 @@ const EventPage = props => {
   const [event, setEvent] = useState(null);
   const [error, setError] = useState('');
   const [isAttending, setIsAttending] = useState(false);
-  const { user, setUser, isLoading: userLoading } = useContext(UserContext);
+  const { user, updateUser, isLoading: userLoading } = useContext(UserContext);
 
   const getAttendance = attendees => {
     if (!user) return false;
@@ -57,6 +56,7 @@ const EventPage = props => {
       }
       setError('');
       setEvent(response);
+      getAttendance(response.attendees);
 
       const attending = getAttendance(response.attendees);
       setIsAttending(attending);
@@ -79,7 +79,7 @@ const EventPage = props => {
       }
       const { updatedEvent, updatedUserEvents } = response;
       setEvent(updatedEvent);
-      setUser({ ...user, events: updatedUserEvents });
+      updateUser({ ...user, events: updatedUserEvents });
       setIsAttending(!isAttending);
     } catch (error) {
       console.error(error);
@@ -88,11 +88,8 @@ const EventPage = props => {
   };
 
   useEffect(() => {
-    if (!event) {
+    if (!userLoading) {
       fetchEvent();
-    }
-    if (event && !userLoading) {
-      getAttendance(event.attendees);
     }
   }, [userLoading]);
 
@@ -123,7 +120,7 @@ const EventPage = props => {
             </Row>
           </Block>
           <Block container spacer={2}>
-            <Row className="align-items-center">
+            <Row className="align-items-center mb-3">
               <Col xs={6}>
                 {user && !isAttending ? (
                   <ButtonCrawl onClick={handleAttendance}>Attend</ButtonCrawl>
@@ -148,27 +145,19 @@ const EventPage = props => {
                 </div>
               </Col>
             </Row>
-            <div>
-              <Title as="h4">About the Event</Title>
-              <Paragraph>{event.description}</Paragraph>
-            </div>
-            <div>
-              <Title as="h4">Details</Title>
-              <Row>
-                <Col sm={6}>
-                  <Subtitle as="h5">Starts</Subtitle>
-                  <p>{event.eventStart}</p>
-                  <Subtitle as="h5">Ends</Subtitle>
-                  <p>{event.eventEnd}</p>
-                </Col>
-                <Col sm={6}>
-                  <Subtitle as="h5">Capacity</Subtitle>
-                  <p>{event.capacity}</p>
-                  <Subtitle as="h5">Availability</Subtitle>
-                  <p>{event.attendees.length < event.capacity ? 'Available' : 'Sold Out'}</p>
-                </Col>
-              </Row>
-            </div>
+            <Row>
+              <Col sm={6}>
+                <Title as="h4">About the Event</Title>
+                <Paragraph>{event.description}</Paragraph>
+              </Col>
+              <Col sm={6}>
+                <Title as="h4">Details</Title>
+                <Subtitle as="h5">Starts</Subtitle>
+                <p>{event.eventStart}</p>
+                <Subtitle as="h5">Ends</Subtitle>
+                <p>{event.eventEnd}</p>
+              </Col>
+            </Row>
           </Block>
         </>
       )}

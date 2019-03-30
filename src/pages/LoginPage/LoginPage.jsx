@@ -18,7 +18,7 @@ const loginSchema = Yup.object().shape({
 
 const LoginPage = props => {
   const { history } = props;
-  const { user, setUser } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
   const initialFormValues = {
     email: '',
     firstName: '',
@@ -59,8 +59,7 @@ const LoginPage = props => {
 
               actions.resetForm();
               actions.setSubmitting(false);
-              setUser(response.data);
-              localStorage.setItem('user', JSON.stringify(response.data));
+              updateUser(response.data);
               history.push('/');
               return;
             } catch (error) {
