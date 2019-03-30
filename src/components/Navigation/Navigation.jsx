@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { Collapse, NavbarToggler, Nav, NavItem, Navbar } from 'reactstrap';
 import NavLogo from './NavLogo';
 import NavLinkWhite from './NavLinkWhite';
-import ButtonCrawl from '../Buttons/ButtonCrawl';
-import { UserContext } from './../../App';
 import Spinner from '../Spinner/Spinner';
+import ButtonYellow from './../Buttons/ButtonYellow';
+import ButtonCrawl from './../Buttons/ButtonCrawl';
+import { UserContext } from './../../App';
 
 const StyledAvatar = styled.img`
   width: 40px;
@@ -55,7 +56,7 @@ const Navigation = props => {
                   <ButtonCrawl>{item.text}</ButtonCrawl>
                 </Link>
               ) : (
-                <ButtonCrawl onClick={handleLogout}>{item.text}</ButtonCrawl>
+                <ButtonYellow onClick={handleLogout}>{item.text}</ButtonYellow>
               )}
             </div>
           );

@@ -10,6 +10,7 @@ import ButtonCrawl from './../../../components/Buttons/ButtonCrawl';
 import { getUserEvents } from './../../../services/user/userService';
 import { UserContext } from './../../../App';
 import { deleteEvent } from '../../../services/event/eventService';
+import ButtonYellow from './../../../components/Buttons/ButtonYellow';
 
 const StyledCardFooter = styled(CardFooter)`
   &.bg-none {
@@ -86,9 +87,9 @@ const MyEventsPage = props => {
                         <Col sm={6}>
                           <Title>Your Events</Title>
                         </Col>
-                        <Col sm={6} className="d-flex justify-content-sm-end">
+                        <Col sm={6} className="d-flex justify-content-sm-end mb-4 mb-sm-0">
                           <Link to="/events/new">
-                            <ButtonCrawl>Create Event</ButtonCrawl>
+                            <ButtonYellow>Create Event</ButtonYellow>
                           </Link>
                         </Col>
                       </Row>
@@ -112,11 +113,11 @@ const MyEventsPage = props => {
                                   <CardTitle className="font-weight-bold h3">{event.name}</CardTitle>
                                   <CardText>{event.description}</CardText>
                                 </div>
-                                <StyledCardFooter className="bg-none mt-2">
+                                <StyledCardFooter className="bg-none mt-2 d-flex justify-content-between pl-0 pr-0">
                                   <Link to={`/events/${event.id}/edit`}>
                                     <ButtonCrawl>Edit</ButtonCrawl>
                                   </Link>
-                                  <ButtonCrawl onClick={() => handleDelete(event.id)}>Delete</ButtonCrawl>
+                                  <ButtonYellow onClick={() => handleDelete(event.id)}>Delete</ButtonYellow>
                                   {deleteError && <p>{deleteError}</p>}
                                 </StyledCardFooter>
                               </CardBody>
@@ -129,7 +130,7 @@ const MyEventsPage = props => {
                     <>
                       <Title>You have no events</Title>
                       <Link to="/events/new">
-                        <ButtonCrawl>Create Event</ButtonCrawl>
+                        <ButtonYellow>Create Event</ButtonYellow>
                       </Link>
                     </>
                   )}

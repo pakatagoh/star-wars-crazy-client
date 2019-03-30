@@ -1,13 +1,30 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import styled from 'styled-components';
 import * as Yup from 'yup';
 import { signup } from './../../services/auth/authService';
-import { UserContext } from './../../App';
 import Block from '../../components/Block/Block';
 import Title from '../../components/Typography/Title';
 import ButtonCrawl from '../../components/Buttons/ButtonCrawl';
-import { Link } from 'react-router-dom';
+import ButtonYellow from './../../components/Buttons/ButtonYellow';
+import { UserContext } from './../../App';
+
+const StyledFormikField = styled(Field)`
+  & {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 5px;
+    border: none;
+    border-bottom: 1px solid white;
+    background: none;
+    color: white;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 const signupSchema = Yup.object().shape({
   email: Yup.string()
@@ -81,19 +98,39 @@ const SignupPage = props => {
                 {!user && (
                   <>
                     <Form>
-                      <Field type="text" name="firstName" placeholder="First name" />
-                      <ErrorMessage name="firstName" />
-                      <Field type="text" name="lastName" placeholder="Last name" />
-                      <ErrorMessage name="lastName" />
-                      <Field type="text" name="imageUrl" placeholder="Image Url" />
-                      <ErrorMessage name="imageUrl" />
-                      <Field type="email" name="email" placeholder="Email" />
-                      <ErrorMessage name="email" />
-                      <Field type="password" name="password" placeholder="password" />
-                      <ErrorMessage name="password" />
-                      <button type="submit" disabled={!isValid || isSubmitting}>
+                      <div className="mb-2">
+                        <StyledFormikField type="text" name="firstName" placeholder="First name" />
+                      </div>
+                      <div className="mb-2">
+                        <ErrorMessage name="firstName" />
+                      </div>
+                      <div className="mb-2">
+                        <StyledFormikField type="text" name="lastName" placeholder="Last name" />
+                      </div>
+                      <div className="mb-2">
+                        <ErrorMessage name="lastName" />
+                      </div>
+                      <div className="mb-2">
+                        <StyledFormikField type="text" name="imageUrl" placeholder="Image Url" />
+                      </div>
+                      <div className="mb-2">
+                        <ErrorMessage name="imageUrl" />
+                      </div>
+                      <div className="mb-2">
+                        <StyledFormikField type="email" name="email" placeholder="Email" />
+                      </div>
+                      <div className="mb-2">
+                        <ErrorMessage name="email" />
+                      </div>
+                      <div className="mb-2">
+                        <StyledFormikField type="password" name="password" placeholder="password" />
+                      </div>
+                      <div className="mb-4">
+                        <ErrorMessage name="password" />
+                      </div>
+                      <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
                         Register
-                      </button>
+                      </ButtonYellow>
                     </Form>
                   </>
                 )}

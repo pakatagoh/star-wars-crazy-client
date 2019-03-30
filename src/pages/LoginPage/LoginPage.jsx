@@ -1,13 +1,30 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import { login } from './../../services/auth/authService';
-import { UserContext } from './../../App';
 import Title from '../../components/Typography/Title';
 import ButtonCrawl from '../../components/Buttons/ButtonCrawl';
 import Block from '../../components/Block/Block';
-import { Link } from 'react-router-dom';
+import ButtonYellow from './../../components/Buttons/ButtonYellow';
+import { login } from './../../services/auth/authService';
+import { UserContext } from './../../App';
+
+const StyledFormikField = styled(Field)`
+  & {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 5px;
+    border: none;
+    border-bottom: 1px solid white;
+    background: none;
+    color: white;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -29,9 +46,11 @@ const LoginPage = props => {
 
   return (
     <main>
-      <Block container spacer={2}>
-        {!user ? <Title>Login</Title> : <Title>You are already logged in</Title>}
-      </Block>
+      {user && (
+        <Block container spacer={2}>
+          <Title>You are already logged in</Title>
+        </Block>
+      )}
       <Block container spacer={2}>
         <Formik
           initialValues={initialFormValues}
@@ -78,14 +97,23 @@ const LoginPage = props => {
               <>
                 {!user && (
                   <>
+                    <Title>Login</Title>
                     <Form>
-                      <Field type="email" name="email" placeholder="Email" />
-                      <ErrorMessage name="email" />
-                      <Field type="password" name="password" placeholder="password" />
-                      <ErrorMessage name="password" />
-                      <button type="submit" disabled={!isValid || isSubmitting}>
+                      <div className="mb-2">
+                        <StyledFormikField type="email" name="email" placeholder="Email" />
+                      </div>
+                      <div className="mb-2">
+                        <ErrorMessage name="email" />
+                      </div>
+                      <div className="mb-2">
+                        <StyledFormikField type="password" name="password" placeholder="Password" />
+                      </div>
+                      <div className="mb-4">
+                        <ErrorMessage name="password" />
+                      </div>
+                      <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
                         Login
-                      </button>
+                      </ButtonYellow>
                     </Form>
                   </>
                 )}
