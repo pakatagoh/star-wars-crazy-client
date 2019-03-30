@@ -22,10 +22,6 @@ const MyEventsPage = props => {
   const { user, isLoading: isUserLoading } = useContext(UserContext);
   const [error, setError] = useState('');
 
-  if (!isUserLoading && !user) {
-    history.push('/login');
-  }
-
   const fetchUserEvents = async () => {
     const response = await getUserEvents();
     if (response.error) {
@@ -40,7 +36,10 @@ const MyEventsPage = props => {
   };
 
   useEffect(() => {
-    if (!isUserLoading) {
+    if (!isUserLoading && !user) {
+      history.push('/login');
+    }
+    if (!isUserLoading && user) {
       fetchUserEvents();
     }
   }, [isUserLoading]);

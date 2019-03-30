@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Block from './../../../components/Block/Block';
@@ -19,10 +19,6 @@ const EventPageNew = props => {
   const { history } = props;
   const { user, isLoading: isUserLoading } = useContext(UserContext);
 
-  if (!isUserLoading && !user) {
-    history.push('/login');
-  }
-
   const initialFormValues = {
     name: '',
     description: '',
@@ -30,6 +26,12 @@ const EventPageNew = props => {
     eventEnd: '',
     imageUrl: '',
   };
+
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      history.push('/login');
+    }
+  }, [isUserLoading]);
 
   return (
     <main>

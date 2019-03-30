@@ -43,9 +43,14 @@ const Navigation = props => {
         );
       }
       return (
-        <NavLinkWhite key={item.text} to={item.to} className="nav-link">
-          <NavItem>{item.text}</NavItem>
-        </NavLinkWhite>
+        <div
+          key={item.text}
+          className="d-flex justify-content-end justify-content-sm-start pt-2 pt-sm-0 pb-2 pb-sm-0 ml-sm-2"
+        >
+          <NavLinkWhite key={item.text} to={item.to} className="nav-link">
+            <NavItem>{item.text}</NavItem>
+          </NavLinkWhite>
+        </div>
       );
     });
   };
