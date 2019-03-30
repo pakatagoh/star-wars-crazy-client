@@ -41,7 +41,7 @@ const MyEventsPage = props => {
   const handleDelete = async id => {
     const response = await deleteEvent(id);
     if (response.error) {
-      console.error(response.error.message);
+      console.error(response.error.message || response.error);
       setDeleteError('Something went wrong when deleting, please try again');
       return;
     }

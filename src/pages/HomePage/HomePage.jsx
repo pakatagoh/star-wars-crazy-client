@@ -99,12 +99,14 @@ const HomePage = () => {
     <main data-testid="home-page">
       <Container>
         <Row>
-          <Col md={3}>
+          <Col lg={3}>
             <Block spacer={2}>
-              <Leaderboard leaderboard={leaderboard} />
+              <div className="d-flex justify-content-center">
+                <Leaderboard leaderboard={leaderboard} />
+              </div>
             </Block>
           </Col>
-          <Col md={9}>
+          <Col lg={9}>
             <Block spacer={2}>
               <Quiz
                 isCompleted={isCompleted}
