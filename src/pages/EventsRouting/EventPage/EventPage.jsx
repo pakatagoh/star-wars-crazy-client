@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col } from 'reactstrap';
+import { parse, format } from 'date-fns';
 import styled from 'styled-components';
 import Title from './../../../components/Typography/Title';
 import Block from '../../../components/Block/Block';
@@ -30,6 +31,8 @@ const StyledAvatar = styled.img`
   object-fit: cover;
   object-position: center;
 `;
+
+const makeDateTimeNice = dateTime => format(dateTime, 'D MMM YYYY, h:mm A');
 
 const EventPage = props => {
   const { id } = props.match.params;
@@ -161,9 +164,9 @@ const EventPage = props => {
               <Col sm={6}>
                 <Title as="h4">Details</Title>
                 <Subtitle as="h5">Starts</Subtitle>
-                <p>{event.eventStart}</p>
+                <p>{makeDateTimeNice(event.eventStart)}</p>
                 <Subtitle as="h5">Ends</Subtitle>
-                <p>{event.eventEnd}</p>
+                <p>{makeDateTimeNice(event.eventEnd)}</p>
               </Col>
             </Row>
           </Block>

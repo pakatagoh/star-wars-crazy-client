@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import DatePicker from 'react-datepicker';
 import { parse, addDays } from 'date-fns';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -8,6 +7,7 @@ import Block from './../../../components/Block/Block';
 import Title from './../../../components/Typography/Title';
 import Spinner from './../../../components/Spinner/Spinner';
 import ButtonYellow from './../../../components/Buttons/ButtonYellow';
+import MyDatePicker from './../../../components/DatePicker/MyDatePicker';
 import { createEvent } from './../../../services/event/eventService';
 import { UserContext } from './../../../App';
 
@@ -43,36 +43,6 @@ const StyledFormikTextArea = styled(Field)`
     outline: none;
   }
 `;
-
-const MyDatePicker = ({
-  field, // { name, value, onChange, onBlur }
-  form: { touched, errors, setFieldValue, setFieldTouched }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-  ...props
-}) => {
-  const onChange = value => {
-    setFieldValue(field.name, value);
-  };
-  const onBlur = () => {
-    setFieldTouched(field.name, true);
-  };
-  return (
-    <>
-      <DatePicker
-        selected={field.value}
-        onChange={onChange}
-        onBlur={onBlur}
-        minDate={new Date()}
-        todayButton={'Today'}
-        showTimeSelect
-        timeFormat="HH:mm"
-        dateFormat="MMMM d, yyyy h:mm aa"
-        timeIntervals={30}
-        {...props}
-      />
-      {touched[field.name] && errors[field.name] && <div>{errors[field.name]}</div>}
-    </>
-  );
-};
 
 const eventSchema = Yup.object().shape({
   name: Yup.string().required('Event name is required'),

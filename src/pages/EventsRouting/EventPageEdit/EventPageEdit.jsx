@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { parse } from 'date-fns';
 import * as Yup from 'yup';
 import Block from '../../../components/Block/Block';
 import Title from '../../../components/Typography/Title';
@@ -8,6 +9,7 @@ import Spinner from '../../../components/Spinner/Spinner';
 import ButtonYellow from './../../../components/Buttons/ButtonYellow';
 import { UserContext } from '../../../App';
 import { getEvent, updateEvent } from './../../../services/event/eventService';
+import MyDatePicker from './../../../components/DatePicker/MyDatePicker';
 
 const StyledFormikField = styled(Field)`
   & {
@@ -65,8 +67,8 @@ const EventPageEdit = props => {
     setInitialFormValues({
       name: response.name,
       description: response.description,
-      eventStart: response.eventStart,
-      eventEnd: response.eventEnd,
+      eventStart: parse(response.eventStart),
+      eventEnd: parse(response.eventEnd),
       imageUrl: response.imageUrl,
     });
   };
@@ -157,13 +159,13 @@ const EventPageEdit = props => {
                           <ErrorMessage name="description" />
                         </div>
                         <div className="mb-4">
-                          <StyledFormikField type="text" name="eventStart" placeholder="Start date and time" />
+                          <StyledFormikField name="eventStart" component={MyDatePicker} />
                         </div>
                         <div className="mb-4">
                           <ErrorMessage name="eventStart" />
                         </div>
                         <div className="mb-4">
-                          <StyledFormikField type="text" name="eventEnd" placeholder="End date and time" />
+                          <StyledFormikField name="eventEnd" component={MyDatePicker} />
                         </div>
                         <div className="mb-4">
                           <ErrorMessage name="eventEnd" />
