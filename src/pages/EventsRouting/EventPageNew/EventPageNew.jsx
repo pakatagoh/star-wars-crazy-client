@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import DatePicker from 'react-datepicker';
+import { parse, addDays } from 'date-fns';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Block from './../../../components/Block/Block';
@@ -8,6 +10,8 @@ import Spinner from './../../../components/Spinner/Spinner';
 import ButtonYellow from './../../../components/Buttons/ButtonYellow';
 import { createEvent } from './../../../services/event/eventService';
 import { UserContext } from './../../../App';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 const StyledFormikField = styled(Field)`
   & {
@@ -40,6 +44,36 @@ const StyledFormikTextArea = styled(Field)`
   }
 `;
 
+const MyDatePicker = ({
+  field, // { name, value, onChange, onBlur }
+  form: { touched, errors, setFieldValue, setFieldTouched }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+  ...props
+}) => {
+  const onChange = value => {
+    setFieldValue(field.name, value);
+  };
+  const onBlur = () => {
+    setFieldTouched(field.name, true);
+  };
+  return (
+    <>
+      <DatePicker
+        selected={field.value}
+        onChange={onChange}
+        onBlur={onBlur}
+        minDate={new Date()}
+        todayButton={'Today'}
+        showTimeSelect
+        timeFormat="HH:mm"
+        dateFormat="MMMM d, yyyy h:mm aa"
+        timeIntervals={30}
+        {...props}
+      />
+      {touched[field.name] && errors[field.name] && <div>{errors[field.name]}</div>}
+    </>
+  );
+};
+
 const eventSchema = Yup.object().shape({
   name: Yup.string().required('Event name is required'),
   description: Yup.string().required('Event description is required'),
@@ -55,8 +89,8 @@ const EventPageNew = props => {
   const initialFormValues = {
     name: '',
     description: '',
-    eventStart: '',
-    eventEnd: '',
+    eventStart: parse(Date.now()),
+    eventEnd: addDays(Date.now(), 2),
     imageUrl: '',
   };
 
@@ -138,13 +172,13 @@ const EventPageNew = props => {
                         <ErrorMessage name="description" />
                       </div>
                       <div className="mb-4">
-                        <StyledFormikField type="text" name="eventStart" placeholder="Start date and time" />
+                        <StyledFormikField name="eventStart" type="text" component={MyDatePicker} />
                       </div>
                       <div className="mb-4">
                         <ErrorMessage name="eventStart" />
                       </div>
                       <div className="mb-4">
-                        <StyledFormikField type="text" name="eventEnd" placeholder="End date and time" />
+                        <StyledFormikField name="eventEnd" type="text" component={MyDatePicker} />
                       </div>
                       <div className="mb-4">
                         <ErrorMessage name="eventEnd" />
