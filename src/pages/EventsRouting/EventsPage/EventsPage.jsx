@@ -83,7 +83,7 @@ const EventsPage = props => {
         }
         if (updatedEvent.length === 0) updatedEvent.isAttending = false;
         updatedEvent.isAttending = updatedEvent.attendees.some(attendee => attendee.id === user.id);
-        draft.push(updatedEvent);
+        draft.splice(foundIndex, 0, updatedEvent);
       });
       setEvents(eventsUpdater);
       updateUser({ ...user, events: updatedUserEvents });
