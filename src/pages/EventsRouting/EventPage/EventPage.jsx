@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col } from 'reactstrap';
-import { parse, format } from 'date-fns';
+import { format } from 'date-fns';
 import styled from 'styled-components';
 import Title from './../../../components/Typography/Title';
 import Block from '../../../components/Block/Block';
