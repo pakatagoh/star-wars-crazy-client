@@ -60,7 +60,7 @@ const MoviePage = props => {
     } else {
       fetchMovie(foundEpisode.imdb);
     }
-  }, [reload]);
+  }, [foundEpisode, reload]);
 
   const { overview, release_date, title, vote_average, cast, imageSrc } = movieData;
   const renderMovieDetails = () => {
