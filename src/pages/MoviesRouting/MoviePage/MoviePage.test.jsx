@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { render, waitForElement, fireEvent } from 'react-testing-library';
+import { render, waitForElement, fireEvent, wait } from 'react-testing-library';
 import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
 
@@ -74,16 +74,18 @@ describe('MoviePage Component', () => {
     movieService.getMovie.mockRestore();
   });
 
-  test('should display sidebar nav of star wars episodes', () => {
+  test('should display sidebar nav of star wars episodes', async () => {
     const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
 
-    expect(getByText(/episode 1/i)).toBeInTheDocument();
-    expect(getByText(/episode 2/i)).toBeInTheDocument();
-    expect(getByText(/episode 3/i)).toBeInTheDocument();
-    expect(getByText(/episode 4/i)).toBeInTheDocument();
-    expect(getByText(/episode 5/i)).toBeInTheDocument();
-    expect(getByText(/episode 6/i)).toBeInTheDocument();
-    expect(getByText(/episode 7/i)).toBeInTheDocument();
+    await wait(() => {
+      expect(getByText(/episode 1/i)).toBeInTheDocument();
+      expect(getByText(/episode 2/i)).toBeInTheDocument();
+      expect(getByText(/episode 3/i)).toBeInTheDocument();
+      expect(getByText(/episode 4/i)).toBeInTheDocument();
+      expect(getByText(/episode 5/i)).toBeInTheDocument();
+      expect(getByText(/episode 6/i)).toBeInTheDocument();
+      expect(getByText(/episode 7/i)).toBeInTheDocument();
+    });
   });
 
   test('should should display a poster image', async () => {
@@ -137,16 +139,18 @@ describe('MoviePage Component with viewport less than sm size', () => {
     movieService.getMovie.mockRestore();
   });
 
-  test('should display fixed menu button', () => {
+  test('should display fixed menu button', async () => {
     const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
 
-    expect(getByText('Episodes')).toBeInTheDocument();
+    await wait(() => {
+      expect(getByText('Episodes')).toBeInTheDocument();
+    });
   });
 
-  test('should display nav of star wars episodes after clicking Episode Menu button', () => {
+  test('should display nav of star wars episodes after clicking Episode Menu button', async () => {
     const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
 
-    const episodeMenuButton = getByText('Episodes');
+    const [episodeMenuButton] = await waitForElement(() => [getByText('Episodes')]);
 
     fireEvent.click(episodeMenuButton);
 
@@ -159,10 +163,10 @@ describe('MoviePage Component with viewport less than sm size', () => {
     expect(getByText(/episode 7/i)).toBeInTheDocument();
   });
 
-  test('should display close button after clicking on Episode Menu button', () => {
+  test('should display close button after clicking on Episode Menu button', async () => {
     const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
 
-    const episodeMenuButton = getByText('Episodes');
+    const [episodeMenuButton] = await waitForElement(() => [getByText('Episodes')]);
 
     fireEvent.click(episodeMenuButton);
 

@@ -116,27 +116,27 @@ const MoviePage = props => {
 
   return (
     <main>
-      <>
-        <Block container spacer={2}>
-          <div className="row">
-            <Media query={`(max-width: ${sizes.sm}px)`}>
-              {matches =>
-                matches ? (
-                  <MovieMenuModal handleClick={handleClick} />
-                ) : (
-                  <div className="col-sm-3">
-                    <MoviePageNav handleClick={handleClick} />
-                  </div>
-                )
-              }
-            </Media>
-            <div className="col-sm-9">{isLoading ? <Spinner /> : renderMovieDetails()}</div>
-          </div>
-        </Block>
-        <Block container spacer={2}>
-          {isLoading ? (
-            <Spinner />
-          ) : (
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <Block container spacer={2}>
+            <div className="row">
+              <Media query={`(max-width: ${sizes.sm}px)`}>
+                {matches =>
+                  matches ? (
+                    <MovieMenuModal handleClick={handleClick} />
+                  ) : (
+                    <div className="col-sm-3">
+                      <MoviePageNav handleClick={handleClick} />
+                    </div>
+                  )
+                }
+              </Media>
+              <div className="col-sm-9">{renderMovieDetails()}</div>
+            </div>
+          </Block>
+          <Block container spacer={2}>
             <iframe
               src={`https://open.spotify.com/embed/album/${foundEpisode.spotifyId}`}
               width="300"
@@ -146,9 +146,9 @@ const MoviePage = props => {
               allow="encrypted-media"
               title="star wars album"
             />
-          )}
-        </Block>
-      </>
+          </Block>
+        </>
+      )}
     </main>
   );
 };
