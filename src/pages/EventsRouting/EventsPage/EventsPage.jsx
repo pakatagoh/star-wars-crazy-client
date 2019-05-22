@@ -23,47 +23,6 @@ const EventsPage = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const addAttendanceAndOrganizer = events => {
-    const eventsWithAttendenceAndOrganizer = events.map(event => {
-      if (event.organizer.id === user.id) {
-        event.isOrganizer = true;
-      } else {
-        event.isOrganizer = false;
-      }
-
-      if (event.attendees.length === 0) {
-        event.isAttending = false;
-        return event;
-      }
-      event.isAttending = event.attendees.some(attendee => attendee.id === user.id);
-
-      return event;
-    });
-    setEvents(eventsWithAttendenceAndOrganizer);
-  };
-
-  const fetchEvents = async () => {
-    try {
-      const response = await getEvents();
-      if (response.error) {
-        console.error(response.error.message);
-        setError(response.error);
-        setIsLoading(false);
-        return;
-      }
-      setError('');
-      setEvents(response);
-      if (user) {
-        addAttendanceAndOrganizer(response);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-      setError(error.message);
-      setIsLoading(false);
-    }
-  };
-
   const handleAttendance = async eventId => {
     try {
       const response = await updateEventAttendance(eventId);
@@ -94,10 +53,49 @@ const EventsPage = props => {
   };
 
   useEffect(() => {
+    const addAttendanceAndOrganizer = events => {
+      const eventsWithAttendenceAndOrganizer = events.map(event => {
+        if (event.organizer.id === user.id) {
+          event.isOrganizer = true;
+        } else {
+          event.isOrganizer = false;
+        }
+
+        if (event.attendees.length === 0) {
+          event.isAttending = false;
+          return event;
+        }
+        event.isAttending = event.attendees.some(attendee => attendee.id === user.id);
+
+        return event;
+      });
+      setEvents(eventsWithAttendenceAndOrganizer);
+    };
+    const fetchEvents = async () => {
+      try {
+        const response = await getEvents();
+        if (response.error) {
+          console.error(response.error.message);
+          setError(response.error);
+          setIsLoading(false);
+          return;
+        }
+        setError('');
+        setEvents(response);
+        if (user) {
+          addAttendanceAndOrganizer(response);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setError(error.message);
+        setIsLoading(false);
+      }
+    };
     if (!userLoading) {
       fetchEvents();
     }
-  }, [userLoading]);
+  }, [user, userLoading]);
 
   return (
     <main>
