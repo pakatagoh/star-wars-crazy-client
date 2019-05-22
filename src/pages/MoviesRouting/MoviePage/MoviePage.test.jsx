@@ -169,3 +169,25 @@ describe('MoviePage Component with viewport less than sm size', () => {
     expect(getByText('Close')).toBeInTheDocument();
   });
 });
+
+describe('MoviePage Component with error handling', () => {
+  beforeEach(() => {
+    window.matchMedia = () => ({
+      matches: true,
+      addListener: () => {},
+      removeListener: () => {},
+    });
+  });
+
+  test('should show error message if cannot find episode', () => {
+    const badMatch = {
+      params: {
+        slug: 'episode-10',
+      },
+    };
+
+    const { getByText } = renderWithRouter(<MoviePage match={badMatch} />, { route: '/movies/episode-10' });
+
+    expect(getByText(/unable to find episode/i)).toBeInTheDocument();
+  });
+});
