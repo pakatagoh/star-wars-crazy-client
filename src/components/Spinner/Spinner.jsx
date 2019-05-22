@@ -33,7 +33,7 @@ const Spinner = () => {
   return (
     <div className="d-flex justify-content-center">
       <StyledImageWrapper>
-        <StyledImage src="https://i.pinimg.com/originals/60/b7/30/60b73041000047d4e8737d4eee9c5a08.png" />
+        <StyledImage src="https://i.pinimg.com/originals/60/b7/30/60b73041000047d4e8737d4eee9c5a08.png" alt="spinner" />
       </StyledImageWrapper>
     </div>
   );
