@@ -23,7 +23,6 @@ const MoviePage = props => {
   const [movieData, setMovieData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [reload, setReload] = useState(false);
 
   const fetchMovie = async imdbId => {
     try {
@@ -48,7 +47,6 @@ const MoviePage = props => {
 
   const handleClick = () => {
     setIsLoading(true);
-    setReload(!reload);
   };
 
   const foundEpisode = STAR_WARS_EPISODES.find(episode => episode.slug === slug);
@@ -60,7 +58,7 @@ const MoviePage = props => {
     } else {
       fetchMovie(foundEpisode.imdb);
     }
-  }, [foundEpisode, reload]);
+  }, [foundEpisode]);
 
   const { overview, release_date, title, vote_average, cast, imageSrc } = movieData;
   const renderMovieDetails = () => {
