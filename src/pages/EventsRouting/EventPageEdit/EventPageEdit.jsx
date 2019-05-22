@@ -57,30 +57,29 @@ const EventPageEdit = props => {
   const [error, setError] = useState('');
   const { user, isLoading: isUserLoading } = useContext(UserContext);
 
-  const fetchEvent = async () => {
-    const response = await getEvent(id);
-    if (response.error) {
-      console.error(response.error);
-      setError(response.error.message);
-      return;
-    }
-    setInitialFormValues({
-      name: response.name,
-      description: response.description,
-      eventStart: parse(response.eventStart),
-      eventEnd: parse(response.eventEnd),
-      imageUrl: response.imageUrl,
-    });
-  };
-
   useEffect(() => {
+    const fetchEvent = async () => {
+      const response = await getEvent(id);
+      if (response.error) {
+        console.error(response.error);
+        setError(response.error.message);
+        return;
+      }
+      setInitialFormValues({
+        name: response.name,
+        description: response.description,
+        eventStart: parse(response.eventStart),
+        eventEnd: parse(response.eventEnd),
+        imageUrl: response.imageUrl,
+      });
+    };
     if (!isUserLoading && !user) {
       history.push('/login');
     }
     if (!isUserLoading && user) {
       fetchEvent();
     }
-  }, [isUserLoading]);
+  }, [history, id, isUserLoading, user]);
 
   return (
     <main>
