@@ -190,4 +190,19 @@ describe('MoviePage Component with error handling', () => {
 
     expect(getByText(/unable to find episode/i)).toBeInTheDocument();
   });
+
+  test('should show error message if fetch fails', async () => {
+    jest.spyOn(movieService, 'getMovie').mockImplementation(() =>
+      Promise.resolve({
+        error: {
+          message: 'something went wrong with retrieving movie data',
+        },
+      })
+    );
+    const { getByText } = renderWithRouter(<MoviePage match={match} />, { route: '/movies/episode-1' });
+
+    const [error] = await waitForElement(() => [getByText(/something went wrong with retrieving movie data/i)]);
+
+    expect(error).toBeInTheDocument();
+  });
 });
