@@ -106,47 +106,49 @@ const MoviePage = props => {
     );
   };
 
+  if (error) {
+    return (
+      <Block container spacer={2}>
+        <Title>{error}</Title>
+      </Block>
+    );
+  }
+
   return (
     <main>
-      {error ? (
+      <>
         <Block container spacer={2}>
-          <Title>{error}</Title>
+          <div className="row">
+            <Media query={`(max-width: ${sizes.sm}px)`}>
+              {matches =>
+                matches ? (
+                  <MovieMenuModal handleClick={handleClick} />
+                ) : (
+                  <div className="col-sm-3">
+                    <MoviePageNav handleClick={handleClick} />
+                  </div>
+                )
+              }
+            </Media>
+            <div className="col-sm-9">{isLoading ? <Spinner /> : renderMovieDetails()}</div>
+          </div>
         </Block>
-      ) : (
-        <>
-          <Block container spacer={2}>
-            <div className="row">
-              <Media query={`(max-width: ${sizes.sm}px)`}>
-                {matches =>
-                  matches ? (
-                    <MovieMenuModal handleClick={handleClick} />
-                  ) : (
-                    <div className="col-sm-3">
-                      <MoviePageNav handleClick={handleClick} />
-                    </div>
-                  )
-                }
-              </Media>
-              <div className="col-sm-9">{isLoading ? <Spinner /> : renderMovieDetails()}</div>
-            </div>
-          </Block>
-          <Block container spacer={2}>
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              <iframe
-                src={`https://open.spotify.com/embed/album/${foundEpisode.spotifyId}`}
-                width="300"
-                height="380"
-                frameBorder="0"
-                allowtransparency="true"
-                allow="encrypted-media"
-                title="star wars album"
-              />
-            )}
-          </Block>
-        </>
-      )}
+        <Block container spacer={2}>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <iframe
+              src={`https://open.spotify.com/embed/album/${foundEpisode.spotifyId}`}
+              width="300"
+              height="380"
+              frameBorder="0"
+              allowtransparency="true"
+              allow="encrypted-media"
+              title="star wars album"
+            />
+          )}
+        </Block>
+      </>
     </main>
   );
 };
