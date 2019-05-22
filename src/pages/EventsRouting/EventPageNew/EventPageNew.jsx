@@ -68,7 +68,7 @@ const EventPageNew = props => {
     if (!isUserLoading && !user) {
       history.push('/login');
     }
-  }, [isUserLoading]);
+  }, [history, isUserLoading, user]);
 
   return (
     <main>
