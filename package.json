@@ -30,7 +30,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "lint-staged && npm test -- --no-watch"
+      "pre-push": "lint-staged && npm test -- --watchAll=false"
     }
   },
   "lint-staged": {
