@@ -42,36 +42,6 @@ const EventPage = props => {
   const [isAttending, setIsAttending] = useState(false);
   const { user, updateUser, isLoading: userLoading } = useContext(UserContext);
 
-  const getAttendance = attendees => {
-    if (!user) return false;
-    if (attendees.length === 0) return false;
-    return attendees.some(attendee => attendee.id === user.id);
-  };
-
-  const fetchEvent = async () => {
-    try {
-      const response = await getEvent(id);
-      if (response.error) {
-        console.error(response.error.message);
-        setError('Something went wrong, unable to load event');
-        setIsLoading(false);
-        return;
-      }
-      setError('');
-      setEvent(response);
-      getAttendance(response.attendees);
-
-      const attending = getAttendance(response.attendees);
-      setIsAttending(attending);
-      setIsLoading(false);
-      return;
-    } catch (error) {
-      console.error(error);
-      setError(error.message);
-      setIsLoading(false);
-    }
-  };
-
   const handleAttendance = async () => {
     try {
       const response = await updateEventAttendance(id);
@@ -91,10 +61,39 @@ const EventPage = props => {
   };
 
   useEffect(() => {
+    const getAttendance = attendees => {
+      if (!user) return false;
+      if (attendees.length === 0) return false;
+      return attendees.some(attendee => attendee.id === user.id);
+    };
+
+    const fetchEvent = async () => {
+      try {
+        const response = await getEvent(id);
+        if (response.error) {
+          console.error(response.error.message);
+          setError('Something went wrong, unable to load event');
+          setIsLoading(false);
+          return;
+        }
+        setError('');
+        setEvent(response);
+        getAttendance(response.attendees);
+
+        const attending = getAttendance(response.attendees);
+        setIsAttending(attending);
+        setIsLoading(false);
+        return;
+      } catch (error) {
+        console.error(error);
+        setError(error.message);
+        setIsLoading(false);
+      }
+    };
     if (!userLoading) {
       fetchEvent();
     }
-  }, [userLoading]);
+  }, [id, user, userLoading]);
 
   return (
     <main>
