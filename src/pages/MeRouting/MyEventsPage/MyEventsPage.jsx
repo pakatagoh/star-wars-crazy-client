@@ -18,7 +18,6 @@ const StyledCardFooter = styled(CardFooter)`
 `;
 
 const MyEventsPage = props => {
-  const { history } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState('');
   const { user, isLoading: isUserLoading } = useContext(UserContext);
@@ -54,13 +53,14 @@ const MyEventsPage = props => {
   };
 
   useEffect(() => {
+    const { history } = props;
     if (!isUserLoading && !user) {
       history.push('/login');
     }
     if (!isUserLoading && user) {
       fetchUserEvents();
     }
-  }, [isUserLoading]);
+  }, [isUserLoading, props, user]);
 
   return (
     <main>
