@@ -42,55 +42,52 @@ const LoginPage = props => {
 
   return (
     <main>
-      {user && (
+      {user ? (
         <Block container spacer={2}>
           <Title>You are already logged in</Title>
         </Block>
-      )}
-      <Block container spacer={2}>
-        <FormikSkeleton
-          initialValues={initialFormValues}
-          schema={loginSchema}
-          apiCall={login}
-          redirectPath="/"
-          successAction={updateUser}
-          history={history}
-        >
-          {(isSubmitting, isValid) => {
-            return (
-              <>
-                {!user && (
-                  <>
-                    <Title>Login</Title>
-                    <Form>
-                      {FIELDS.map(field => (
-                        <InputField
-                          key={field.name}
-                          type={field.type}
-                          name={field.name}
-                          placeholder={field.placeholder}
-                          margin={2}
-                          maxWidth={300}
-                        />
-                      ))}
-                      <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
-                        Login
-                      </ButtonYellow>
-                    </Form>
-                  </>
-                )}
-              </>
-            );
-          }}
-        </FormikSkeleton>
-      </Block>
-      {!user && (
-        <Block container spacer={2}>
-          <Title as="h5">Don't have an account?</Title>
-          <Link to="/signup">
-            <ButtonCrawl>Signup</ButtonCrawl>
-          </Link>
-        </Block>
+      ) : (
+        <>
+          <Block container spacer={1}>
+            <Title>Login</Title>
+          </Block>
+          <Block container spacer={2}>
+            <FormikSkeleton
+              initialValues={initialFormValues}
+              schema={loginSchema}
+              apiCall={login}
+              redirectPath="/"
+              successAction={updateUser}
+              history={history}
+            >
+              {(isSubmitting, isValid) => {
+                return (
+                  <Form>
+                    {FIELDS.map(field => (
+                      <InputField
+                        key={field.name}
+                        type={field.type}
+                        name={field.name}
+                        placeholder={field.placeholder}
+                        margin={2}
+                        maxWidth={300}
+                      />
+                    ))}
+                    <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
+                      Login
+                    </ButtonYellow>
+                  </Form>
+                );
+              }}
+            </FormikSkeleton>
+          </Block>
+          <Block container spacer={2}>
+            <Title as="h5">Don't have an account?</Title>
+            <Link to="/signup">
+              <ButtonCrawl>Signup</ButtonCrawl>
+            </Link>
+          </Block>
+        </>
       )}
     </main>
   );

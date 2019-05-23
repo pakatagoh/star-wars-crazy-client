@@ -64,7 +64,7 @@ const SignupPage = props => {
         </Block>
       ) : (
         <>
-          <Block container spacer={2}>
+          <Block container spacer={1}>
             <Title>Sign up for some Star Wars fun</Title>
           </Block>
 
