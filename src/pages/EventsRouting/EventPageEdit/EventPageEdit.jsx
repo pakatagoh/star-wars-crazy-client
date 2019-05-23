@@ -83,7 +83,6 @@ const EventPageEdit = props => {
               history={history}
             >
               {(isSubmitting, isValid) => {
-                console.log('isValid: ', isValid);
                 return (
                   <Form>
                     <InputField type="text" name="name" placeholder="Event Name" margin={4} />
