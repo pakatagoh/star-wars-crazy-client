@@ -17,6 +17,9 @@ const StyledCardFooter = styled(CardFooter)`
   }
 `;
 
+const FALLBACK_IMAGE =
+  'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80';
+
 const MyEventsPage = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState('');
@@ -99,12 +102,11 @@ const MyEventsPage = props => {
                               <CardImg
                                 top
                                 width="100%"
-                                src={event.imageUrl}
+                                src={event.imageUrl || FALLBACK_IMAGE}
                                 alt={event.name}
                                 onError={e => {
                                   e.target.onerror = null;
-                                  e.target.src =
-                                    'https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2098&q=80';
+                                  e.target.src = FALLBACK_IMAGE;
                                 }}
                               />
                               <CardBody className="d-flex flex-column justify-content-between">
