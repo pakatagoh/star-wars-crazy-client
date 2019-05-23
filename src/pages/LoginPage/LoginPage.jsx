@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { Form, Field, ErrorMessage } from 'formik';
+import { Form } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import Title from '../../components/Typography/Title';
@@ -10,22 +9,7 @@ import ButtonYellow from './../../components/Buttons/ButtonYellow';
 import { login } from './../../services/auth/authService';
 import { UserContext } from './../../App';
 import FormikSkeleton from './../../components/Form/FormikSkeleton';
-
-const StyledFormikField = styled(Field)`
-  & {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px 5px;
-    border: none;
-    border-bottom: 1px solid white;
-    background: none;
-    color: white;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
+import InputField from './../../components/Field/InputField';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -34,16 +18,27 @@ const loginSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
+const FIELDS = [
+  {
+    name: 'email',
+    placeholder: 'Email',
+    type: 'text',
+  },
+  {
+    name: 'password',
+    placeholder: 'Password',
+    type: 'password',
+  },
+];
+
 const LoginPage = props => {
   const { history } = props;
   const { user, updateUser } = useContext(UserContext);
-  const initialFormValues = {
-    email: '',
-    firstName: '',
-    lastName: '',
-    password: '',
-    imageUrl: '',
-  };
+  const initialFormValues = FIELDS.reduce((accum, currentVal) => {
+    const key = currentVal.name;
+    accum[key] = '';
+    return accum;
+  }, {});
 
   return (
     <main>
@@ -68,18 +63,16 @@ const LoginPage = props => {
                   <>
                     <Title>Login</Title>
                     <Form>
-                      <div className="mb-2">
-                        <StyledFormikField type="email" name="email" placeholder="Email" />
-                      </div>
-                      <div className="mb-2">
-                        <ErrorMessage name="email" />
-                      </div>
-                      <div className="mb-2">
-                        <StyledFormikField type="password" name="password" placeholder="Password" />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="password" />
-                      </div>
+                      {FIELDS.map(field => (
+                        <InputField
+                          key={field.name}
+                          type={field.type}
+                          name={field.name}
+                          placeholder={field.placeholder}
+                          margin={2}
+                          maxWidth={300}
+                        />
+                      ))}
                       <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
                         Login
                       </ButtonYellow>
