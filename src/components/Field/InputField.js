@@ -18,12 +18,32 @@ const StyledFormikField = styled(Field)`
   }
 `;
 
+const StyledFormikTextArea = styled(Field)`
+  & {
+    width: 100%;
+    height: 150px;
+    padding: 10px 5px;
+    border: none;
+    border-bottom: 1px solid white;
+    background: none;
+    color: white;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 const InputField = props => {
-  const { type, name, placeholder, margin, maxWidth } = props;
+  const { name, margin, component, ...rest } = props;
   return (
     <>
       <div className={`mb-${margin}`}>
-        <StyledFormikField type={type} name={name} placeholder={placeholder} maxWidth={maxWidth} />
+        {component === 'textarea' ? (
+          <StyledFormikTextArea name={name} component={component} {...rest} />
+        ) : (
+          <StyledFormikField name={name} component={component} {...rest} />
+        )}
       </div>
       <div className={`mb-${margin}`}>
         <ErrorMessage name={name} />

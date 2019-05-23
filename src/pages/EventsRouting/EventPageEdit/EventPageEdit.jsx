@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { Form, Field, ErrorMessage } from 'formik';
+import { Form } from 'formik';
 import { parse } from 'date-fns';
 import * as Yup from 'yup';
 import Block from '../../../components/Block/Block';
@@ -11,37 +10,7 @@ import { UserContext } from '../../../App';
 import { getEvent, updateEvent } from './../../../services/event/eventService';
 import MyDatePicker from './../../../components/DatePicker/MyDatePicker';
 import FormikSkeleton from './../../../components/Form/FormikSkeleton';
-
-const StyledFormikField = styled(Field)`
-  & {
-    width: 100%;
-    padding: 10px 5px;
-    border: none;
-    border-bottom: 1px solid white;
-    background: none;
-    color: white;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const StyledFormikTextArea = styled(Field)`
-  & {
-    width: 100%;
-    height: 150px;
-    padding: 10px 5px;
-    border: none;
-    border-bottom: 1px solid white;
-    background: none;
-    color: white;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
+import InputField from '../../../components/Field/InputField';
 
 const eventSchema = Yup.object().shape({
   name: Yup.string().required('Event name is required'),
@@ -88,6 +57,9 @@ const EventPageEdit = props => {
 
   return (
     <main>
+      <Block container spacer={2}>
+        <Title>Edit Event</Title>
+      </Block>
       {isUserLoading ? (
         <Block container spacer={2}>
           <Spinner />
@@ -97,68 +69,34 @@ const EventPageEdit = props => {
           <Title as="h2">{error}</Title>
         </Block>
       ) : (
-        <>
-          <Block container spacer={2}>
-            <Title>Edit Event</Title>
-          </Block>
-          <Block container spacer={2}>
-            {initialFormValues ? (
-              <FormikSkeleton
-                initialValues={initialFormValues}
-                schema={eventSchema}
-                apiCall={apiCall(id)}
-                redirectPath="/events"
-                history={history}
-              >
-                {(isSubmitting, isValid) => {
-                  return (
-                    <Form>
-                      <div className="mb-4">
-                        <StyledFormikField type="text" name="name" placeholder="Event name" />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="name" />
-                      </div>
-                      <div className="mb-4">
-                        <StyledFormikTextArea
-                          component="textarea"
-                          name="description"
-                          placeholder="Describe your event"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="description" />
-                      </div>
-                      <div className="mb-4">
-                        <StyledFormikField name="eventStart" component={MyDatePicker} />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="eventStart" />
-                      </div>
-                      <div className="mb-4">
-                        <StyledFormikField name="eventEnd" component={MyDatePicker} />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="eventEnd" />
-                      </div>
-                      <div className="mb-4">
-                        <StyledFormikField type="text" name="imageUrl" placeholder="Event image url" />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="imageUrl" />
-                      </div>
-                      <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
-                        Save
-                      </ButtonYellow>
-                    </Form>
-                  );
-                }}
-              </FormikSkeleton>
-            ) : (
-              <Spinner />
-            )}
-          </Block>
-        </>
+        <Block container spacer={2}>
+          {initialFormValues ? (
+            <FormikSkeleton
+              initialValues={initialFormValues}
+              schema={eventSchema}
+              apiCall={apiCall(id)}
+              redirectPath="/events"
+              history={history}
+            >
+              {(isSubmitting, isValid) => {
+                return (
+                  <Form>
+                    <InputField type="text" name="name" placeholder="Event Name" margin={4} />
+                    <InputField name="description" placeholder="Describe your event" component="textarea" margin={4} />
+                    <InputField name="eventStart" margin={4} component={MyDatePicker} />
+                    <InputField name="eventEnd" margin={4} component={MyDatePicker} />
+                    <InputField type="text" name="imageurl" placeholder="Event Image Url" margin={4} />
+                    <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
+                      Save
+                    </ButtonYellow>
+                  </Form>
+                );
+              }}
+            </FormikSkeleton>
+          ) : (
+            <Spinner />
+          )}
+        </Block>
       )}
     </main>
   );
