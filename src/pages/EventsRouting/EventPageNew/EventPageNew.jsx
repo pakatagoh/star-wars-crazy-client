@@ -12,6 +12,7 @@ import { createEvent } from './../../../services/event/eventService';
 import { UserContext } from './../../../App';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import FormikSkeleton from './../../../components/Form/FormikSkeleton';
 
 const StyledFormikField = styled(Field)`
   & {
@@ -82,92 +83,53 @@ const EventPageNew = props => {
             <Title>New Event</Title>
           </Block>
           <Block container spacer={2}>
-            <Formik
+            <FormikSkeleton
               initialValues={initialFormValues}
-              validationSchema={eventSchema}
-              onSubmit={async (values, actions) => {
-                try {
-                  const response = await createEvent(values);
-                  if (response.error && response.error.name === 'SequelizeValidationError') {
-                    const { errors } = response.error;
-                    actions.setSubmitting(false);
-                    errors.forEach(error => {
-                      actions.setSubmitting(false);
-                      actions.setFieldError(error.path, error.message);
-                    });
-                    return;
-                  }
-                  if (response.error) {
-                    console.error(response.error);
-                    actions.setSubmitting(false);
-                    actions.setStatus({
-                      error: { message: response.error.message || 'Something went wrong, please try again' },
-                    });
-                    return;
-                  }
-
-                  actions.resetForm();
-                  actions.setSubmitting(false);
-                  history.push('/events');
-                  return;
-                } catch (error) {
-                  console.error(error);
-                  actions.setSubmitting(false);
-                  actions.setStatus({ error: { message: 'Something went wrong, please try again' } });
-                }
-              }}
-              render={props => {
-                const { status, isSubmitting, isValid } = props;
-
-                const renderError = status => {
-                  return <div>{status.error.message}</div>;
-                };
+              schema={eventSchema}
+              apiCall={createEvent}
+              redirectPath="/events"
+              history={history}
+            >
+              {(isSubmitting, isValid) => {
                 return (
-                  <>
-                    <Form>
-                      <div className="mb-4">
-                        <StyledFormikField type="text" name="name" placeholder="Event name" />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="name" />
-                      </div>
-                      <div className="mb-4">
-                        <StyledFormikTextArea
-                          component="textarea"
-                          name="description"
-                          placeholder="Describe your event"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="description" />
-                      </div>
-                      <div className="mb-4">
-                        <StyledFormikField name="eventStart" type="text" component={MyDatePicker} />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="eventStart" />
-                      </div>
-                      <div className="mb-4">
-                        <StyledFormikField name="eventEnd" type="text" component={MyDatePicker} />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="eventEnd" />
-                      </div>
-                      <div className="mb-4">
-                        <StyledFormikField type="text" name="imageUrl" placeholder="Event image url" />
-                      </div>
-                      <div className="mb-4">
-                        <ErrorMessage name="imageUrl" />
-                      </div>
-                      <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
-                        Create
-                      </ButtonYellow>
-                    </Form>
-                    {status && status.error && renderError(status)}
-                  </>
+                  <Form>
+                    <div className="mb-4">
+                      <StyledFormikField type="text" name="name" placeholder="Event name" />
+                    </div>
+                    <div className="mb-4">
+                      <ErrorMessage name="name" />
+                    </div>
+                    <div className="mb-4">
+                      <StyledFormikTextArea component="textarea" name="description" placeholder="Describe your event" />
+                    </div>
+                    <div className="mb-4">
+                      <ErrorMessage name="description" />
+                    </div>
+                    <div className="mb-4">
+                      <StyledFormikField name="eventStart" type="text" component={MyDatePicker} />
+                    </div>
+                    <div className="mb-4">
+                      <ErrorMessage name="eventStart" />
+                    </div>
+                    <div className="mb-4">
+                      <StyledFormikField name="eventEnd" type="text" component={MyDatePicker} />
+                    </div>
+                    <div className="mb-4">
+                      <ErrorMessage name="eventEnd" />
+                    </div>
+                    <div className="mb-4">
+                      <StyledFormikField type="text" name="imageUrl" placeholder="Event image url" />
+                    </div>
+                    <div className="mb-4">
+                      <ErrorMessage name="imageUrl" />
+                    </div>
+                    <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
+                      Create
+                    </ButtonYellow>
+                  </Form>
                 );
               }}
-            />
+            </FormikSkeleton>
           </Block>
         </>
       )}

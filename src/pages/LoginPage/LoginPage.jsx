@@ -9,6 +9,7 @@ import Block from '../../components/Block/Block';
 import ButtonYellow from './../../components/Buttons/ButtonYellow';
 import { login } from './../../services/auth/authService';
 import { UserContext } from './../../App';
+import FormikSkeleton from './../../components/Form/FormikSkeleton';
 
 const StyledFormikField = styled(Field)`
   & {
@@ -52,47 +53,15 @@ const LoginPage = props => {
         </Block>
       )}
       <Block container spacer={2}>
-        <Formik
+        <FormikSkeleton
           initialValues={initialFormValues}
-          validationSchema={loginSchema}
-          onSubmit={async (values, actions) => {
-            try {
-              const response = await login(values);
-              if (response.error && response.error.name === 'SequelizeValidationError') {
-                const { errors } = response.error;
-                actions.setSubmitting(false);
-                errors.forEach(error => {
-                  actions.setSubmitting(false);
-                  actions.setFieldError(error.path, error.message);
-                });
-                return;
-              }
-              if (response.error) {
-                console.error(response.error);
-                actions.setSubmitting(false);
-                actions.setStatus({
-                  error: { message: response.error.message || 'Something went wrong, please try again' },
-                });
-                return;
-              }
-
-              actions.resetForm();
-              actions.setSubmitting(false);
-              updateUser(response.data);
-              history.push('/');
-              return;
-            } catch (error) {
-              console.error(error);
-              actions.setSubmitting(false);
-              actions.setStatus({ error: { message: 'Something went wrong, please try again' } });
-            }
-          }}
-          render={props => {
-            const { status, isSubmitting, isValid } = props;
-
-            const renderError = status => {
-              return <div>{status.error.message}</div>;
-            };
+          schema={loginSchema}
+          apiCall={login}
+          redirectPath="/"
+          successAction={updateUser}
+          history={history}
+        >
+          {(isSubmitting, isValid) => {
             return (
               <>
                 {!user && (
@@ -117,11 +86,10 @@ const LoginPage = props => {
                     </Form>
                   </>
                 )}
-                {status && status.error && renderError(status)}
               </>
             );
           }}
-        />
+        </FormikSkeleton>
       </Block>
       {!user && (
         <Block container spacer={2}>

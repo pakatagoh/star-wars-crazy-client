@@ -10,6 +10,7 @@ import ButtonYellow from './../../../components/Buttons/ButtonYellow';
 import { UserContext } from '../../../App';
 import { getEvent, updateEvent } from './../../../services/event/eventService';
 import MyDatePicker from './../../../components/DatePicker/MyDatePicker';
+import FormikSkeleton from './../../../components/Form/FormikSkeleton';
 
 const StyledFormikField = styled(Field)`
   & {
@@ -81,6 +82,10 @@ const EventPageEdit = props => {
     }
   }, [history, id, isUserLoading, user]);
 
+  const apiCall = id => {
+    return async values => updateEvent(id, values);
+  };
+
   return (
     <main>
       {isUserLoading ? (
@@ -98,92 +103,57 @@ const EventPageEdit = props => {
           </Block>
           <Block container spacer={2}>
             {initialFormValues ? (
-              <Formik
-                isInitialValid={true}
+              <FormikSkeleton
                 initialValues={initialFormValues}
-                validationSchema={eventSchema}
-                onSubmit={async (values, actions) => {
-                  try {
-                    const response = await updateEvent(id, values);
-                    if (response.error && response.error.name === 'SequelizeValidationError') {
-                      const { errors } = response.error;
-                      actions.setSubmitting(false);
-                      errors.forEach(error => {
-                        actions.setSubmitting(false);
-                        actions.setFieldError(error.path, error.message);
-                      });
-                      return;
-                    }
-                    if (response.error) {
-                      console.error(response.error);
-                      actions.setSubmitting(false);
-                      actions.setStatus({
-                        error: { message: response.error.message || 'Something went wrong, please try again' },
-                      });
-                      return;
-                    }
-
-                    actions.resetForm();
-                    actions.setSubmitting(false);
-                    history.push('/events');
-                    return;
-                  } catch (error) {
-                    console.error(error);
-                    actions.setSubmitting(false);
-                    actions.setStatus({ error: { message: 'Something went wrong, please try again' } });
-                  }
-                }}
-                render={props => {
-                  const { status, isSubmitting, isValid } = props;
-                  const renderError = status => {
-                    return <div>{status.error.message}</div>;
-                  };
+                schema={eventSchema}
+                apiCall={apiCall(id)}
+                redirectPath="/events"
+                history={history}
+              >
+                {(isSubmitting, isValid) => {
                   return (
-                    <>
-                      <Form>
-                        <div className="mb-4">
-                          <StyledFormikField type="text" name="name" placeholder="Event name" />
-                        </div>
-                        <div className="mb-4">
-                          <ErrorMessage name="name" />
-                        </div>
-                        <div className="mb-4">
-                          <StyledFormikTextArea
-                            component="textarea"
-                            name="description"
-                            placeholder="Describe your event"
-                          />
-                        </div>
-                        <div className="mb-4">
-                          <ErrorMessage name="description" />
-                        </div>
-                        <div className="mb-4">
-                          <StyledFormikField name="eventStart" component={MyDatePicker} />
-                        </div>
-                        <div className="mb-4">
-                          <ErrorMessage name="eventStart" />
-                        </div>
-                        <div className="mb-4">
-                          <StyledFormikField name="eventEnd" component={MyDatePicker} />
-                        </div>
-                        <div className="mb-4">
-                          <ErrorMessage name="eventEnd" />
-                        </div>
-                        <div className="mb-4">
-                          <StyledFormikField type="text" name="imageUrl" placeholder="Event image url" />
-                        </div>
-                        <div className="mb-4">
-                          <ErrorMessage name="imageUrl" />
-                        </div>
-                        <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
-                          Save
-                        </ButtonYellow>
-                      </Form>
-                      {status && status.error && renderError(status)}
-                    </>
+                    <Form>
+                      <div className="mb-4">
+                        <StyledFormikField type="text" name="name" placeholder="Event name" />
+                      </div>
+                      <div className="mb-4">
+                        <ErrorMessage name="name" />
+                      </div>
+                      <div className="mb-4">
+                        <StyledFormikTextArea
+                          component="textarea"
+                          name="description"
+                          placeholder="Describe your event"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <ErrorMessage name="description" />
+                      </div>
+                      <div className="mb-4">
+                        <StyledFormikField name="eventStart" component={MyDatePicker} />
+                      </div>
+                      <div className="mb-4">
+                        <ErrorMessage name="eventStart" />
+                      </div>
+                      <div className="mb-4">
+                        <StyledFormikField name="eventEnd" component={MyDatePicker} />
+                      </div>
+                      <div className="mb-4">
+                        <ErrorMessage name="eventEnd" />
+                      </div>
+                      <div className="mb-4">
+                        <StyledFormikField type="text" name="imageUrl" placeholder="Event image url" />
+                      </div>
+                      <div className="mb-4">
+                        <ErrorMessage name="imageUrl" />
+                      </div>
+                      <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
+                        Save
+                      </ButtonYellow>
+                    </Form>
                   );
                 }}
-              />
+              </FormikSkeleton>
             ) : (
               <Spinner />
             )}
