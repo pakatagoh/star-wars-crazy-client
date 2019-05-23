@@ -21,11 +21,6 @@ const signupSchema = Yup.object().shape({
 
 const FIELDS = [
   {
-    name: 'email',
-    placeholder: 'Email',
-    type: 'text',
-  },
-  {
     name: 'firstName',
     placeholder: 'First Name',
     type: 'text',
@@ -33,6 +28,11 @@ const FIELDS = [
   {
     name: 'lastName',
     placeholder: 'Last name',
+    type: 'text',
+  },
+  {
+    name: 'email',
+    placeholder: 'Email',
     type: 'text',
   },
   {
@@ -58,22 +58,27 @@ const SignupPage = props => {
 
   return (
     <main>
-      <Block container spacer={2}>
-        {!user ? <Title>Sign up for some Star Wars fun</Title> : <Title>You are already logged in</Title>}
-      </Block>
-      <Block container spacer={2}>
-        <FormikSkeleton
-          initialValues={initialFormValues}
-          schema={signupSchema}
-          apiCall={signup}
-          redirectPath="/"
-          successAction={updateUser}
-          history={history}
-        >
-          {(isSubmitting, isValid) => {
-            return (
-              <>
-                {!user && (
+      {user ? (
+        <Block container spacer={2}>
+          <Title>You are already logged in</Title>
+        </Block>
+      ) : (
+        <>
+          <Block container spacer={2}>
+            <Title>Sign up for some Star Wars fun</Title>
+          </Block>
+
+          <Block container spacer={2}>
+            <FormikSkeleton
+              initialValues={initialFormValues}
+              schema={signupSchema}
+              apiCall={signup}
+              redirectPath="/"
+              successAction={updateUser}
+              history={history}
+            >
+              {(isSubmitting, isValid) => {
+                return (
                   <Form>
                     {FIELDS.map(field => (
                       <InputField
@@ -89,19 +94,17 @@ const SignupPage = props => {
                       Register
                     </ButtonYellow>
                   </Form>
-                )}
-              </>
-            );
-          }}
-        </FormikSkeleton>
-      </Block>
-      {!user && (
-        <Block container spacer={2}>
-          <Title as="h4">Already have an account?</Title>
-          <Link to="/login">
-            <ButtonCrawl>Login</ButtonCrawl>
-          </Link>
-        </Block>
+                );
+              }}
+            </FormikSkeleton>
+          </Block>
+          <Block container spacer={2}>
+            <Title as="h4">Already have an account?</Title>
+            <Link to="/login">
+              <ButtonCrawl>Login</ButtonCrawl>
+            </Link>
+          </Block>
+        </>
       )}
     </main>
   );
