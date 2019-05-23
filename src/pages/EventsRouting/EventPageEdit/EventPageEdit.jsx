@@ -55,6 +55,14 @@ const EventPageEdit = props => {
     return async values => updateEvent(id, values);
   };
 
+  if (error) {
+    return (
+      <Block container spacer={2}>
+        <Title as="h2">{error}</Title>
+      </Block>
+    );
+  }
+
   return (
     <main>
       <Block container spacer={2}>
@@ -63,10 +71,6 @@ const EventPageEdit = props => {
       {isUserLoading ? (
         <Block container spacer={2}>
           <Spinner />
-        </Block>
-      ) : error ? (
-        <Block container spacer={2}>
-          <Title as="h2">{error}</Title>
         </Block>
       ) : (
         <Block container spacer={2}>
