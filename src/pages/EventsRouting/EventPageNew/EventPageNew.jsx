@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { parse, addDays } from 'date-fns';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Block from './../../../components/Block/Block';
 import Title from './../../../components/Typography/Title';

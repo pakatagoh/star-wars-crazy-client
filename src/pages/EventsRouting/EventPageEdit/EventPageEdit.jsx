@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Form, Field, ErrorMessage } from 'formik';
 import { parse } from 'date-fns';
 import * as Yup from 'yup';
 import Block from '../../../components/Block/Block';
