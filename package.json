@@ -26,7 +26,7 @@
     "test:no-watch": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "test:coverage": "npm test -- --coverage",
-    "husky:pre-push": "cross-env CI=true && npm test"
+    "husky:pre-push": "cross-env CI=true npm test"
   },
   "husky": {
     "hooks": {
