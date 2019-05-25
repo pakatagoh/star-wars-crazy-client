@@ -25,12 +25,13 @@
     "test": "react-scripts test",
     "test:no-watch": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
-    "test:coverage": "npm test -- --coverage"
+    "test:coverage": "npm test -- --coverage",
+    "husky:pre-push": "cross-env CI=true && npm test"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "lint-staged && npm test -- --watchAll=false"
+      "pre-push": "npm run husky:pre-push"
     }
   },
   "lint-staged": {
@@ -49,6 +50,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "history": "^4.7.2",
     "husky": "^1.3.1",
     "jest-dom": "^3.1.2",
