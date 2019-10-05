@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Star Wars Crazy
 
-This project came about as a result of wanting to work with react hooks and implementing testing with react-testing-library.
+This project came about as a result of wanting to work with react hooks and implementing testing
 
 It was also test bed to run a CI/CD pipeline
 
