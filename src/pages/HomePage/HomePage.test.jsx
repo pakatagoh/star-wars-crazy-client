@@ -1,9 +1,8 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { render, wait } from 'react-testing-library';
-import 'react-testing-library/cleanup-after-each';
-import 'jest-dom/extend-expect';
+import { render, wait } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import HomePage from './HomePage';
 
 function renderWithRouter(ui, { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {}) {
@@ -14,11 +13,13 @@ function renderWithRouter(ui, { route = '/', history = createMemoryHistory({ ini
 }
 
 describe('HomePageView Component', () => {
-  test('should display Quiz Form', () => {
+  test('should display Quiz Form', async () => {
     const quizTestId = 'quiz-view';
     const { getByTestId } = renderWithRouter(<HomePage />);
 
-    expect(getByTestId(quizTestId)).toBeInTheDocument();
+    await wait(() => {
+      expect(getByTestId(quizTestId)).toBeInTheDocument();
+    });
   });
 
   test('should display Random Quote View Component', async () => {

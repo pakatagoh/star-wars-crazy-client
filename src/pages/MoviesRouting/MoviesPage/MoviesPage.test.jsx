@@ -1,14 +1,18 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { render, wait } from 'react-testing-library';
-import 'react-testing-library/cleanup-after-each';
-import 'jest-dom/extend-expect';
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import Theme from '../../../theme/Theme';
 import MoviesPage from './MoviesPage';
 
 function renderWithRouter(ui, { route = '/movies', history = createMemoryHistory({ initialEntries: [route] }) } = {}) {
   return {
-    ...render(<Router history={history}>{ui}</Router>),
+    ...render(
+      <Theme>
+        <Router history={history}>{ui}</Router>
+      </Theme>
+    ),
     history,
   };
 }

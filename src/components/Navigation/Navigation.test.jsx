@@ -1,8 +1,7 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { render } from 'react-testing-library';
-import 'react-testing-library/cleanup-after-each';
-import 'jest-dom/extend-expect';
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import { createMemoryHistory } from 'history';
 import Navigation from './Navigation';
 

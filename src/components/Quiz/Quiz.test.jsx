@@ -1,9 +1,7 @@
 import React from 'react';
-import { render, waitForElement, fireEvent } from 'react-testing-library';
-import 'react-testing-library/cleanup-after-each';
-import 'jest-dom/extend-expect';
+import { render, waitForElement, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import * as quizService from '../../services/quiz/quizService';
-import Quiz from './Quiz';
 import HomePage from './../../pages/HomePage/HomePage';
 
 describe('Quiz Container', () => {

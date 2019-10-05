@@ -1,9 +1,8 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { render, fireEvent, waitForElement } from 'react-testing-library';
-import 'react-testing-library/cleanup-after-each';
-import 'jest-dom/extend-expect';
+import { render, fireEvent, waitForElement } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import App from '../../App';
 import * as authServices from './../../services/auth/authService';
 
@@ -16,11 +15,7 @@ function renderWithRouter(ui, { route = '/', history = createMemoryHistory({ ini
 
 describe('Signup Page before submission', () => {
   const renderWithFields = () => {
-    const renderedAppPage = renderWithRouter(<App />);
-
-    const signupNav = renderedAppPage.getByText(/sign up/i);
-
-    fireEvent.click(signupNav);
+    const renderedAppPage = renderWithRouter(<App />, { route: '/signup' });
 
     return {
       ...renderedAppPage,
@@ -68,11 +63,7 @@ describe('Signup Page before submission', () => {
 
 describe('Signup form after filling up required fields', () => {
   const renderWithFields = () => {
-    const renderedAppPage = renderWithRouter(<App />);
-
-    const signupNav = renderedAppPage.getByText(/sign up/i);
-
-    fireEvent.click(signupNav);
+    const renderedAppPage = renderWithRouter(<App />, { route: '/signup' });
 
     const emailInput = renderedAppPage.getByPlaceholderText(/email/i);
     const firstNameInput = renderedAppPage.getByPlaceholderText(/first name/i);
@@ -93,6 +84,7 @@ describe('Signup form after filling up required fields', () => {
 
   afterEach(() => {
     authServices.signup.mockRestore();
+    localStorage.clear();
   });
 
   test('should show home page if submission was successful', async () => {

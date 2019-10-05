@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, waitForElement, wait } from 'react-testing-library';
-import 'react-testing-library/cleanup-after-each';
-import 'jest-dom/extend-expect';
+import { render, waitForElement, wait } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import RandomQuote from './RandomQuote';
 import * as randomQuoteService from '../../services/randomQuotes/randomQuotesService';
 
