@@ -49,7 +49,7 @@ const MovieMenuModal = props => {
         toggle={handleToggle}
         className="m-0 h-100"
         contentClassName={`h100 rounded-0 ${contentBgBlack}`}
-        scrollable="true"
+        scrollable={true}
       >
         <ModalBody>
           <div>
