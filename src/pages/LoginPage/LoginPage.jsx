@@ -70,7 +70,7 @@ const LoginPage = props => {
                         name={field.name}
                         placeholder={field.placeholder}
                         margin={2}
-                        maxWidth={300}
+                        maxwidth={300}
                       />
                     ))}
                     <ButtonYellow type="submit" disabled={!isValid || isSubmitting}>
