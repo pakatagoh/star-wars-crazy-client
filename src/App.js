@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Theme from './theme/Theme';
 import Routing from './pages/Routing';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -25,11 +26,13 @@ const App = () => {
   };
 
   return (
-    <UserContext.Provider value={{ user, updateUser, isLoading }}>
-      <Header />
-      <Routing />
-      <Footer />
-    </UserContext.Provider>
+    <Theme>
+      <UserContext.Provider value={{ user, updateUser, isLoading }}>
+        <Header />
+        <Routing />
+        <Footer />
+      </UserContext.Provider>
+    </Theme>
   );
 };
 
