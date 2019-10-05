@@ -5,7 +5,7 @@ import { Field, ErrorMessage } from 'formik';
 const StyledFormikField = styled(Field)`
   & {
     width: 100%;
-    ${({ maxWidth }) => (maxWidth ? `max-width: ${maxWidth}px;` : null)};
+    ${({ maxwidth }) => (maxwidth ? `max-width: ${maxwidth}px;` : null)};
     padding: 10px 5px;
     border: none;
     border-bottom: 1px solid white;
