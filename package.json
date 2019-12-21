@@ -4,29 +4,29 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",
-    "bootstrap": "^4.3.1",
-    "date-fns": "^2.4.1",
-    "formik": "^1.5.1",
-    "immer": "^4.0.1",
+    "bootstrap": "^4.4.1",
+    "date-fns": "^2.8.1",
+    "formik": "^2.0.8",
+    "immer": "^5.1.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
-    "react": "^16.10.2",
-    "react-datepicker": "^2.9.6",
-    "react-dom": "^16.10.2",
+    "react": "^16.12.0",
+    "react-datepicker": "^2.10.1",
+    "react-dom": "^16.12.0",
     "react-media": "^1.10.0",
-    "react-scripts": "3.2.0",
-    "reactstrap": "^8.0.1",
-    "styled-components": "^4.4.0",
-    "yup": "^0.27.0"
+    "react-scripts": "3.3.0",
+    "reactstrap": "^8.2.0",
+    "styled-components": "^4.4.1",
+    "yup": "^0.28.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:no-watch": "react-scripts test --watchAll=false",
+    "test": "react-scripts test --watchAll=false",
+    "test:watch": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:coverage": "npm test -- --coverage",
-    "husky:pre-push": "cross-env CI=true npm test"
+    "test:coverage": "yarn test --coverage",
+    "husky:pre-push": "cross-env CI=true yarn test"
   },
   "husky": {
     "hooks": {
@@ -50,14 +50,14 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.1.0",
-    "@testing-library/react": "^9.3.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
     "cross-env": "^6.0.3",
     "history": "^4.10.1",
-    "husky": "^3.0.8",
-    "jest-fetch-mock": "^2.1.2",
-    "lint-staged": "^9.4.1",
-    "prettier": "^1.18.2",
+    "husky": "^3.1.0",
+    "jest-fetch-mock": "^3.0.0",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
     "react-router-dom": "^5.1.2"
   }
 }
