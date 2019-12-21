@@ -7,7 +7,14 @@ import Footer from './components/Footer/Footer';
 export const UserContext = React.createContext({});
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<null | {
+    id: number;
+    firstName: string;
+    lastName: string;
+    imageUrl: string;
+    score: number | null;
+    events: { [key: string]: number }[];
+  }>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -20,7 +27,14 @@ const App = () => {
     setIsLoading(false);
   }, []);
 
-  const updateUser = data => {
+  const updateUser = (data: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    imageUrl: string;
+    score: number | null;
+    events: { [key: string]: number }[];
+  }) => {
     localStorage.setItem('user', JSON.stringify(data));
     setUser(data);
   };
