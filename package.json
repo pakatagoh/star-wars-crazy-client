@@ -8,7 +8,7 @@
     "date-fns": "^2.8.1",
     "formik": "^2.0.8",
     "immer": "^5.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-datepicker": "^2.10.1",
